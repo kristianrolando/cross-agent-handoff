@@ -2,7 +2,7 @@
 
 <picture>
   <source media="(max-width: 600px)" srcset="docs/assets/readme-hero-mobile.svg">
-  <img src="docs/assets/readme-hero.svg" alt="Switch agents. Keep the work. Claude Code and Codex share context through the project checkpoint, one writer at a time.">
+  <img src="docs/assets/readme-hero.svg" alt="Switch agents. Keep the work. Claude Code, Codex, Antigravity and other coding agents share context through the project checkpoint, one writer at a time.">
 </picture>
 
 <p align="center">
@@ -18,6 +18,8 @@
 
 **Hit a usage limit? Switching agents? Returning in a new session?** Save the useful context in your project, then let the next agent inspect the files and continue.
 
+**Claude Code · Codex · Antigravity · Cursor · Gemini CLI · GitHub Copilot · OpenCode · Cline**
+
 One compact checkpoint preserves the goal, verified progress, unfinished work, decisions, evidence and next action. No cross-vendor API calls, extra cloud service or shared chat history are required.
 
 ## Quick start
@@ -31,13 +33,13 @@ One compact checkpoint preserves the goal, verified progress, unfinished work, d
 /plugin install cross-agent-handoff@cross-agent-tools
 ```
 
-**Direct skill for Codex or Claude Code** · run in your project:
+**Direct skill for your coding agent** · run in your project:
 
 ```sh
 npx skills add kristianrolando/cross-agent-handoff --skill cross-agent-handoff
 ```
 
-Choose your host in the installer. This installer requires Node.js 22.20+; the core workflow does not need Node.js. For manual copying and user-wide paths, see [installation options](#installation-options). Use one installation route per host.
+Choose your host in the installer. For Antigravity, select **Antigravity** or append `--agent antigravity --copy` for a project-local copy. This installer requires Node.js 22.20+; the core workflow does not need Node.js. For manual copying and user-wide paths, see [installation options](#installation-options). Use one installation route per host. Check the [host guide](skills/cross-agent-handoff/references/agents.md) for locations and installer differences, including the recommended manual Cline path.
 
 ### Initialize once
 
@@ -46,6 +48,10 @@ Choose your host in the installer. This installer requires Node.js 22.20+; the c
 | Claude Code plugin | `/cross-agent-handoff:cross-agent-handoff Initialize continuity in this project.` |
 | Claude Code direct skill | `/cross-agent-handoff Initialize continuity in this project.` |
 | Codex | `Use $cross-agent-handoff to initialize continuity in this project.` |
+| Antigravity App, Cursor or Cline | `/cross-agent-handoff Initialize continuity in this project.` |
+| Gemini CLI, GitHub Copilot or OpenCode | `Use the cross-agent-handoff skill to initialize continuity in this project.` |
+
+If the host does not discover the skill, use the [explicit-file fallback](skills/cross-agent-handoff/references/agents.md#activate-and-route-project-context). Antigravity IDE discovery can be checked in Customizations; Gemini CLI exposes `/skills list`.
 
 The agent inspects existing instructions and documentation, reuses a suitable checkpoint or creates `HANDOFF.md`, and adds short project routing where needed. For a new project, include your goal and acceptance criteria. Initialization does not scaffold an application or choose a stack.
 
@@ -72,7 +78,7 @@ applicable instructions, inspect actual files and changes, then continue
 from the next supported action. Preserve unfinished work.
 ```
 
-Works in either direction. You open the next host; the skill does not switch applications automatically.
+Use the same procedure for Claude → Antigravity, Antigravity → Codex, Cursor → Gemini CLI, or any other supported pair. You open the next host; the skill does not switch applications automatically.
 
 ## What survives the switch
 
@@ -95,14 +101,20 @@ The checkpoint links to existing requirements, architecture and backlog instead 
 
 | Host / component | Available route | Evidence and limits |
 | --- | --- | --- |
-| **Claude Code** | Direct skill or included plugin | Maintainer reports successful use; manifests locally validated; installer copied full skill resources. Exact maintainer-tested version/settings were not recorded. |
-| **Codex** | Direct skill with optional UI metadata | Maintainer reports successful use; installer and independent fresh-agent recovery checked. Separate Codex CLI model discovery was not observed in the authoring environment. |
-| Other filesystem-capable agents | Explicitly read `SKILL.md` and the checkpoint | Portable procedure; host-specific discovery/invocation unverified. |
+| **Claude Code** | Direct skill or included Claude plugin | Maintainer reports successful use; manifests validated and installer copy checked. Exact live version/settings were not recorded. |
+| **Codex** | Direct skill; optional UI metadata | Installer and independent fresh-agent recovery checked. Separate Codex CLI model discovery was not observed. |
+| **Antigravity** | Native skill in `.agents/skills/` | Official App/CLI/IDE discovery documented; live-app handoff not independently exercised here. |
+| **Cursor** | Native skill in `.agents/skills/` or `.cursor/skills/` | Official discovery/invocation documented; live-app handoff not exercised here. |
+| **Gemini CLI** | Native skill in `.agents/skills/` or `.gemini/skills/` | Official discovery documented; activation consent/settings may apply; no live-app trial here. |
+| **GitHub Copilot** | Native skill in `.github/skills/` | Official agent support documented; IDE/CLI/cloud versions and locations vary; no live-app trial here. |
+| **OpenCode** | Native skill in `.opencode/skills/` or `.agents/skills/` | Official skill-tool loading documented; permissions apply; no live-app trial here. |
+| **Cline** | Native skill in `.cline/skills/` | Official discovery/slash invocation documented; use manual path if installer differs; no live-app trial here. |
+| **Windsurf / other filesystem agents** | Explicitly read installed `SKILL.md` and checkpoint | Portable fallback; native discovery not verified for this package. |
 | Plain chat / uploads | Read supplied checkpoint and files | Snapshot only unless live filesystem tools are available. |
 | Optional Python helper | Python 3.9+, standard library | Hosted checks passed on Linux, macOS and Windows. |
 | Concurrent overlapping writers | Requires separate coordination | The sequential checkpoint does not lock source files. |
 
-Public CLI discovery and copy installation were checked in a disposable project for both host directories, including resources and MIT notices. Maintainer-reported app behavior is recorded separately from automated evidence. See [validation and coverage](docs/validation.md).
+New host routes were checked against [official documentation and installation paths](skills/cross-agent-handoff/references/agents.md), reviewed on 2026-11-02. Documented compatibility, installer checks and actual model trials are distinct. See [validation and coverage](docs/validation.md).
 
 ## What to expect
 
@@ -119,16 +131,13 @@ Public CLI discovery and copy installation were checked in a disposable project 
 
 Copy the complete `skills/cross-agent-handoff` directory, including LICENSE and supporting resources, to one supported location for each host.
 
-| Host | Project location | User location |
-| --- | --- | --- |
-| Claude Code | `.claude/skills/cross-agent-handoff/` | `~/.claude/skills/cross-agent-handoff/` |
-| Codex | `.agents/skills/cross-agent-handoff/` | `~/.agents/skills/cross-agent-handoff/` |
+The [host guide](skills/cross-agent-handoff/references/agents.md#install-the-complete-skill) lists project and user locations for all eight named native-skill hosts. Shared `.agents/skills/` discovery can reuse one installed copy where documented. Cline and Claude have their own recommended project paths; keep every copy on the same version and use one canonical checkpoint.
 
 Windows users can use their file manager; symlinks are not required. Inspect an existing installation before updating it rather than nesting a new copy inside its directory.
 
 For local Claude plugin development, the marketplace command can point to this checkout. Root `AGENTS.md` and `CLAUDE.md` guide repository maintenance; installing the plugin does not automatically load those files into consumer projects. Initialization adds reviewed project routing when needed.
 
-The documented Codex route is a direct skill. This package does not provide a native Codex plugin wrapper.
+The included plugin wrapper is for Claude Code. Other hosts use direct skills or explicit file reading; this repository does not ship their native plugin wrappers.
 
 </details>
 
@@ -163,8 +172,9 @@ To update, review and replace the installed skill while retaining project record
 | Start here | Go deeper |
 | --- | --- |
 | [Checkpoint example](docs/checkpoint-example.md) | [Architecture and trade-offs](docs/architecture.md) |
-| [Contributing with Claude or Codex](CONTRIBUTING.md) | [Validation evidence and limits](docs/validation.md) |
+| [Contributing with any coding agent](CONTRIBUTING.md) | [Validation evidence and limits](docs/validation.md) |
 | [Setup and migration](skills/cross-agent-handoff/references/setup.md) | [File map](docs/file-map.md) |
+| [Agent installation and activation](skills/cross-agent-handoff/references/agents.md) | [Release process](docs/releasing.md) |
 
 ## Checks and contributions
 

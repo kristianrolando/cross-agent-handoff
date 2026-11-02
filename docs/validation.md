@@ -98,3 +98,36 @@ In a disposable project, `npx --yes skills add kristianrolando/cross-agent-hando
 The public repository, MIT skill, Claude Code plugin/catalog, contributor guidance, CI and initial versioned release are available. README and plugin metadata point to the actual repository. Repository topics agent-skills, ai-agents, claude-code, codex and handoff were saved and visibly verified.
 
 The original Mac checkout has been reconciled. Commit `b0d3e39` records the completed recovery; local main and the public branch matched at that commit with a clean working tree when reviewed. The interrupted `57c17ab` and published `fddd8d1` snapshots were compared again and found identical. The [resolved synchronization record](releasing.md#resolved-desktop-synchronization) retains the history and guidance for future checkouts. No pending synchronization blocker remains from that interruption. Native Codex plugin packaging remains outside the documented direct-skill route.
+
+## Expanded agent routes (2026-11-02)
+
+Added host-specific installation, activation and instruction-routing guidance for Antigravity,
+Cursor, Gemini CLI, GitHub Copilot, OpenCode and Cline. Official sources and current documented
+locations are recorded in the bundled [host guide](../skills/cross-agent-handoff/references/agents.md).
+The portable lifecycle and default checkpoint format remain unchanged. The core now contains
+about 1,214 whitespace-delimited words; the host guide is loaded only for installation/routing.
+
+On macOS with Node.js 26.11.1, Skills CLI 1.7.4 completed a project-local copy installation
+from this working checkout into a disposable directory, selecting all eight named agents:
+
+```sh
+npx skills@1.7.4 add /path/to/cross-agent-handoff --skill cross-agent-handoff \
+  --agent claude-code codex antigravity cursor gemini-cli github-copilot opencode cline \
+  --copy --yes
+```
+
+The CLI produced two shared destinations: `.agents/skills/cross-agent-handoff` and
+`.claude/skills/cross-agent-handoff`. In both destinations all ten source package files matched
+byte-for-byte, including the new host guide, LICENSE, template and helper. A separate manual
+copy to the officially documented Cline destination, `.cline/skills/cross-agent-handoff`, also
+matched all ten files. Multiple selected hosts share the same physical folder; this is not
+eight independently observed host loaders. No global installation or settings changed.
+
+All 27 existing package/protocol checks passed again. Both changed hero SVGs were rendered
+and visually inspected at their desktop/mobile sizes. No helper implementation changed.
+The plugin manifest version advances to 0.1.1 so updated instructions have a distinct package
+version on main. This is not a claim that a v0.1.1 release/tag has been published; v0.1.0 stays
+frozen. New host model execution, automatic discovery, activation consent and live round-trip
+handoffs were not exercised. Windsurf and other filesystem agents have an explicit-file fallback;
+no native-discovery test is claimed for them. These limits do not negate the maintainer's earlier
+reported successful use, whose exact application coverage remains unspecified.

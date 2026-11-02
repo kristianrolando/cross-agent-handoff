@@ -1,6 +1,6 @@
 # Contributing
 
-Contributions from humans, Claude Code, Codex and other filesystem-capable agents use the same source files, instructions, checks and review process. No access to another agent's conversation, account or API is required.
+Contributions from humans, Claude Code, Codex, Antigravity, Cursor, Gemini CLI, GitHub Copilot, OpenCode, Cline and other filesystem-capable agents use the same source files, instructions, checks and review process. No access to another agent's conversation, account or API is required.
 
 ## Start here
 
@@ -14,9 +14,11 @@ When another session contributed from a different checkout, fetch the known orig
 
 Use HANDOFF.md as the current status and Git commits/PRs as durable change history. Keep stable design decisions in docs/architecture.md. Do not add a second task board or competing agent-specific status file.
 
-## Claude Code entrypoint
+## Agent entrypoints
 
 Open this repository as the project directory. CLAUDE.md imports @AGENTS.md; shared rules live in AGENTS.md. Confirm actual loading in your installed Claude Code version/settings, or explicitly ask it to read those files.
+
+For any other coding agent, open the same repository and use the prompt below. Do not assume that it auto-loads AGENTS.md or interprets Claude imports. Native skill locations and discovery checks are in the [host guide](skills/cross-agent-handoff/references/agents.md); installing the skill is optional for repository maintenance. If needed, explicitly read `skills/cross-agent-handoff/SKILL.md`. Keep one shared HANDOFF.md, regardless of host.
 
 Copy-ready prompt:
 
@@ -32,7 +34,7 @@ The repository's installed skill is not required to maintain its source: all con
 
 ## Make a focused change
 
-Create a descriptive branch for an independent PR. For a sequential continuation on an existing task branch, retain that branch and inspect its changes rather than creating unnecessary branches. Contributors without write access can fork the public repository and open a pull request. The AI uses the human contributor's existing access; no separate Claude or Codex GitHub account is needed.
+Create a descriptive branch for an independent PR. For a sequential continuation on an existing task branch, retain that branch and inspect its changes rather than creating unnecessary branches. Contributors without write access can fork the public repository and open a pull request. The AI uses the human contributor's existing access; no separate agent-specific GitHub account is needed.
 
 Keep the portable procedure in skills/cross-agent-handoff/SKILL.md and host-specific metadata in its adapter files. Put substantial conditional detail in references. Avoid mandatory dependencies, vendor APIs, new background services or automatic source locking without an actual need.
 

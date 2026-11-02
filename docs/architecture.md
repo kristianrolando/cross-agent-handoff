@@ -59,3 +59,14 @@ Consulted official sources on 2026-11-02. Platform behavior is version/settings 
 - [Claude plugin overview](https://code.claude.com/docs/en/plugins) and [marketplaces](https://code.claude.com/docs/en/plugin-marketplaces): separate packaging and catalog; no vendor tool integration is required to ship a skill.
 
 These sources support packaging/loading mechanisms, not guaranteed handoff accuracy. Actual model compliance and operational savings require repeated real trials. Ordinary chat uploads provide a snapshot unless live filesystem tools are available.
+
+## Additional agent support
+
+Antigravity, Cursor, Gemini CLI, GitHub Copilot, OpenCode and Cline use the same portable
+skill and checkpoint. Keep their documented loading paths and activation details in the
+conditional [host guide](../skills/cross-agent-handoff/references/agents.md), not in separate
+copies of the core procedure. That guide records official sources and the review date.
+Native skill support is distinct from native plugin packaging: only the Claude Code wrapper
+ships here. Explicit file reading provides a fallback for filesystem agents, including hosts
+whose discovery has not been validated. Initialization adapts only the active host's routing;
+it does not generate every vendor's configuration or introduce per-agent status files.

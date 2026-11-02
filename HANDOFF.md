@@ -6,64 +6,65 @@
 - writer: none
 
 ## Project
-Cross-Agent Handoff: standalone portable skill and Claude Code plugin for sequential continuity.
+Cross-Agent Handoff: portable sequential project continuity and a Claude Code plugin wrapper.
 Public source: https://github.com/kristianrolando/cross-agent-handoff
 Rules: AGENTS.md. Claude adapter: CLAUDE.md. Contributor workflow: CONTRIBUTING.md.
 User docs: README.md. Design: docs/architecture.md. Evidence: docs/validation.md.
-Release process and local synchronization notes: docs/releasing.md.
+Host loading/routing: skills/cross-agent-handoff/references/agents.md.
+Release and synchronization history: docs/releasing.md.
 
 ## Task
-Improve the GitHub README's visual presentation and fast comprehension. The user explicitly
-does not need a demo video. Create repository-native static visuals and preserve accurate
-installation instructions, compatibility limits and links. Existing release tags stay frozen.
+Extend installation, activation and contribution beyond Claude Code and Codex to Antigravity
+and other widely used coding agents. Preserve one portable workflow/checkpoint, document actual
+host capabilities, retain honest validation limits, update README visuals and publish on main.
+No new versioned release was requested in this task.
 
 ## State
-README now includes three explanatory SVG visuals: a banner, handoff flow and checkpoint map,
-with separate narrow-screen layouts. Installation appears early; manual setup and recovery
-use collapsible sections. Existing compatibility limits, licensing and documentation remain.
-All six SVGs were rendered and visually inspected; no video demo was created.
+Added documented native-skill routes for Antigravity, Cursor, Gemini CLI, GitHub Copilot,
+OpenCode and Cline alongside Claude Code and Codex. The bundled host guide gives project/user
+locations, activation/discovery checks, official sources and an explicit-file fallback for
+Windsurf and other filesystem agents. It records installer discrepancies, including Cline's
+recommended manual location and Antigravity global-path differences.
 
-Published source/history on main, MIT notices, Claude plugin/catalog, direct Codex skill route,
-shared human/Claude/Codex contributor instructions and PR template. Topics saved and verified.
-Release v0.1.0 is published at:
+SKILL.md now names the additional hosts and routes platform details on demand. Initialization
+respects the active host's rules and uses a thin pointer to shared instructions when needed;
+it does not generate every vendor's configuration or create agent-specific status files.
+README installation, compatibility, handoff examples and both hero SVGs now cover multiple hosts.
+AGENTS.md and CONTRIBUTING.md explain contribution from any filesystem-capable agent.
+The optional helper and checkpoint format are unchanged. No new runtime dependency, global
+installation, vendor configuration or background writer was added.
+
+Plugin version on main is 0.1.1 to distinguish updated bundled instructions. Latest published
+release remains v0.1.0 at frozen source 666e04c279d312a375a9ba06b5f9e6dfd3d92204:
 https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.1.0
-Frozen release source: 666e04c279d312a375a9ba06b5f9e6dfd3d92204.
-Both supported host-directory installs succeeded through the public Skills CLI in a disposable
-project. Full resources and MIT notices were checked. This is installer validation, not another
-live model trial. Maintainer previously reported successful use; exact app coverage is unspecified.
-No model/installer job or overlapping source writer continues.
+Do not move that tag or claim 0.1.1 is released. No overlapping product writer continues.
 
 ## Evidence
-Current documentation checks: seven package checks passed. All SVG sources parsed as XML;
-README local image/source paths, alt text and inline navigation were checked. Wide and narrow
-SVGs were rendered with a temporary resvg dependency and visually inspected. No project runtime
-or installed-skill content changed. Patch whitespace and checkpoint health checks passed.
-The rendering dependency and PNG previews remain outside the repository.
+27 package/protocol checks passed locally. Both native Claude plugin validations passed;
+the known warning that root CLAUDE.md is not consumer plugin context remains expected.
+All SVGs parsed as XML; both modified hero SVGs were rendered and visually inspected.
+Whitespace checks passed. The core is about 1,214 words; the host guide is conditional.
 
-27 local package/protocol checks passed. Release-source CI passed all four OS/Python jobs:
-https://github.com/kristianrolando/cross-agent-handoff/actions/runs/41429718683
-Release checks and publication completed successfully:
-https://github.com/kristianrolando/cross-agent-handoff/actions/runs/41429718374
-GitHub API confirmed public visibility, released v0.1.0 and its target source commit.
-Public CLI discovery found one skill and copy installation succeeded for Codex and Claude Code.
-Closing documentation follows on main; do not move the released tag to include this checkpoint.
+Skills CLI 1.7.4 installed this updated checkout with all eight named agents selected into a
+disposable project. The two resulting shared host folders each contained ten byte-identical
+package files. A manual copy to the documented Cline-specific folder also matched all ten.
+This proves installer/file completeness, not eight native loaders or live model handoffs.
+New host live discovery, consent and round-trip behavior were not exercised. Earlier maintainer
+feedback reported smooth use without exact app/version coverage. See docs/validation.md.
+
+The original Mac checkout is reconciled; previous interrupted documentation snapshots were
+verified equivalent. At task start local main and origin/main matched 1d8d27e with a clean tree.
+No stale synchronization warning needs action; fetch and inspect again on future continuations.
 
 ## Next
-Await the user's next requested change or release. When working from another checkout,
-fetch origin and compare history first; follow docs/releasing.md to preserve work and
-rebase/merge deliberately; never hard-reset or force-push as a shortcut.
-No new feature, global installation or directory submission is implied by task completion.
-
-## Local Mac sync (verified 2026-11-02)
-The original Mac checkout is reconciled. The initial sync brought main and origin/main to
-f6a7795; the verification was saved as b0d3e39. At this task's start both branches matched
-b0d3e39 with a clean tree. The earlier sync inspection recorded no stashes or extra worktrees.
-The reflog shows the interrupted commit 57c17ab was rebased onto origin/main and dropped.
-`git diff 57c17ab fddd8d1` is empty and both commits share patch-id 3e78dd8d, so no work was lost.
+Review the hosted Package checks run for this publication. Future work should start from
+actual files and Git status. On an explicit maintainer release request, prepare versioned
+0.1.1 notes, verify hosted checks and publish a new matching tag without moving v0.1.0.
+No global install, marketplace submission or model trial is implied by this completed task.
 
 ## Recent outcomes
-- Verified CI across Ubuntu, macOS and Windows.
-- Recovered the interrupted documentation push through the connector.
-- Published v0.1.0 and verified public Skills CLI discovery and both host-directory installs.
-- Replaced stale sync warnings in release/validation docs with verified resolved history.
-- Added responsive README visuals, clearer quick-start hierarchy and collapsible advanced docs.
+- Published MIT v0.1.0 and verified public discovery and Claude/Codex copy installation.
+- Reconciled the original Mac checkout without losing interrupted documentation.
+- Added responsive README visuals and concise quick-start hierarchy.
+- Added six documented native-skill host routes and a portable fallback for other agents.
+- Verified expanded installer selection, complete resources and existing package checks.

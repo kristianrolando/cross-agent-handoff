@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="500" viewBox="0 0 1280 500" role="img" aria-labelledby="title desc">
   <title id="title">Cross-Agent Handoff: switch agents, keep the work</title>
-  <desc id="desc">Claude Code and Codex use a shared project checkpoint. The project holds the context between sessions. One writer at a time.</desc>
+  <desc id="desc">Claude Code, Codex, Antigravity, Cursor and other coding agents use a shared project checkpoint. The project holds the context between sessions. One writer at a time.</desc>
   <defs>
     <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse"><path d="M 28 0 H 0 V 28" fill="none" stroke="#23433f" stroke-width="1"/></pattern>
   </defs>
@@ -23,10 +23,10 @@
     <path d="M880 135H970V182M1112 135H1024V182" fill="none" stroke="#6b998b" stroke-width="2.5"/>
     <rect x="752" y="92" width="186" height="64" rx="12" fill="#f0d5c2"/>
     <circle cx="777" cy="124" r="6" fill="#ad5f3c"/>
-    <text x="794" y="131" fill="#5c3728" font-size="21" font-weight="600">Claude Code</text>
+    <text x="794" y="131" fill="#5c3728" font-size="21" font-weight="600">Your agent</text>
     <rect x="1050" y="92" width="182" height="64" rx="12" fill="#d4e8dc"/>
     <circle cx="1077" cy="124" r="6" fill="#307565"/>
-    <text x="1095" y="131" fill="#20473a" font-size="22" font-weight="600">Codex</text>
+    <text x="1095" y="131" fill="#20473a" font-size="22" font-weight="600">Next agent</text>
     <rect x="802" y="185" width="379" height="225" rx="15" fill="#091f1c" stroke="#527e70" stroke-width="1.5"/>
     <path d="M802 231H1181" stroke="#345b4e"/>
     <path d="M822 202H836L841 207V219H822Z" fill="none" stroke="#b1d2bd" stroke-width="1.5"/>

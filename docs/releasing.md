@@ -3,6 +3,7 @@
 ## Publication status
 
 Public repository: [kristianrolando/cross-agent-handoff](https://github.com/kristianrolando/cross-agent-handoff).
+Main now carries plugin version 0.1.1 with expanded agent guidance; it is not yet tagged or released.
 Published initial release: [v0.1.0](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.1.0). The tag targets verified source commit `666e04c279d312a375a9ba06b5f9e6dfd3d92204`.
 
 All four release-source CI jobs and the release workflow succeeded; the public Skills CLI discovered and copied the complete skill to both host directories in a disposable project. See docs/validation.md for actual run links and limits. Contributor support is shared through AGENTS.md, CLAUDE.md, CONTRIBUTING.md and HANDOFF.md.
@@ -15,8 +16,8 @@ Keep a release frozen at its verified source commit. Closing handoff/evidence up
 2. Confirm origin points to the real repository.
 3. Push the local main branch. Preserve existing commits and inspect divergence before changing refs; do not force-push.
 4. Set topics: agent-skills, claude-code, codex, handoff, ai-agents. Inspect the first hosted Package checks run and fix actual failures.
-5. Verify the public skill-install route and Claude plugin marketplace route against the hosted files. Keep the direct skill route for Codex; no native Codex plugin is implemented.
-6. Create a release tagged v0.1.0 at the verified commit. The plugin manifest version is 0.1.0. Use the release notes below.
+5. Verify the public skill-install route and Claude plugin marketplace route against the hosted files. Use direct skills for the other documented hosts; the included plugin wrapper remains Claude-specific.
+6. On an explicit maintainer release request, use a new tag matching the current plugin manifest version and prepare matching versioned notes. The initial v0.1.0 release below is historical; never reuse or move its tag.
 7. Record actual repository, run and release links in HANDOFF.md and docs/validation.md. Keep maintainer feedback distinct from automated or directly observed evidence.
 
 ## Initial release notes

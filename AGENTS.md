@@ -2,7 +2,7 @@
 
 This repository authors the standalone Cross-Agent Handoff skill and its plugin packaging. Keep changes within this project unless the user explicitly requests an external integration.
 
-Contributor entrypoint: CONTRIBUTING.md. Current task: HANDOFF.md. Claude Code imports this shared file through CLAUDE.md; Codex uses applicable AGENTS.md discovery. Both agents follow the same rules and checks.
+Contributor entrypoint: CONTRIBUTING.md. Current task: HANDOFF.md. Claude Code imports this shared file through CLAUDE.md; Codex uses applicable AGENTS.md discovery. Antigravity, Cursor, Gemini CLI, GitHub Copilot, OpenCode, Cline and other contributors must read this file explicitly when their host does not discover it. All agents follow the same rules and checks.
 
 <!-- cross-agent-handoff:start -->
 ## Cross-agent continuity

@@ -2,7 +2,7 @@
 
 ## Existing project
 
-Inspect instructions, setup docs, task/backlog, and current status before adding files. Prefer an existing checkpoint with sufficient information; record its path in the entrypoint. Do not create HANDOFF.md if an existing document already owns that information. The helper only handles its default format; use manual saves for adapted formats.
+Inspect instructions, setup docs, task/backlog, and current status before adding files. Include the active host's existing rules; use [agents.md](agents.md) for host-specific discovery and routing. Prefer an existing checkpoint with sufficient information; record its path in the entrypoint. Do not create HANDOFF.md if an existing document already owns that information. The helper only handles its default format; use manual saves for adapted formats.
 
 If no equivalent exists, copy assets/checkpoint.md to HANDOFF.md at the chosen project root and replace every REPLACE line using inspected facts. Alternatively use the optional helper's init command, then populate the draft. Initialization must not claim unknown project history or successful checks.
 
@@ -21,7 +21,7 @@ skill for the full procedure when available; these rules also work without it.
 <!-- cross-agent-handoff:end -->
 ```
 
-Claude: inspect actual loading. Current releases may load AGENTS.md directly depending on version/settings and other instruction files. For compatibility, add `@AGENTS.md` to an applicable CLAUDE.md if shared rules are not otherwise loaded, retaining all existing content. Do not duplicate a preexisting import or change global settings. On hosts that ignore either file, explicitly ask the agent to read it.
+Inspect actual instruction loading in the active host. Claude can import `@AGENTS.md` through an applicable CLAUDE.md when shared rules are not otherwise loaded. Other hosts may need a plain instruction in an existing supported entrypoint to read AGENTS.md and the checkpoint; see the host guide. Retain existing content, avoid duplicate pointers, and never assume Claude import syntax is portable. If no entrypoint is known, explicitly ask the agent to read the files. Do not generate configuration files for unused hosts or change global settings.
 
 New project: establish identity, scope, and observable criteria from the request before coding. Do not scaffold an application, pick a tech stack, or initialize Git just because continuity is being enabled. Point to the real setup/architecture when they exist.
 
@@ -31,7 +31,7 @@ Replace the installed skill folder after reviewing the new source; retain projec
 
 ## Remove
 
-Remove only the installed skill directory and the exact integration block after reviewing it. Remove an added `@AGENTS.md` import only if it was introduced solely for this integration and is no longer needed. Keep checkpoint, decisions, source, history, and any preexisting instructions by default. If deleting the checkpoint is explicitly requested, first migrate still-needed decisions/backlog and remove references to it. No automatic cleanup command removes project data.
+Remove only the installed skill directory and the exact integration block after reviewing it. Remove a host-specific pointer or added `@AGENTS.md` import only if it was introduced solely for this integration and is no longer needed. Keep checkpoint, decisions, source, history, and any preexisting instructions by default. If deleting the checkpoint is explicitly requested, first migrate still-needed decisions/backlog and remove references to it. No automatic cleanup command removes project data.
 
 ## Minimum ongoing reads
 
