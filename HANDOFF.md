@@ -1,46 +1,52 @@
 # Project handoff
 
 - format: cross-agent-handoff/1
-- task_status: in_progress
-- handoff: working
-- writer: Codex
+- task_status: done
+- handoff: ready
+- writer: none
 
 ## Project
 Cross-Agent Handoff: standalone portable skill and Claude Code plugin for sequential continuity.
-Rules: AGENTS.md. Contributor guide: CONTRIBUTING.md. Claude entrypoint: CLAUDE.md.
-User entrypoint: README.md. Source: skills/cross-agent-handoff. Design: docs/architecture.md.
-Evidence: docs/validation.md. Publication runbook/release notes: docs/releasing.md.
+Public source: https://github.com/kristianrolando/cross-agent-handoff
+Rules: AGENTS.md. Claude adapter: CLAUDE.md. Contributor workflow: CONTRIBUTING.md.
+User docs: README.md. Design: docs/architecture.md. Evidence: docs/validation.md.
+Release process and local synchronization notes: docs/releasing.md.
 
 ## Task
-The user explicitly authorized ensuring Claude can contribute and creating a public GitHub
-repository, following the recommended publication steps. Intended destination:
-kristianrolando/cross-agent-handoff. Existing MIT/public packaging is complete.
-Acceptance: shared contributor context, published source/install routes, first CI reviewed,
-and initial versioned release. Do not infer that any remote action succeeded from prepared URLs.
+The user authorized Claude contributor support, public repository creation, installation routes,
+CI review and the initial release. These outcomes are complete. MIT licensing was user-approved.
 
 ## State
-Source and Git history are public at https://github.com/kristianrolando/cross-agent-handoff.
-Shared CONTRIBUTING.md, CLAUDE.md importing AGENTS.md, PR template and public install routes exist.
-Hosted CLAUDE.md routing was retrieved and verified. Origin uses the real repository and main
-has an upstream. Publication transport uses GitHub Desktop; Safari is authorized for GitHub UI.
-First hosted CI passed four jobs on commit 74d2c5c4c7fae8adf72e3053e4db4cb22f829af2.
-Current work: push final public evidence/docs, review its CI and publish v0.1.0 at that verified
-commit. Freeze that tag; subsequent closing handoff updates may follow on main.
-No active model trial or overlapping writer exists.
+Published source/history on main, MIT notices, Claude plugin/catalog, direct Codex skill route,
+shared human/Claude/Codex contributor instructions and PR template. Topics saved and verified.
+Release v0.1.0 is published at:
+https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.1.0
+Frozen release source: 666e04c279d312a375a9ba06b5f9e6dfd3d92204.
+Both supported host-directory installs succeeded through the public Skills CLI in a disposable
+project. Full resources and MIT notices were checked. This is installer validation, not another
+live model trial. Maintainer previously reported successful use; exact app coverage is unspecified.
+No model/installer job or overlapping source writer continues.
 
 ## Evidence
-27 local automated checks passed. Hosted Package checks #1:
-https://github.com/kristianrolando/cross-agent-handoff/actions/runs/41401002913
-All four Linux/macOS/Windows Python jobs completed successfully; exact IDs in docs/validation.md.
-GitHub API verified public visibility and ownership. No release is claimed in this snapshot yet.
+27 local package/protocol checks passed. Release-source CI passed all four OS/Python jobs:
+https://github.com/kristianrolando/cross-agent-handoff/actions/runs/41429718683
+Release checks and publication completed successfully:
+https://github.com/kristianrolando/cross-agent-handoff/actions/runs/41429718374
+GitHub API confirmed public visibility, released v0.1.0 and its target source commit.
+Public CLI discovery found one skill and copy installation succeeded for Codex and Claude Code.
+Closing documentation follows on main; do not move the released tag to include this checkpoint.
 
 ## Next
-Push final docs, inspect that run and publish v0.1.0. Verify actual release/tag state before
-creating anything, then record the observed release URL and leave a ready checkpoint.
-Publication is authorized; do not repeat old permission blockers after the new Safari access grant.
+Await the user's next requested change or release. Before working from the original Mac checkout,
+inspect pending work, fetch origin and compare history: an unpushed documentation-only commit
+57c17ab may remain from the environment interruption. Its equivalent patch was published as
+fddd8d1. Follow docs/releasing.md to preserve work and rebase/merge deliberately; never hard-reset
+or force-push as a shortcut. This cloud session cannot claim to have synchronized that local Mac.
+No new feature, global installation or directory submission is implied by task completion.
 
 ## Recent outcomes
-- Added shared Claude/Codex contribution guidance and PR template.
-- Created public repository and pushed existing local Git history.
-- Verified first hosted CI: four successful jobs across Linux, macOS and Windows.
-- Updated public documentation and release procedure with observed evidence.
+- Added shared Claude/Codex contributor guidance and a PR template.
+- Created public repository, uploaded source/history and saved discovery topics.
+- Verified CI across Ubuntu, macOS and Windows.
+- Recovered the interrupted documentation push through the connector.
+- Published v0.1.0 and verified public Skills CLI discovery and both host-directory installs.

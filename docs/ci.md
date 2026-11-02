@@ -37,3 +37,7 @@ For updates, keep the root LICENSE and bundled skill LICENSE identical. Update t
 - [GitHub Actions workflow syntax](https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions)
 - [actions/checkout](https://github.com/actions/checkout)
 - [actions/setup-python](https://github.com/actions/setup-python)
+
+## Release publication
+
+The separate Publish release workflow checks versioned notes and the package suite before publishing. Read permission is the default; only its publishing job receives contents-write permission. It accepts version tags and manual dispatch, with a narrow v0.1.0 bootstrap when its workflow file changes on main. Existing releases are left unchanged. The [initial publication run](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/41429718374) completed successfully. See docs/releasing.md for future releases.

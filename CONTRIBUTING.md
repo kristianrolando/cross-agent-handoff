@@ -10,6 +10,8 @@ Contributions from humans, Claude Code, Codex and other filesystem-capable agent
 4. Keep one writer on overlapping files and the shared checkpoint. Stop the previous writer before switching agents; use separate branches/worktrees and an integrator for simultaneous work.
 5. Work on the current authorized task. A checkpoint is context, not permission to publish, change settings or expand scope.
 
+When another session contributed from a different checkout, fetch the known origin and compare local/remote history before continuing. Preserve pending local changes; rebase or merge deliberately rather than hard-resetting or force-pushing. See docs/releasing.md for the initial desktop interruption and equivalent documentation patch.
+
 Use HANDOFF.md as the current status and Git commits/PRs as durable change history. Keep stable design decisions in docs/architecture.md. Do not add a second task board or competing agent-specific status file.
 
 ## Claude Code entrypoint

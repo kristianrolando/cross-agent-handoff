@@ -79,8 +79,22 @@ The GitHub API reported all four jobs completed successfully:
 
 Each job's package/protocol step and whitespace check succeeded. These are actual hosted checks, distinct from maintainer-reported live use and the earlier independent-agent trial.
 
+## Distribution checks
+
+The public command `npx --yes skills add kristianrolando/cross-agent-handoff --list` cloned the GitHub repository and found exactly one skill: cross-agent-handoff.
+
+In a disposable project, `npx --yes skills add kristianrolando/cross-agent-handoff --skill cross-agent-handoff --agent codex --agent claude-code --copy --yes` exited successfully. Both `.agents/skills/cross-agent-handoff` and `.claude/skills/cross-agent-handoff` contained identical SKILL.md instructions plus LICENSE, helper, template and setup reference. No global host installation or live model invocation was performed. This checks distribution and file completeness, separately from maintainer-reported app behavior.
+
+## Release evidence
+
+[Cross-Agent Handoff v0.1.0](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.1.0) is published, not a draft or prerelease. Its source target is `666e04c279d312a375a9ba06b5f9e6dfd3d92204`.
+
+- [Package checks on the release source](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/41429718683): four jobs completed successfully (Windows 3.13, Ubuntu 3.9, macOS 3.13, Ubuntu 3.13).
+- [Publish release](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/41429718374): version/notes/package checks and publication job completed successfully.
+- Release/tag publication was read back through the GitHub API. Closing documentation/checkpoint updates follow on main without moving the frozen v0.1.0 tag.
+
 ## Publication status
 
-MIT source and local Git history are public on main, and origin/main matched the local pushed commit when inspected. The hosted CLAUDE.md was retrieved to verify contributor routing. README and plugin metadata point to the actual repository. Shared contributor instructions and the PR template are available.
+The public repository, MIT skill, Claude Code plugin/catalog, contributor guidance, CI and initial versioned release are available. README and plugin metadata point to the actual repository. Repository topics agent-skills, ai-agents, claude-code, codex and handoff were saved and visibly verified.
 
-Release v0.1.0 is prepared for publication after the final documentation push and its CI. See [releasing.md](releasing.md). The direct Codex skill route and Claude Code plugin route remain distinct. The public install commands follow those distributions; no new native Codex plugin or extra live model trial is claimed.
+The original Mac checkout may retain an unpushed equivalent documentation commit after the desktop session disconnected. Follow the preservation-first fetch/compare/rebase guidance in [releasing.md](releasing.md) before continuing there. The remote source is complete; no force-push or reset is required. Native Codex plugin packaging remains outside the documented direct-skill route.

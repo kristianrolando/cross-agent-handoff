@@ -3,6 +3,8 @@
 [![Package checks](https://github.com/kristianrolando/cross-agent-handoff/actions/workflows/ci.yml/badge.svg)](https://github.com/kristianrolando/cross-agent-handoff/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
+[Download v0.1.0](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.1.0)
+
 Continue a project in Claude Code, Codex, or a new session without relying on the previous conversation. Keep the goal, verified progress, unfinished work, decisions and next step in the project itself.
 
 **One compact checkpoint. No cross-vendor API calls. No additional cloud service.**
@@ -77,6 +79,8 @@ See the [full before/after checkpoint example](docs/checkpoint-example.md). Exam
 | Plain chat or uploaded project | Read the provided checkpoint and files | Snapshot only unless live filesystem tools are available. No automatic synchronization. |
 | Optional Python helper | Python 3.9+; standard library only | Local checks passed on macOS with Python 3.9. Hosted CI also passed on Linux (Python 3.9/3.13), macOS and Windows (Python 3.13). |
 | Concurrent agents editing overlapping files | Outside the sequential core | Requires separate areas/workspaces and an integrator. The checkpoint is not a source lock. |
+
+The public Skills CLI was also checked in a disposable project: discovery found this skill and copy installation retained all resources and the MIT notice for both host directories. This verifies the installer, not a new live model trial.
 
 The maintainer reported that their own testing worked smoothly. This is recorded as maintainer feedback, separately from reproducible automated evidence. It does not establish every host version, operating system, or concurrency scenario. Details: [validation record](docs/validation.md).
 

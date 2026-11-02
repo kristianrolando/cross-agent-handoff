@@ -2,11 +2,12 @@
 
 ## Publication status
 
-The maintainer authorized publication at `kristianrolando/cross-agent-handoff`. The public repository has been created and ownership/visibility verified. Source and Git history have been uploaded. The first hosted CI run passed all four jobs; release v0.1.0 is prepared for publication. Root contributor files support both Claude Code and Codex.
+Public repository: [kristianrolando/cross-agent-handoff](https://github.com/kristianrolando/cross-agent-handoff).
+Published initial release: [v0.1.0](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.1.0). The tag targets verified source commit `666e04c279d312a375a9ba06b5f9e6dfd3d92204`.
 
-The README badge, installation commands and plugin metadata point to that repository. The first hosted CI result is recorded in docs/validation.md. Verify actual tag/release state before reporting release publication.
+All four release-source CI jobs and the release workflow succeeded; the public Skills CLI discovered and copied the complete skill to both host directories in a disposable project. See docs/validation.md for actual run links and limits. Contributor support is shared through AGENTS.md, CLAUDE.md, CONTRIBUTING.md and HANDOFF.md.
 
-Freeze the release at its verified source commit. Closing handoff/evidence updates may follow on main without rebuilding or moving the release tag. Do not force-move an existing public tag.
+Keep a release frozen at its verified source commit. Closing handoff/evidence updates may follow on main without moving that tag. Never force-move an existing public tag.
 
 ## Release procedure
 
