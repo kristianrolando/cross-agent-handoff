@@ -2,9 +2,15 @@
 
 ## Observed environment and scope
 
-Validation date: 2026-11-02. macOS, Python 3.9.6, Git 2.54.0, Claude Code 2.1.287. Tests run in disposable directories. The package is authored and delivered in its standalone checkout. The user clarified that the previously named external repository was unrelated; no placement into that repository is required.
+Validation date: 2026-11-02. macOS, Python 3.9.6, Git 2.54.0, Claude Code 2.1.287. Tests run in disposable directories. The package is authored and delivered in its standalone checkout. No integration into an unrelated repository is required.
 
 No global host settings, installed skill directories, subscription configuration, production application, remote repository, or cloud service were changed. A temporary virtual environment was used to attempt validator dependency setup; its package download failed due to network resolution, and no runtime dependency was added to this package.
+
+## Maintainer feedback and public packaging update
+
+The maintainer reported successful testing and smooth operation, then authorized MIT licensing and public documentation/CI improvements. Record that as successful maintainer feedback. Exact tested application versions, operating systems, settings, and scenario coverage were not supplied; do not invent them or relabel the original authoring-environment trial as a pass.
+
+The public package now includes MIT notices in both the repository and standalone skill, a short quick start, explicitly fictional before/after checkpoint examples, a compatibility matrix, and a GitHub Actions workflow. The configured Linux/macOS/Windows matrix has not run on GitHub from this environment. No additional live model testing was attempted for this documentation update.
 
 ## Scenario coverage
 
@@ -29,11 +35,11 @@ Observed result: the agent inspected source, avoided rewriting completed work, r
 
 ## Platform and format checks
 
-- Claude Code's native plugin validator passed for both the standalone plugin manifest and marketplace after adding attribution/catalog descriptions.
+- Claude Code's native plugin validator passed for the marketplace and plugin manifest. During the public-packaging update, plugin validation also warned that root CLAUDE.md is not loaded as plugin project context. That file is for maintaining this repository; consumers receive the workflow through SKILL.md and their reviewed project routing, so no runtime CLAUDE.md loading is claimed.
 - YAML frontmatter and Codex UI metadata parsed successfully with Ruby's standard YAML parser. The bundled skill-creator quick validator could not run because PyYAML was absent; attempted dependency retrieval in a temporary environment failed due to network resolution. The package's own metadata tests also check required fields, name/directory match, description size, links and placeholder absence.
 - Claude CLI was present and reported authenticated status. A bounded read-only resume request was attempted; it produced no usable resume assessment and ended with `error_during_execution` after interruption of the pending run. It is inconclusive, not a passing model or discovery test. No cause beyond the available diagnostic is claimed.
 - No `codex` CLI executable was found. This Work session and its independent agent can exercise the portable procedure, but do not substitute for testing Codex CLI discovery or a bidirectional live handoff.
-- Real install/discovery in both hosts, persistent instruction loading, a true Claude to Codex to Claude round trip, and cross-device transfer remain unvalidated.
+- The authoring environment did not independently verify live installation or a cross-vendor round trip. The maintainer subsequently reported successful use; exact coverage remains unspecified. Cross-device transfer has no recorded verification.
 
 ## Reproduce automated checks
 
@@ -45,7 +51,7 @@ claude plugin validate .
 claude plugin validate .claude-plugin/plugin.json
 ```
 
-The automated suite comprises 24 tests. Actual output is saved in [test output](evidence/unittest.txt). It does not call either vendor model. The helper requires only the Python standard library.
+The automated suite now comprises 27 tests, including bundled-license and public-example checks. Actual output is saved in [test output](evidence/unittest.txt). It does not call either vendor model. The helper requires only the Python standard library.
 
 ## Self-review and fixes
 
@@ -58,6 +64,6 @@ The automated suite comprises 24 tests. Actual output is saved in [test output](
 7. Kept durable criteria/decisions in existing owners; the checkpoint is not a second backlog. Existing equivalent formats remain supported manually.
 8. Clearly separated implementation, local protocol tests, independent-agent behavior, plugin-manifest validation, actual installation, and full cross-vendor verification.
 
-## Remaining work
+## Publication status
 
-Run the small live round-trip acceptance trial in both actual hosts, including actual skill discovery and persistent instruction loading. A remote Git repository and public release have not been created; select a license and release destination before publication. Do not call consumer installation, public distribution, or end-to-end platform compatibility complete until those actions are actually verified.
+MIT licensing and public-facing documentation/CI configuration are complete. A remote Git repository and public release have not been created. When publishing is requested, select the real release destination, replace local-only installation paths with its actual URL where appropriate, and inspect the first hosted CI run. Do not report a hosted CI pass before one exists. Maintainer-reported successful use is accepted without another model-testing prerequisite for this update.

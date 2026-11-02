@@ -1,102 +1,152 @@
 # Cross-Agent Handoff
 
-A portable Agent Skill for continuing the same project across Claude Code, Codex, and other filesystem-capable agents. It keeps one compact project checkpoint and uses existing requirements, decisions, logs, and source as their own information owners. No vendor API or additional subscription is required.
+Continue a project in Claude Code, Codex, or a new session without relying on the previous conversation. Keep the goal, verified progress, unfinished work, decisions and next step in the project itself.
 
-This checkout is the standalone Cross-Agent Handoff project. Its skill and plugin packaging are maintained here.
+**One compact checkpoint. No cross-vendor API calls. No additional cloud service.**
 
-## Install as a skill
+Use it when a usage limit interrupts work, when you switch agents, or when you return to a project later. The core needs ordinary filesystem access; Python and Git are optional.
 
-Copy the complete `skills/cross-agent-handoff` directory to ONE supported location for each host, retaining its name and resources. Do not copy only SKILL.md.
+## Quick start
 
-| Host | Project installation | User installation |
+### 1. Install the skill
+
+Download or clone this repository. Ask your coding agent to install it with this prompt, replacing the source directory with your actual checkout:
+
+```text
+Install cross-agent-handoff from <checkout>/skills/cross-agent-handoff
+into this project's supported skill directory for this host.
+Copy the complete folder, including LICENSE and supporting resources.
+Inspect an existing installation before changing it; do not overwrite it blindly.
+Do not change application code or global settings.
+```
+
+For direct installation, the project locations are `.claude/skills/cross-agent-handoff/` for Claude Code and `.agents/skills/cross-agent-handoff/` for Codex. See [installation options](#installation-options) for user-wide installation and the Claude plugin route. Avoid installing both the direct skill and plugin in the same host.
+
+### 2. Initialize your project
+
+Choose the prompt for your host:
+
+| Host | Prompt |
+| --- | --- |
+| Claude Code, direct skill | `/cross-agent-handoff Initialize continuity in this project. Reuse existing documentation and preserve project instructions.` |
+| Claude Code, plugin | `/cross-agent-handoff:cross-agent-handoff Initialize continuity in this project. Reuse existing documentation and preserve project instructions.` |
+| Codex | `Use $cross-agent-handoff to initialize continuity in this project. Reuse existing documentation and preserve project instructions.` |
+
+The agent inspects the project, reuses an existing checkpoint or creates `HANDOFF.md`, and adds a short routing block when needed. For a new project, include your goal and acceptance criteria. Initialization does not scaffold an application or choose a tech stack.
+
+### 3. Save and switch
+
+In the outgoing agent:
+
+```text
+Use cross-agent-handoff to save a handoff. Record actual progress, unfinished
+work, evidence and limits, running operations, and one next action.
+Start no new implementation.
+```
+
+Stop the outgoing session and any operations writing overlapping files. Open the **same project files** in the next agent:
+
+```text
+Use cross-agent-handoff to resume this project. Read the checkpoint and
+applicable instructions, inspect actual files and changes, then continue
+from the next supported action. Preserve unfinished work.
+```
+
+The procedure works in either direction. The user opens the next host; the skill does not switch applications automatically.
+
+## What a handoff looks like
+
+Illustrative example, not a test result:
+
+| Before the switch | After continuation |
+| --- | --- |
+| Named greeting implemented; blank fallback unfinished | Successor inspects the existing function and adds only the missing fallback |
+| Named case checked; blank case not run | Named and blank cases checked against the saved source |
+| Next: implement blank fallback | Task complete; no new work assumed |
+
+See the [full before/after checkpoint example](docs/checkpoint-example.md). Examples and templates are learning material; the real project's files and criteria determine what is true.
+
+## Compatibility
+
+| Host or component | Available route | Evidence and limits |
+| --- | --- | --- |
+| Claude Code | Direct skill or included Claude plugin | Maintainer reports successful use. Plugin and marketplace manifests independently validated locally. Exact maintainer-tested version/settings were not recorded. |
+| Codex | Direct skill; optional UI metadata included | Maintainer reports successful use. Independent fresh-agent recovery exercised the workflow; separate Codex CLI discovery was not observed in the authoring environment. |
+| Other filesystem-capable agents | Explicitly read SKILL.md and project checkpoint | Portable procedure; host discovery and invocation are not verified. |
+| Plain chat or uploaded project | Read the provided checkpoint and files | Snapshot only unless live filesystem tools are available. No automatic synchronization. |
+| Optional Python helper | Python 3.9+; standard library only | Local checks passed on macOS with Python 3.9. CI is configured for Linux, macOS and Windows; hosted results are pending. |
+| Concurrent agents editing overlapping files | Outside the sequential core | Requires separate areas/workspaces and an integrator. The checkpoint is not a source lock. |
+
+The maintainer reported that their own testing worked smoothly. This is recorded as maintainer feedback, separately from reproducible automated evidence. It does not establish every host version, operating system, or concurrency scenario. Details: [validation record](docs/validation.md).
+
+## Installation options
+
+Copy the complete `skills/cross-agent-handoff` directory, retaining its name, LICENSE and resources. Do not copy only SKILL.md.
+
+| Host | Project location | User location |
 | --- | --- | --- |
 | Claude Code | `.claude/skills/cross-agent-handoff/` | `~/.claude/skills/cross-agent-handoff/` |
 | Codex | `.agents/skills/cross-agent-handoff/` | `~/.agents/skills/cross-agent-handoff/` |
 
-Avoid duplicate installations of the same name in a host. Use an absolute source directory when copying from elsewhere; the installed skill has no dependency on its original checkout. Windows users can copy folders using their file manager. No symlinks are required.
+Use one installation per host. Windows users can copy with their file manager; no symlinks are required. When updating, inspect the destination instead of nesting a new copy inside an existing folder.
 
-Project installation example, run at the target project's root after replacing SOURCE with this checkout:
+### Claude Code plugin
 
-```sh
-mkdir -p .claude/skills .agents/skills
-cp -R SOURCE/skills/cross-agent-handoff .claude/skills/cross-agent-handoff
-cp -R SOURCE/skills/cross-agent-handoff .agents/skills/cross-agent-handoff
-```
-
-Run only when those destination skill folders do not already exist; review updates rather than nesting a copy inside an existing folder. This installs the same skill for two independent hosts, not two copies inside one host's search path.
-
-### Optional Claude Code plugin
-
-This standalone package includes its own `.claude-plugin/plugin.json` and marketplace. In Claude Code, add this checkout as a local marketplace, then install:
+This repository includes a plugin and a local marketplace. Run inside Claude Code, replacing the directory with this checkout:
 
 ```text
 /plugin marketplace add /absolute/path/to/this-checkout
 /plugin install cross-agent-handoff@cross-agent-tools
 ```
 
-After hosting this repository, the first command can instead reference its real Git URL. No public repository has been created by this package. Codex's documented direct-skill path above is the supported route here; no native Codex plugin manifest is claimed.
+Root AGENTS.md and CLAUDE.md guide maintenance of this repository; installing the plugin does not automatically load those files into a consumer project. Initialization adds the reviewed project routing when needed.
 
-## Activate on an existing project
+When this repository is publicly hosted, its real Git URL can replace the local path. The documented Codex route is a direct skill; this package does not provide a native Codex plugin wrapper. Public-hosting commands are not fabricated before a release URL exists.
 
-Claude Code:
-
-```text
-/cross-agent-handoff Initialize continuity in this project. Reuse existing documentation and preserve project instructions. Do not change application code.
-```
-
-When installed as the plugin, use `/cross-agent-handoff:cross-agent-handoff` instead of `/cross-agent-handoff`.
-
-Codex:
+## Recovery after interruption
 
 ```text
-Use $cross-agent-handoff to initialize continuity in this project. Reuse existing documentation and preserve project instructions. Do not change application code.
+Use cross-agent-handoff to recover after interruption. Inspect the checkpoint,
+actual files, relevant diffs and untracked work, available evidence and running
+operations. Separate verified progress from unknown history, save reconciled
+state, then continue the authorized task.
 ```
 
-The agent inspects first, chooses one checkpoint (HANDOFF.md only if needed), fills it from evidence, and adds small routing instructions. For a new project use the same prompt with your goal and acceptance criteria; the skill does not choose a stack or scaffold software on its own.
+Only persisted facts and artifacts can survive a lost session. Checkpointing is an agent procedure, not an emergency-save daemon. The skill cannot guarantee a save before a usage limit or crash, stop other sessions, or reconstruct unsaved decisions.
 
-## Switch either direction
-
-Outgoing agent:
+## Health, updates and removal
 
 ```text
-Use cross-agent-handoff to prepare a handoff. Save actual progress, unresolved work, evidence and limits, relevant writers, and the next action. Start no new implementation.
+Use cross-agent-handoff to review continuity health without changing files.
+Check routing, checkpoint claims versus files, validation inputs,
+unfinished work and writer activity.
 ```
 
-Wait for the save and stop the outgoing writer and relevant background operations. Open the SAME actual project in the other agent:
+The [optional helper](skills/cross-agent-handoff/references/helper.md) provides draft creation, structural checks, selective file hashes, a previous copy and guarded atomic saves. It never proves that historical test claims are true or that another writer has stopped.
 
-```text
-Use cross-agent-handoff to resume this project from its checkpoint. Verify files, changes, criteria and writer activity before continuing. Preserve unfinished work.
+To update, review and replace the installed skill while keeping project records. To remove, delete only the installation and its reviewed routing additions; keep project data and decisions. See [setup and removal](skills/cross-agent-handoff/references/setup.md).
+
+## Automated checks
+
+Run the same dependency-free suite used by CI:
+
+```sh
+python3 -m unittest discover -s tests -v
 ```
 
-This works in either direction. The agent must read the checkpoint even when a skill was discovered automatically. For persistent behavior, retain the short routing block documented in the skill's setup reference. Skill selection is not an enforced lifecycle hook.
+On Windows, use `python` if `python3` is unavailable. [GitHub Actions](.github/workflows/ci.yml) runs the suite on pushes, pull requests and manual dispatch. It covers filesystem failure scenarios, metadata, local documentation links, bundled license consistency, and example checkpoint structure. It makes no model calls and needs no vendor credentials.
 
-## After a crash or usage limit
+The workflow is configured here; a hosted CI pass can only be reported after an actual GitHub run. See [CI scope and maintenance](docs/ci.md).
 
-Stop any remaining writer, then ask the successor:
+## Documentation
 
-```text
-Use cross-agent-handoff to recover this project after interruption. Treat saved status as a lead. Inspect actual files, relevant diffs and untracked work, available evidence and running operations. Separate verified progress from unknown history, save reconciled state, then continue the authorized task.
-```
+- [Architecture and trade-offs](docs/architecture.md)
+- [Before/after checkpoint example](docs/checkpoint-example.md)
+- [Validation evidence and compatibility limits](docs/validation.md)
+- [Directory map](docs/file-map.md)
 
-Only saved facts and artifacts can survive. A usage limit can prevent the last checkpoint. No automatic emergency save or guaranteed lossless recovery is provided.
+## License
 
-## Status, update, and removal
+[MIT](LICENSE). Copyright (c) 2026 Kristian Rolando Limantara.
 
-```text
-Use cross-agent-handoff to review continuity health without changing files. Check canonical routing, checkpoint claims versus actual files, validation inputs, unfinished work and writer activity.
-```
-
-For mechanical checks and optional atomic saves, see [helper instructions](skills/cross-agent-handoff/references/helper.md). A check passing does not prove project correctness. To update, replace the installed skill after review while retaining project records. To remove, delete only the installation and its reviewed routing additions; keep project data and decisions. Details: [setup and removal](skills/cross-agent-handoff/references/setup.md).
-
-## What is automatic
-
-| Mechanism | Actual behavior |
-| --- | --- |
-| Skill discovery | Host-dependent selection; explicit invocation is more dependable |
-| Checkpointing | Agent follows instructions; no timer, daemon or crash hook |
-| Optional helper | Draft creation, structural/hash checks, guarded atomic checkpoint replacement |
-| Agent switching | User opens the other host and resumes the same filesystem |
-| Concurrent writes | Not supported by the sequential core; separate areas/workspaces and integration are required |
-| File transfer | User/environment responsibility when changing devices or snapshots |
-
-See [architecture and reference critique](docs/architecture.md), [validation results](docs/validation.md), and [file map](docs/file-map.md). Runtime files and prompts are English. The core works without Git or Python; the optional helper requires Python 3.9+ and uses no third-party modules.
+The standalone skill includes the same license so its notice travels with direct installations. Preserve copyright and license notices when distributing copies or substantial portions. No change to a consumer project's license is required merely to follow this workflow.

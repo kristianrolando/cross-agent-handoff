@@ -2,6 +2,8 @@
 from pathlib import Path
 import json
 import re
+import subprocess
+import sys
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -14,8 +16,9 @@ class PackageTests(unittest.TestCase):
         match = re.match(r'^---\n(.*?)\n---\n', text, re.S)
         self.assertIsNotNone(match)
         fields = dict(line.split(': ', 1) for line in match[1].splitlines())
-        self.assertEqual(set(fields), {'name', 'description'})
+        self.assertEqual(set(fields), {'name', 'description', 'license'})
         self.assertEqual(fields['name'], SKILL.name)
+        self.assertEqual(fields['license'], 'MIT')
         self.assertRegex(fields['name'], r'^[a-z0-9]+(?:-[a-z0-9]+)*$')
         self.assertTrue(0 < len(fields['description']) <= 1024)
         self.assertNotIn('[TODO', text)
@@ -43,6 +46,22 @@ class PackageTests(unittest.TestCase):
             self.assertTrue((ROOT / path / 'SKILL.md').is_file())
         self.assertEqual(market['plugins'][0]['name'], plugin['name'])
         self.assertTrue((ROOT / market['plugins'][0]['source']).is_dir())
+
+    def test_license_travels_with_standalone_skill(self):
+        root_license = (ROOT / 'LICENSE').read_text()
+        self.assertEqual((SKILL / 'LICENSE').read_text(), root_license)
+        self.assertIn('MIT License', root_license)
+        self.assertIn('Copyright (c) 2026 Kristian Rolando Limantara', root_license)
+        plugin = json.loads((ROOT / '.claude-plugin/plugin.json').read_text())
+        self.assertEqual(plugin['license'], 'MIT')
+
+    def test_public_examples_use_valid_checkpoint_format(self):
+        for name in ('before.md', 'after.md'):
+            result = subprocess.run(
+                [sys.executable, str(SKILL / 'scripts/handoff.py'), 'check',
+                 '--project', str(ROOT), '--checkpoint', 'docs/examples/' + name],
+                capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
     def test_core_reading_size(self):
         self.assertLess(len((SKILL / 'SKILL.md').read_text().split()), 1600)

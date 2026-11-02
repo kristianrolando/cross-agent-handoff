@@ -1,6 +1,7 @@
 ---
 name: cross-agent-handoff
 description: Preserve and resume project work across Claude Code, Codex, other filesystem-capable agents, and new sessions using a compact project checkpoint. Use when setting up persistent project context, switching agents after a usage limit, saving a handoff, recovering interrupted work, or checking continuity records. Do not initialize or mutate project records for an ordinary read-only question.
+license: MIT
 ---
 
 # Cross-Agent Handoff

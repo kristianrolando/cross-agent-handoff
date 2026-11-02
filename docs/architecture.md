@@ -51,7 +51,7 @@ Normal continuation reads project instructions, one checkpoint, and the linked c
 
 Consulted official sources on 2026-11-02. Platform behavior is version/settings dependent:
 
-- [Agent Skills specification](https://agentskills.io/specification): SKILL.md frontmatter, matching directory name, optional scripts/references/assets, progressive disclosure. The package uses only portable name and description frontmatter.
+- [Agent Skills specification](https://agentskills.io/specification): SKILL.md frontmatter, matching directory name, optional scripts/references/assets, progressive disclosure. The package uses portable name, description and license frontmatter.
 - [Claude Code skills](https://code.claude.com/docs/en/skills): direct skill directories and invocation. Plugin namespacing differs from direct installation.
 - [Claude project memory](https://code.claude.com/docs/en/memory): direct AGENTS.md support depends on version, settings and CLAUDE.md presence; an @AGENTS.md import is a compatibility route. Verify actual loading instead of changing global defaults.
 - [Codex skills](https://developers.openai.com/codex/skills/): repository/user .agents/skills discovery and product-specific agents/openai.yaml metadata.

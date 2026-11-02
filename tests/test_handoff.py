@@ -66,7 +66,7 @@ class ProtocolTests(unittest.TestCase):
 
     def save(self, text, expected=0, sha=None):
         candidate = self.root / 'candidate.md'
-        candidate.write_text(text)
+        candidate.write_bytes(text.encode('utf-8'))
         before = sha or hashlib.sha256(self.target.read_bytes()).hexdigest()
         return self.cli('save', '--candidate', str(candidate), '--expected-sha', before, expected=expected)
 
@@ -197,11 +197,16 @@ class ProtocolTests(unittest.TestCase):
         self.assertEqual(self.target.read_bytes(), before)
         self.assertEqual(list(self.root.iterdir()), [self.target])
 
-    def test_refuse_symlink_and_parent_traversal(self):
+    def test_refuse_symlink_target(self):
         self.target.write_text(checkpoint())
         link = self.root / 'link.md'
-        link.symlink_to(self.target)
+        try:
+            link.symlink_to(self.target)
+        except (OSError, NotImplementedError) as exc:
+            self.skipTest('Symlink creation unavailable: ' + str(exc))
         self.cli('check', '--checkpoint', 'link.md', expected=2)
+
+    def test_refuse_parent_traversal(self):
         self.cli('init', '--checkpoint', '../escape.md', expected=2)
         self.cli('inspect', '--file', '../escape.md', expected=2)
 

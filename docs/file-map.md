@@ -11,7 +11,14 @@
 | skills/cross-agent-handoff/scripts/handoff.py | Standard-library draft/check/inspect/save helper |
 | .claude-plugin/plugin.json | Standalone Claude Code plugin wrapper |
 | .claude-plugin/marketplace.json | Local/Git marketplace catalog for that wrapper |
-| README.md | Installation and copy-ready user workflows |
+| README.md | Public quick start, compatibility matrix, installation and workflows |
+| LICENSE | User-approved MIT license for the project |
+| skills/cross-agent-handoff/LICENSE | Same MIT notice bundled with direct skill installs |
+| .github/workflows/ci.yml | GitHub Actions matrix for automatic package/protocol checks |
+| docs/ci.md | CI scope, configured environments and local equivalent |
+| docs/checkpoint-example.md | Explanation of an illustrative handoff |
+| docs/examples/before.md | Complete illustrative outgoing checkpoint |
+| docs/examples/after.md | Complete illustrative successor checkpoint |
 | docs/architecture.md | Reference critique, alternatives, trade-offs and official sources |
 | docs/validation.md | Observed results and unvalidated areas |
 | docs/evidence/ | Reproducible test output and independent-agent recovery artifact |
