@@ -23,6 +23,7 @@
 | skills/cross-agent-handoff/LICENSE | Same MIT notice bundled with direct skill installs |
 | .github/workflows/release.yml | Checked versioned release publication on explicit tag or dispatch |
 | docs/releases/v0.1.0.md | Initial public release notes and install commands |
+| docs/releases/v0.1.1.md | Expanded host guide, helper and workflow fixes release notes |
 | .github/workflows/ci.yml | GitHub Actions matrix for automatic package/protocol checks |
 | docs/ci.md | CI scope, configured environments and local equivalent |
 | docs/checkpoint-example.md | Explanation of an illustrative handoff |
@@ -30,7 +31,7 @@
 | docs/examples/after.md | Complete illustrative successor checkpoint |
 | docs/architecture.md | Reference critique, alternatives, trade-offs and official sources |
 | docs/validation.md | Observed results and unvalidated areas |
-| docs/evidence/ | Reproducible test output and independent-agent recovery artifact |
+| docs/evidence/ | Test output, independent-agent recovery and the 2026-11-02 live Codex/Antigravity trial |
 | tests/test_handoff.py | Disposable filesystem and failure-injection scenarios |
 | tests/test_package.py | Package integrity and portable metadata/link checks |
 | .gitignore | Exclude generated Python caches |

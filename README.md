@@ -14,7 +14,7 @@
 
 [![Package checks](https://github.com/kristianrolando/cross-agent-handoff/actions/workflows/ci.yml/badge.svg)](https://github.com/kristianrolando/cross-agent-handoff/actions/workflows/ci.yml)
 [![MIT License](https://img.shields.io/badge/License-MIT-315b43?style=flat-square)](LICENSE)
-[![v0.1.0](https://img.shields.io/badge/Release-v0.1.0-a15d3e?style=flat-square)](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.1.0)
+[![v0.1.1](https://img.shields.io/badge/Release-v0.1.1-a15d3e?style=flat-square)](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.1.1)
 
 **Hit a usage limit? Switching agents? Returning in a new session?** Save the useful context in your project, then let the next agent inspect the files and continue.
 
@@ -101,9 +101,9 @@ The checkpoint links to existing requirements, architecture and backlog instead 
 
 | Host / component | Available route | Evidence and limits |
 | --- | --- | --- |
-| **Claude Code** | Direct skill or included Claude plugin | Maintainer reports successful use; manifests validated and installer copy checked. Exact live version/settings were not recorded. |
-| **Codex** | Direct skill; optional UI metadata | Installer and independent fresh-agent recovery checked. Separate Codex CLI model discovery was not observed. |
-| **Antigravity** | Native skill in `.agents/skills/` | Official App/CLI/IDE discovery documented; live-app handoff not independently exercised here. |
+| **Claude Code** | Direct skill or included Claude plugin | Maintainer reports successful use; manifests validated and installer copy checked. CLI 2.1.287 listed the project skill; the 2026-11-02 live trial could not run because its sign-in had expired. |
+| **Codex** | Direct skill; optional UI metadata | Codex CLI 0.166 initialized, handed off and later finished a task in a [live trial](docs/evidence/live-trial-2026-11-02.md). |
+| **Antigravity** | Native skill in `.agents/skills/` | Antigravity CLI 1.2.3 expanded `/cross-agent-handoff` and resumed from a Codex checkpoint in the [live trial](docs/evidence/live-trial-2026-11-02.md); headless mode denied shell commands, so it used file tools only. App and IDE not exercised. |
 | **Cursor** | Native skill in `.agents/skills/`, `.cursor/skills/` or `.claude/skills/` | Official discovery/invocation documented; live-app handoff not exercised here. |
 | **Gemini CLI** | Native skill in `.agents/skills/` or `.gemini/skills/` | Official discovery documented; activation consent/settings may apply; no live-app trial here. |
 | **GitHub Copilot** | Native skill in `.github/skills/`, `.agents/skills/` or `.claude/skills/` | Official agent support documented; loaded when relevant, with no documented slash command; surfaces and locations vary; no live-app trial here. |
@@ -114,7 +114,7 @@ The checkpoint links to existing requirements, architecture and backlog instead 
 | Optional Python helper | Python 3.9+, standard library | Hosted checks passed on Linux, macOS and Windows. |
 | Concurrent overlapping writers | Requires separate coordination | The sequential checkpoint does not lock source files. |
 
-New host routes were checked against [official documentation and installation paths](skills/cross-agent-handoff/references/agents.md), reviewed on 2026-11-02. Documented compatibility, installer checks and actual model trials are distinct. See [validation and coverage](docs/validation.md).
+New host routes were checked against [official documentation and installation paths](skills/cross-agent-handoff/references/agents.md), reviewed on 2026-11-02. Documented compatibility, installer checks and actual model trials are distinct; only Codex and Antigravity CLI have a recorded live handoff. See [validation and coverage](docs/validation.md).
 
 ## What to expect
 

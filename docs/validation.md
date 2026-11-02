@@ -159,3 +159,17 @@ Helper fixes: placeholder detection now matches template phrases (`REPLACE with`
 instead of any uppercase `REPLACE`, so project terms such as SQL `INSERT OR REPLACE` no longer
 block saves; an existing save lock now reports a clear recovery message. 28 local tests pass
 (Python 3.9.6, macOS). No live host discovery or model handoff was exercised in this review.
+
+## Live sequential handoff trial (2026-11-02)
+
+A real Codex → Antigravity → Codex chain completed a three-criterion task in a disposable project,
+each session seeing only the project files and a short prompt. Codex CLI 0.166 initialized the
+checkpoint and did criterion A; Antigravity CLI 1.2.3 expanded `/cross-agent-handoff` from the
+project-local `.agents/skills/` copy, resumed and did B with file tools only, recording its runtime
+check as not_run; a fresh Codex session added tests, ran them (2 passed) and closed the task.
+Details, prompts, hashes and the final checkpoint: [live trial evidence](evidence/live-trial-2026-11-02.md).
+
+Limits: one trial on one Mac. Claude Code 2.1.287 discovered the project skill but could not run
+(expired sign-in). Headless Antigravity denied shell commands in default and `--sandbox` modes;
+auto-approval was not used, so Antigravity with shell access, its App and IDE remain untested.
+Cursor, Gemini CLI, GitHub Copilot, OpenCode and Cline were not run.

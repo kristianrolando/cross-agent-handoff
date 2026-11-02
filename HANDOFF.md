@@ -42,8 +42,13 @@ untrusted-history rules) is sound and concise. Defects found and fixed (committe
   and gained a dated review section.
 Decisions: no new hosts, files, dependencies or per-agent state; core SKILL.md unchanged.
 
-Writers / operations: none from this session. Hosted run 41447769806 for b8ad312 completed
-with success (checked via gh at the end of this review).
+Approved follow-up, in progress: review fixes pushed as ee5996d; hosted Package checks run
+41452193109 passed all four jobs, including the new committed-whitespace step, and the push
+did not start the release workflow. Live trial done (see Evidence). This commit adds v0.1.1
+notes, README badge and trial records; tag v0.1.1 is to be pushed on it after CI passes.
+
+Writers / operations: this Claude Code session only. Trial agents ran in a disposable project
+outside the repository and have exited.
 
 ## Evidence
 - `python3 -m unittest discover -s tests -v`: 28 passed (macOS, Python 3.9.6) on the
@@ -54,12 +59,17 @@ with success (checked via gh at the end of this review).
 - `handoff.py check` on this repository: no errors or warnings before this rewrite.
 - Official docs fetched 2026-11-02 for Claude Code (skills, memory), Codex, Antigravity,
   Cursor, Gemini CLI (skills, GEMINI.md), Copilot, OpenCode and Cline.
-- not_run: Claude plugin validation (packaging unchanged), live host discovery, model handoffs.
+- Live trial (docs/evidence/live-trial-2026-11-02.md): Codex CLI 0.166 → Antigravity CLI 1.2.3
+  → fresh Codex session finished GREET-1 from files only; final tests 2 passed. Claude Code
+  2.1.287 listed the skill but its sign-in had expired. Headless Antigravity denied shell
+  commands; the auto-approve flag was blocked by this session's safety check and not used.
+- `claude plugin validate .` and `.claude-plugin/plugin.json` passed; only the expected
+  root CLAUDE.md warning.
+- not_run: Cursor, Gemini CLI, Copilot, OpenCode and Cline live runs.
 
 ## Next
-Push this commit and confirm all four hosted Package checks jobs, including the new whitespace
-step. Then run live trials with locally installed Claude Code, Codex and Antigravity CLIs in
-disposable projects, add docs/releases/v0.1.1.md, and push tag v0.1.1.
+Push this commit, confirm all four Package checks jobs, then push tag v0.1.1 on it and verify
+the Publish release run and the GitHub release. Record both in a closing checkpoint.
 
 ## Recent outcomes
 - Published MIT v0.1.0 and verified public discovery and Claude/Codex copy installation.
