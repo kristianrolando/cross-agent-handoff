@@ -16,6 +16,7 @@
 | CLAUDE.md | Claude contributor adapter importing shared rules |
 | AGENTS.md | Canonical shared contributor instructions |
 | .github/pull_request_template.md | Focused change and validation review template |
+| docs/assets/*.svg | Editable README banner, handoff flow and checkpoint map |
 | README.md | Public quick start, compatibility matrix, installation and workflows |
 | LICENSE | User-approved MIT license for the project |
 | skills/cross-agent-handoff/LICENSE | Same MIT notice bundled with direct skill installs |

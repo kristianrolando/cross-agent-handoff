@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="575" viewBox="0 0 1280 575" role="img" aria-labelledby="title desc">
+  <title id="title">A checkpoint keeps the useful context</title>
+  <desc id="desc">Four questions guide the checkpoint: what are we doing, what is verified or unfinished, what was checked, and what should happen next. The greeting example is illustrative, not test evidence.</desc>
+  <rect width="1280" height="575" rx="20" fill="#102d2a"/>
+  <g font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif">
+    <text x="40" y="49" fill="#a5c2b3" font-size="16" font-weight="700" letter-spacing="2">A SMALL FILE. USEFUL CONTEXT.</text>
+    <text x="40" y="100" fill="#f2f4e8" font-size="35" font-weight="700" letter-spacing="-.7">What the next agent needs to know.</text>
+    <rect x="40" y="140" width="580" height="361" rx="14" fill="#f5f1e7"/>
+    <path d="M40 194H620" stroke="#d7dbd0"/>
+    <text x="66" y="175" fill="#284b3c" font-family="'SFMono-Regular',Consolas,monospace" font-size="21" font-weight="600">HANDOFF.md</text>
+    <rect x="460" y="155" width="135" height="26" rx="13" fill="#e4e6d9"/>
+    <text x="475" y="173" fill="#63705a" font-size="13" font-weight="600">EXAMPLE EXCERPT</text>
+    <g font-family="'SFMono-Regular',Consolas,monospace" font-size="21">
+      <text x="66" y="232" fill="#9c5a37">## Task</text>
+      <text x="66" y="263" fill="#27483b">Handle blank greeting names.</text>
+      <text x="66" y="307" fill="#9c5a37">## State</text>
+      <text x="66" y="338" fill="#27483b">Named greeting saved.</text>
+      <text x="66" y="369" fill="#27483b">Blank fallback unfinished.</text>
+      <text x="66" y="413" fill="#9c5a37">## Evidence / Next</text>
+      <text x="66" y="444" fill="#27483b">Blank case: not_run.</text>
+      <text x="66" y="475" fill="#27483b">Next: add fallback and check.</text>
+    </g>
+    <g fill="none" stroke="#436958"><path d="M670 230H1238"/><path d="M670 318H1238"/><path d="M670 406H1238"/></g>
+    <text x="674" y="173" fill="#9fcbb0" font-size="15" font-weight="700" letter-spacing="1.4">PROJECT + TASK</text>
+    <text x="674" y="207" fill="#eef2e5" font-size="24">What are we doing, and why?</text>
+    <text x="674" y="261" fill="#9fcbb0" font-size="15" font-weight="700" letter-spacing="1.4">STATE</text>
+    <text x="674" y="295" fill="#eef2e5" font-size="24">What is verified? What remains?</text>
+    <text x="674" y="349" fill="#9fcbb0" font-size="15" font-weight="700" letter-spacing="1.4">EVIDENCE</text>
+    <text x="674" y="383" fill="#eef2e5" font-size="24">What was checked, on which inputs?</text>
+    <text x="674" y="437" fill="#9fcbb0" font-size="15" font-weight="700" letter-spacing="1.4">NEXT</text>
+    <text x="674" y="471" fill="#eef2e5" font-size="24">What should happen next?</text>
+    <text x="42" y="541" fill="#b6cabc" font-size="18">Illustrative example. Read the actual files before trusting a checkpoint.</text>
+  </g>
+</svg>
