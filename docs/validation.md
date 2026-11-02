@@ -131,3 +131,8 @@ frozen. New host model execution, automatic discovery, activation consent and li
 handoffs were not exercised. Windsurf and other filesystem agents have an explicit-file fallback;
 no native-discovery test is claimed for them. These limits do not negate the maintainer's earlier
 reported successful use, whose exact application coverage remains unspecified.
+
+Hosted [Package checks for the expanded-agent feature](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/41447517465) completed
+successfully on commit `a2c92cccf05d01ecec78b2eb0e6b43753ff6d49b`, covering all four configured
+OS/Python jobs. GitHub-rendered README and the published host guide were read back successfully.
+Closing evidence updates follow that verified feature commit on main.

@@ -30,6 +30,7 @@ SKILL.md now names the additional hosts and routes platform details on demand. I
 respects the active host's rules and uses a thin pointer to shared instructions when needed;
 it does not generate every vendor's configuration or create agent-specific status files.
 README installation, compatibility, handoff examples and both hero SVGs now cover multiple hosts.
+Published feature commit: a2c92cc. GitHub-rendered README and hosted host guide were read back.
 AGENTS.md and CONTRIBUTING.md explain contribution from any filesystem-capable agent.
 The optional helper and checkpoint format are unchanged. No new runtime dependency, global
 installation, vendor configuration or background writer was added.
@@ -40,7 +41,9 @@ https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.1.0
 Do not move that tag or claim 0.1.1 is released. No overlapping product writer continues.
 
 ## Evidence
-27 package/protocol checks passed locally. Both native Claude plugin validations passed;
+27 package/protocol checks passed locally. All four hosted Package checks jobs passed for
+feature commit a2c92cc: https://github.com/kristianrolando/cross-agent-handoff/actions/runs/41447517465.
+This closing evidence update follows on main without changing the released tag. Both native Claude plugin validations passed;
 the known warning that root CLAUDE.md is not consumer plugin context remains expected.
 All SVGs parsed as XML; both modified hero SVGs were rendered and visually inspected.
 Whitespace checks passed. The core is about 1,214 words; the host guide is conditional.
@@ -57,7 +60,7 @@ verified equivalent. At task start local main and origin/main matched 1d8d27e wi
 No stale synchronization warning needs action; fetch and inspect again on future continuations.
 
 ## Next
-Review the hosted Package checks run for this publication. Future work should start from
+No implementation work remains for the current request. Future work should start from
 actual files and Git status. On an explicit maintainer release request, prepare versioned
 0.1.1 notes, verify hosted checks and publish a new matching tag without moving v0.1.0.
 No global install, marketplace submission or model trial is implied by this completed task.
