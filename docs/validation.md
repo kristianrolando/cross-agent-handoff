@@ -66,6 +66,6 @@ The automated suite now comprises 27 tests, including bundled-license and public
 
 ## Publication status
 
-MIT licensing, public documentation, shared Claude/Codex contributor entrypoints and CI configuration are complete. The maintainer explicitly authorized public repository creation. Publication remains blocked by available network/tool access: local GitHub CLI connectivity failed, the browser's github.com origin request was denied, and the available connector has no repository-creation action. No public remote, hosted release or hosted CI result is claimed. The publication runbook and release notes are in [releasing.md](releasing.md).
+MIT licensing, public documentation, shared Claude/Codex contributor entrypoints and CI configuration are complete. The maintainer authorized public publication. Repository `kristianrolando/cross-agent-handoff` has been created and verified public. Source upload, hosted CI and initial release are in progress; no hosted success is claimed yet. See [releasing.md](releasing.md) for the release procedure.
 
-The README and plugin metadata use the intended destination, kristianrolando/cross-agent-handoff, ready for publication. Once access is permitted or the maintainer creates the repo, verify its actual state, push main, inspect CI, validate the hosted install routes, and create v0.1.0. No further live model testing is required for this packaging update.
+README commands and plugin metadata use the actual repository destination. The direct Codex skill route and Claude Code plugin route remain distinct. No additional live model testing is required for this packaging update.

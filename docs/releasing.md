@@ -1,18 +1,16 @@
 # Publishing and releases
 
-## Current publication request
+## Publication status
 
-The maintainer authorized creating a public GitHub repository and publishing this package. The intended location is `kristianrolando/cross-agent-handoff`. Contributor support for Claude Code and Codex is configured in AGENTS.md, CLAUDE.md and CONTRIBUTING.md.
+The maintainer authorized publication at `kristianrolando/cross-agent-handoff`. The public repository has been created and ownership/visibility verified. Initial source upload, hosted CI review and release creation are in progress. Root contributor files support both Claude Code and Codex.
 
-Publication is not yet complete. The GitHub connector identifies the account as kristianrolando but exposes no repository-creation operation. The local GitHub CLI could not reach api.github.com. The browser refused access to github.com at its origin permission gate. Do not bypass that denial through another browser surface or indirect execution. Resume network actions only after permitted access is available or the maintainer creates the repository themselves.
+The README badge, installation commands and plugin metadata point to that repository. Inspect the actual GitHub state before reporting a release or CI pass.
 
-The README badge, installation commands and plugin URLs are prepared for the intended destination. Their presence is not evidence that a repository or CI run exists. No remote, hosted release or hosted CI result has been verified.
+## Release procedure
 
-## Publish when access is available
-
-1. Check whether the intended repository now exists and verify its ownership and state. Do not overwrite an unrelated existing repository.
-2. If absent, create it as public, without generated README/license/gitignore. Use the description: `Persistent project handoff across Claude Code, Codex, and other AI agents.`
-3. Add the real Git remote and push the local main branch. Preserve existing commits and inspect divergence before changing refs; do not force-push.
+1. Verify repository ownership, visibility and current state. Do not overwrite unrelated work.
+2. Confirm origin points to the real repository.
+3. Push the local main branch. Preserve existing commits and inspect divergence before changing refs; do not force-push.
 4. Set topics: agent-skills, claude-code, codex, handoff, ai-agents. Inspect the first hosted Package checks run and fix actual failures.
 5. Verify the public skill-install route and Claude plugin marketplace route against the hosted files. Keep the direct skill route for Codex; no native Codex plugin is implemented.
 6. Create a release tagged v0.1.0 at the verified commit. The plugin manifest version is 0.1.0. Use the release notes below.
