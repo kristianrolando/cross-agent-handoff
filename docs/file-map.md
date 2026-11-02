@@ -21,17 +21,8 @@
 
 A consumer project normally gains only HANDOFF.md plus reviewed routing additions to existing instructions. Helper saves additionally create HANDOFF.md.previous; the save lock and replacement temp files are transient unless interrupted. Existing project formats may be reused without helper tooling.
 
-## Target repository integration
+## Project and distribution scope
 
-The requested destination repository is outside this session's writable roots. An actual directory creation attempt returned `Operation not permitted`. This standalone checkout was implemented in the writable project workspace instead. The original motion-video-director files and manifest were not modified. The source reference was not modified.
+This checkout is the standalone Cross-Agent Handoff project. Maintain the skill under `skills/cross-agent-handoff` and its optional Claude Code plugin/catalog at the checkout root. No placement into another repository is required.
 
-To add only the skill to the requested repository after opening that repository in an authorized workspace, copy `skills/cross-agent-handoff` alongside `skills/motion-video-director`. Refuse an existing destination rather than overwriting it. Do not copy this standalone package's root manifest over the existing motion-video-director manifest. Its plugin wrapper belongs to this standalone checkout.
-
-Example from this checkout, with TARGET replaced by the intended repository root:
-
-```sh
-test ! -e TARGET/skills/cross-agent-handoff && \
-  cp -R skills/cross-agent-handoff TARGET/skills/cross-agent-handoff
-```
-
-Then review the existing host packaging before distributing a combined plugin. Direct installation from this standalone checkout already works independently. Target-directory placement and automatic host discovery were not verified here.
+Consumer installation is separate from authoring. Follow README.md to copy the complete skill to a supported host location or load this checkout as a local Claude Code marketplace. Review an existing destination before updating it; do not overwrite another skill or plugin's configuration. Actual host installation and discovery remain distinct from manifest validation.

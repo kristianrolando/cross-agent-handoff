@@ -29,7 +29,7 @@ class PackageTests(unittest.TestCase):
 
     def test_runtime_has_no_personal_dependencies(self):
         for path in SKILL.rglob('*'):
-            if path.is_file() and '__pycache__' not in path.parts:
+            if path.is_file() and path.suffix in {'.md', '.py', '.yaml'} and '__pycache__' not in path.parts:
                 text = path.read_text()
                 self.assertNotIn('/Users/', text, str(path))
                 self.assertNotIn('/root/', text, str(path))

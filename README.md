@@ -2,7 +2,7 @@
 
 A portable Agent Skill for continuing the same project across Claude Code, Codex, and other filesystem-capable agents. It keeps one compact project checkpoint and uses existing requirements, decisions, logs, and source as their own information owners. No vendor API or additional subscription is required.
 
-This package is independent of motion-video-director. Do not overwrite that skill, its license, or its plugin manifest when adding this directory alongside it.
+This checkout is the standalone Cross-Agent Handoff project. Its skill and plugin packaging are maintained here.
 
 ## Install as a skill
 
@@ -27,7 +27,7 @@ Run only when those destination skill folders do not already exist; review updat
 
 ### Optional Claude Code plugin
 
-This standalone package includes its own `.claude-plugin/plugin.json` and marketplace. Do not replace the motion plugin's manifest with it. In Claude Code, add THIS checkout as a local marketplace, then install:
+This standalone package includes its own `.claude-plugin/plugin.json` and marketplace. In Claude Code, add this checkout as a local marketplace, then install:
 
 ```text
 /plugin marketplace add /absolute/path/to/this-checkout

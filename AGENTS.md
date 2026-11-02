@@ -1,6 +1,6 @@
 # Cross-Agent Handoff package
 
-This repository authors a portable skill. Keep motion-video-director and its packaging outside this checkout unchanged.
+This repository authors the standalone Cross-Agent Handoff skill and its plugin packaging. Keep changes within this project unless the user explicitly requests an external integration.
 
 <!-- cross-agent-handoff:start -->
 ## Cross-agent continuity

@@ -2,9 +2,9 @@
 
 ## Observed environment and scope
 
-Validation date: 2026-11-02. macOS, Python 3.9.6, Git 2.54.0, Claude Code 2.1.287. Tests run in disposable directories. The actual requested destination rejected directory creation under this session's filesystem permissions; delivery is a separate writable checkout, not an installation into the requested repository.
+Validation date: 2026-11-02. macOS, Python 3.9.6, Git 2.54.0, Claude Code 2.1.287. Tests run in disposable directories. The package is authored and delivered in its standalone checkout. The user clarified that the previously named external repository was unrelated; no placement into that repository is required.
 
-The source motion-video-director skill and original plugin manifest were not edited. No global host settings, installed skill directories, subscription configuration, production application, remote repository, or cloud service were changed. A temporary virtual environment was used to attempt validator dependency setup; its package download failed due to network resolution, and no runtime dependency was added to this package.
+No global host settings, installed skill directories, subscription configuration, production application, remote repository, or cloud service were changed. A temporary virtual environment was used to attempt validator dependency setup; its package download failed due to network resolution, and no runtime dependency was added to this package.
 
 ## Scenario coverage
 
@@ -60,4 +60,4 @@ The automated suite comprises 24 tests. Actual output is saved in [test output](
 
 ## Remaining work
 
-Copy the dedicated skill into the requested repository from an authorized workspace, review that repository's distribution settings without replacing the motion plugin manifest, and run the small live round-trip acceptance trial in both actual hosts. A remote Git repository and public release have not been created; select a license and release destination before publication. Do not call target installation, public distribution, or end-to-end platform compatibility complete until those actions are actually verified.
+Run the small live round-trip acceptance trial in both actual hosts, including actual skill discovery and persistent instruction loading. A remote Git repository and public release have not been created; select a license and release destination before publication. Do not call consumer installation, public distribution, or end-to-end platform compatibility complete until those actions are actually verified.
