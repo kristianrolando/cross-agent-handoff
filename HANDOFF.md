@@ -37,12 +37,16 @@ Public CLI discovery found one skill and copy installation succeeded for Codex a
 Closing documentation follows on main; do not move the released tag to include this checkpoint.
 
 ## Next
-Await the user's next requested change or release. Before working from the original Mac checkout,
-inspect pending work, fetch origin and compare history: an unpushed documentation-only commit
-57c17ab may remain from the environment interruption. Its equivalent patch was published as
-fddd8d1. Follow docs/releasing.md to preserve work and rebase/merge deliberately; never hard-reset
-or force-push as a shortcut. This cloud session cannot claim to have synchronized that local Mac.
+Await the user's next requested change or release. When working from another checkout,
+fetch origin and compare history first; follow docs/releasing.md to preserve work and
+rebase/merge deliberately; never hard-reset or force-push as a shortcut.
 No new feature, global installation or directory submission is implied by task completion.
+
+## Local Mac sync (verified 2026-11-02)
+The original Mac checkout is reconciled. After `git fetch origin`, local main and origin/main
+are both at f6a7795 (0 ahead, 0 behind), with a clean tree, no stashes and no extra worktrees.
+The reflog shows the interrupted commit 57c17ab was rebased onto origin/main and dropped.
+`git diff 57c17ab fddd8d1` is empty and both commits share patch-id 3e78dd8d, so no work was lost.
 
 ## Recent outcomes
 - Added shared Claude/Codex contributor guidance and a PR template.
