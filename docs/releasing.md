@@ -3,7 +3,7 @@
 ## Publication status
 
 Public repository: [kristianrolando/cross-agent-handoff](https://github.com/kristianrolando/cross-agent-handoff).
-Release v0.1.1 ([notes](releases/v0.1.1.md)) is tagged at the commit that adds those notes; the closing evidence below records the exact source commit and runs.
+Latest release: [v0.1.1](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.1.1) ([notes](releases/v0.1.1.md)), tag pushed by the maintainer on verified source commit `5eb5279d461807582158474aead506692d5c8348`.
 Published initial release: [v0.1.0](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.1.0). The tag targets verified source commit `666e04c279d312a375a9ba06b5f9e6dfd3d92204`.
 
 All four release-source CI jobs and the release workflow succeeded; the public Skills CLI discovered and copied the complete skill to both host directories in a disposable project. See docs/validation.md for actual run links and limits. Contributor support is shared through AGENTS.md, CLAUDE.md, CONTRIBUTING.md and HANDOFF.md.

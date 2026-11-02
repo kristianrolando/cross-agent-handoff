@@ -1,7 +1,7 @@
 # Project handoff
 
 - format: cross-agent-handoff/1
-- task_status: partial
+- task_status: done
 - handoff: ready
 - writer: none
 
@@ -20,8 +20,8 @@ confirm hosted CI, run live host trials where CLIs exist, and publish release v0
 Still not authorized: global skill installs, vendor settings changes, moving v0.1.0.
 
 ## State
-At review start main matched origin/main at b8ad312. Only release remains v0.1.0 (tag at
-666e04c, unchanged). plugin.json is 0.1.1; v0.1.1 is prepared but NOT tagged or released.
+At review start main matched origin/main at b8ad312. v0.1.1 is now released (Latest) from
+source 5eb5279; v0.1.0 remains unchanged at 666e04c. plugin.json is 0.1.1.
 
 Review conclusion: the core lifecycle (SKILL.md, recovery, one checkpoint, ownership table,
 untrusted-history rules) is sound and concise. Defects found and fixed in ee5996d:
@@ -46,9 +46,9 @@ Approved follow-up: ee5996d pushed; Package checks 41452193109 passed all four j
 the new committed-whitespace step, and did not start the release workflow. Release source
 5eb5279 adds v0.1.1 notes, README badge and live-trial records; Package checks 41453750169
 passed all four jobs on it.
-Blocked: pushing tag v0.1.1 was refused by the Claude Code session's safety check (publishing
-a public release surface). No tag was created locally or remotely. Until it is pushed, the
-README v0.1.1 badge on main links to a release page that does not exist yet.
+Release: the agent's tag push was refused by its safety check, so the maintainer pushed the
+annotated v0.1.1 tag. Publish release run 41460822031 passed and created the release; the
+README v0.1.1 badge now resolves.
 
 Writers / operations: none. Trial agents ran in a disposable project outside the repository
 and have exited.
@@ -56,8 +56,10 @@ and have exited.
 ## Evidence
 - `python3 -m unittest discover -s tests -v`: 28 passed locally (macOS, Python 3.9.6); hosted
   runs above passed on Ubuntu 3.9/3.13, macOS 3.13 and Windows 3.13.
-- Workflow and openai.yaml YAML parsed with Ruby; actionlint not available. Release workflow
-  not yet run for v0.1.1.
+- Workflow and openai.yaml YAML parsed with Ruby; actionlint not available.
+- Release: https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.1.1 is
+  Latest, not draft/prerelease, tag resolves to 5eb5279, body matches docs/releases/v0.1.1.md.
+  Publish run: https://github.com/kristianrolando/cross-agent-handoff/actions/runs/41460822031
 - Official docs fetched 2026-11-02 for Claude Code (skills, memory), Codex, Antigravity,
   Cursor, Gemini CLI (skills, GEMINI.md), Copilot, OpenCode and Cline.
 - Live trial (docs/evidence/live-trial-2026-11-02.md): Codex CLI 0.166 → Antigravity CLI 1.2.3
@@ -69,17 +71,15 @@ and have exited.
 - not_run: Cursor, Gemini CLI, Copilot, OpenCode and Cline live runs.
 
 ## Next
-Maintainer publishes v0.1.1 on the CI-verified release source, not on later commits:
-`git tag -a v0.1.1 5eb5279d461807582158474aead506692d5c8348 -m "Cross-Agent Handoff v0.1.1"`
-then `git push origin refs/tags/v0.1.1`. The tag push runs Publish release; verify it and the
-release page, then record the run and release links here and in docs/validation.md.
+No work remains for this task. Open options, each needing a maintainer request: rerun the
+live trial with Claude Code after re-signing in, try Antigravity with shell access, or trial
+Cursor, Gemini CLI, Copilot, OpenCode or Cline. Never move the v0.1.0 or v0.1.1 tags.
 
 ## Recent outcomes
 - Published MIT v0.1.0 and verified public discovery and Claude/Codex copy installation.
-- Reconciled the original Mac checkout without losing interrupted documentation.
 - Added six documented native-skill host routes and a portable fallback for other agents.
 - Verified expanded installer selection, complete resources and existing package checks.
 - 2026-11-02 review: fixed release/CI workflow defects, host-path inaccuracies and helper
   placeholder false positives; pushed with passing hosted checks.
-- 2026-11-02: live Codex → Antigravity → Codex trial recorded; v0.1.1 prepared at 5eb5279,
-  tag push blocked pending the maintainer.
+- 2026-11-02: live Codex → Antigravity → Codex trial recorded.
+- 2026-11-02: v0.1.1 released from 5eb5279 (maintainer pushed the tag); publish run verified.

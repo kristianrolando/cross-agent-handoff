@@ -173,3 +173,13 @@ Limits: one trial on one Mac. Claude Code 2.1.287 discovered the project skill b
 (expired sign-in). Headless Antigravity denied shell commands in default and `--sandbox` modes;
 auto-approval was not used, so Antigravity with shell access, its App and IDE remain untested.
 Cursor, Gemini CLI, GitHub Copilot, OpenCode and Cline were not run.
+
+## Release v0.1.1 evidence
+
+[Cross-Agent Handoff v0.1.1](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.1.1)
+is published as Latest, not a draft or prerelease. The annotated tag resolves to source commit
+`5eb5279d461807582158474aead506692d5c8348`; v0.1.0 still resolves to `666e04c`.
+
+- [Package checks on the release source](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/41453750169): all four OS/Python jobs passed.
+- [Publish release](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/41460822031): version/notes validation, package checks, committed-whitespace check and publication passed.
+- The release body matches `docs/releases/v0.1.1.md` apart from a trailing newline. The maintainer pushed the tag; an agent session's attempt was blocked by its safety check.
