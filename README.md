@@ -1,5 +1,8 @@
 # Cross-Agent Handoff
 
+[![Package checks](https://github.com/kristianrolando/cross-agent-handoff/actions/workflows/ci.yml/badge.svg)](https://github.com/kristianrolando/cross-agent-handoff/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 Continue a project in Claude Code, Codex, or a new session without relying on the previous conversation. Keep the goal, verified progress, unfinished work, decisions and next step in the project itself.
 
 **One compact checkpoint. No cross-vendor API calls. No additional cloud service.**
@@ -10,15 +13,13 @@ Use it when a usage limit interrupts work, when you switch agents, or when you r
 
 ### 1. Install the skill
 
-Download or clone this repository. Ask your coding agent to install it with this prompt, replacing the source directory with your actual checkout:
+Run from the project where you want to use the skill:
 
-```text
-Install cross-agent-handoff from <checkout>/skills/cross-agent-handoff
-into this project's supported skill directory for this host.
-Copy the complete folder, including LICENSE and supporting resources.
-Inspect an existing installation before changing it; do not overwrite it blindly.
-Do not change application code or global settings.
+```sh
+npx skills add kristianrolando/cross-agent-handoff --skill cross-agent-handoff
 ```
+
+Choose Claude Code or Codex in the installer. The installer needs Node.js 22.20+; the core workflow does not need Node.js. To install without this CLI, download or clone this repository and copy the complete skill folder using [installation options](#installation-options).
 
 For direct installation, the project locations are `.claude/skills/cross-agent-handoff/` for Claude Code and `.agents/skills/cross-agent-handoff/` for Codex. See [installation options](#installation-options) for user-wide installation and the Claude plugin route. Avoid installing both the direct skill and plugin in the same host.
 
@@ -92,16 +93,16 @@ Use one installation per host. Windows users can copy with their file manager; n
 
 ### Claude Code plugin
 
-This repository includes a plugin and a local marketplace. Run inside Claude Code, replacing the directory with this checkout:
+This repository includes a plugin and a local marketplace. Run inside Claude Code:
 
 ```text
-/plugin marketplace add /absolute/path/to/this-checkout
+/plugin marketplace add kristianrolando/cross-agent-handoff
 /plugin install cross-agent-handoff@cross-agent-tools
 ```
 
 Root AGENTS.md and CLAUDE.md guide maintenance of this repository; installing the plugin does not automatically load those files into a consumer project. Initialization adds the reviewed project routing when needed.
 
-When this repository is publicly hosted, its real Git URL can replace the local path. The documented Codex route is a direct skill; this package does not provide a native Codex plugin wrapper. Public-hosting commands are not fabricated before a release URL exists.
+For local development, the marketplace command can instead point to this checkout. The documented Codex route is a direct skill; this package does not provide a native Codex plugin wrapper.
 
 ## Recovery after interruption
 
@@ -150,3 +151,7 @@ The workflow is configured here; a hosted CI pass can only be reported after an 
 [MIT](LICENSE). Copyright (c) 2026 Kristian Rolando Limantara.
 
 The standalone skill includes the same license so its notice travels with direct installations. Preserve copyright and license notices when distributing copies or substantial portions. No change to a consumer project's license is required merely to follow this workflow.
+
+## Contributing
+
+Human and AI-assisted contributions use the same shared rules, checkpoint and checks. See [CONTRIBUTING.md](CONTRIBUTING.md) for the Claude Code entrypoint, Codex workflow, PR process and handoff prompts.

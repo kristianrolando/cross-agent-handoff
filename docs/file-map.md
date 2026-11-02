@@ -11,6 +11,11 @@
 | skills/cross-agent-handoff/scripts/handoff.py | Standard-library draft/check/inspect/save helper |
 | .claude-plugin/plugin.json | Standalone Claude Code plugin wrapper |
 | .claude-plugin/marketplace.json | Local/Git marketplace catalog for that wrapper |
+| docs/releasing.md | Publication runbook, current access blocker and initial release notes |
+| CONTRIBUTING.md | Shared human/Claude/Codex contribution and handoff workflow |
+| CLAUDE.md | Claude contributor adapter importing shared rules |
+| AGENTS.md | Canonical shared contributor instructions |
+| .github/pull_request_template.md | Focused change and validation review template |
 | README.md | Public quick start, compatibility matrix, installation and workflows |
 | LICENSE | User-approved MIT license for the project |
 | skills/cross-agent-handoff/LICENSE | Same MIT notice bundled with direct skill installs |

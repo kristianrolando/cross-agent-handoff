@@ -1,53 +1,52 @@
 # Project handoff
 
 - format: cross-agent-handoff/1
-- task_status: done
+- task_status: blocked
 - handoff: ready
 - writer: none
 
 ## Project
-Cross-Agent Handoff: a standalone portable Agent Skill for sequential project continuity.
-Rules: AGENTS.md. Public entrypoint: README.md. Design and sources: docs/architecture.md.
-Source: skills/cross-agent-handoff. Validation: docs/validation.md. File map: docs/file-map.md.
-No runtime services; Python 3.9+ only for the optional helper. Git is optional for consumers.
+Cross-Agent Handoff: standalone portable skill and Claude Code plugin for sequential continuity.
+Rules: AGENTS.md. Contributor guide: CONTRIBUTING.md. Claude entrypoint: CLAUDE.md.
+User entrypoint: README.md. Source: skills/cross-agent-handoff. Design: docs/architecture.md.
+Evidence: docs/validation.md. Publication runbook/release notes: docs/releasing.md.
 
 ## Task
-Apply the user-approved MIT license and improve public usability with a short quick start,
-before/after checkpoints, an honest compatibility matrix, and automated CI.
-Acceptance: complete root/bundled license notices, actionable documented installation and usage,
-explicitly illustrative examples, separation of maintainer feedback from automated evidence,
-and a GitHub Actions configuration with no vendor-model dependency. No publication was requested.
+The user explicitly authorized ensuring Claude can contribute and creating a public GitHub
+repository, following the recommended publication steps. Intended destination:
+kristianrolando/cross-agent-handoff. Existing MIT/public packaging is complete.
+Acceptance: shared contributor context, published source/install routes, first CI reviewed,
+and initial versioned release. Do not infer that any remote action succeeded from prepared URLs.
 
 ## State
-Complete: MIT LICENSE in root and standalone skill, license metadata, rewritten public README,
-full checkpoint examples and explanation, compatibility matrix, CI workflow and maintenance guide.
-Existing workflow/helper runtime behavior is preserved. The suite handles platforms lacking symlink
-creation by skipping that specific check while still checking traversal. Candidate bytes are written
-explicitly in fixtures to avoid implicit platform newline conversion.
-Decision: keep one project checkpoint and conditional references; do not add a daemon, mandatory
-log, cloud integration, or native Codex plugin for this packaging task.
-Maintainer reports successful testing and smooth use; exact host versions/settings and coverage
-were not supplied. This feedback is recorded in README.md and docs/validation.md and accepted
-without making further live model testing a prerequisite for this update.
-Writers/operations: no continuing package-related jobs or model trial. No external integration required.
+Complete: shared CONTRIBUTING.md, root CLAUDE.md importing AGENTS.md, shared instruction routing,
+PR template, prepared public README commands/badge, plugin homepage/repository URLs and release runbook.
+Claude and Codex can follow the same ordinary project files; neither needs the other's history.
+The maintainer previously reported successful testing. Local suite still passes 27 checks.
+Blocked: repository creation/publication. GitHub connector verified login kristianrolando but has no
+repository creation action. Local gh could not reach api.github.com. The browser refused github.com
+origin access. Do not use another browser surface or indirect execution to bypass the denied action.
+No Git remote, public repository, release or hosted CI run has been verified. Prepared URLs are intended,
+not observed published resources. The local branch is main; inspect Git state on resume.
+Writers/operations: no continuing application, model or publication jobs. No overlapping writer remains.
 
 ## Evidence
-Local automated suite: 27 tests passed; exact output in docs/evidence/unittest.txt.
-Workflow YAML parsed locally; push/pull_request/manual triggers, read-only permissions and four
-OS/Python entries checked. Hosted CI has not run and no hosted success is claimed.
-Claude marketplace and plugin validation passed; plugin validation warns root CLAUDE.md is not
-consumer context. It is repository-maintenance guidance; runtime instructions live in the skill.
-Runtime personal-path checks, documentation links, license consistency and example schemas pass.
-Historical authoring trials and their limits remain in docs/validation.md.
+Local suite: 27 tests pass; docs/evidence/unittest.txt. Claude marketplace validation passes.
+Plugin packaging, licenses and local links are covered by existing checks; no new model trial was run.
+The browser reported that authority for network egress to github.com was not granted.
+The original local trial artifact's temporary directory path was omitted for public presentation;
+procedure, source hashes and trial limitations remain in docs/evidence/independent-recovery.md.
 
 ## Next
-Await the user's publication destination or next requested change. If asked to publish, use the
-real repository URL in installation instructions and review the first GitHub Actions run.
-Do not create a remote, publish, or infer new authorization from this checkpoint.
+Obtain permitted GitHub access or have the maintainer create the intended empty public repository,
+then follow docs/releasing.md. Check actual repo ownership/state before uploading, preserve commits,
+inspect hosted CI, verify install routes and create v0.1.0. Authorization to publish already exists;
+the blocker is execution access, not a missing product decision. Do not repeat or circumvent denied
+browser access without a new permitted basis.
 
 ## Recent outcomes
-- Built the portable skill, optional helper, templates, documentation and Claude plugin/catalog.
-- Independent fresh-agent recovery preserved existing work and reconciled a stale checkpoint.
-- User clarified project scope; removed unrelated external integration requirements.
-- User reported successful testing and selected MIT.
-- Applied MIT and completed public quick start, example checkpoints, compatibility matrix and CI configuration.
+- Built the portable skill/helper, MIT licensing, documentation, examples and CI configuration.
+- Maintainer reported successful testing and authorized public publication.
+- Added shared human/Claude/Codex contribution instructions and a PR template.
+- Prepared public URLs and initial release notes; verified the linked account.
+- Local GitHub CLI connectivity and browser-origin access blocked creation; saved a truthful handoff.

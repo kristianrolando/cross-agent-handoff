@@ -27,6 +27,6 @@ test_relative_markdown_links (test_package.PackageTests) ... ok
 test_runtime_has_no_personal_dependencies (test_package.PackageTests) ... ok
 
 ----------------------------------------------------------------------
-Ran 27 tests in 1.124s
+Ran 27 tests in 1.179s
 
 OK

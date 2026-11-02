@@ -8,5 +8,7 @@
   "author": {
     "name": "Kristian Rolando Limantara"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "homepage": "https://github.com/kristianrolando/cross-agent-handoff#readme",
+  "repository": "https://github.com/kristianrolando/cross-agent-handoff"
 }

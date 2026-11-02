@@ -2,6 +2,8 @@
 
 This repository authors the standalone Cross-Agent Handoff skill and its plugin packaging. Keep changes within this project unless the user explicitly requests an external integration.
 
+Contributor entrypoint: CONTRIBUTING.md. Current task: HANDOFF.md. Claude Code imports this shared file through CLAUDE.md; Codex uses applicable AGENTS.md discovery. Both agents follow the same rules and checks.
+
 <!-- cross-agent-handoff:start -->
 ## Cross-agent continuity
 Read HANDOFF.md before substantial work; inspect actual files and relevant changes before trusting it.

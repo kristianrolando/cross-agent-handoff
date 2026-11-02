@@ -31,7 +31,7 @@ Additional mechanics cover staged plus unstaged and untracked Git changes, dupli
 
 A fresh Codex-family agent received only the skill path, disposable project path, a request to resume after interruption, and confirmation that prior writers stopped. It had no predecessor chat or expected answer. Source already contained the blank fallback; the checkpoint said it was unfinished and asserted historical tests without evidence.
 
-Observed result: the agent inspected source, avoided rewriting completed work, ran five direct string-case checks, preserved an unrelated user draft, marked old test history and authorship unknown, and saved a done/ready checkpoint. The saved checkpoint and reproduction procedure are retained in [the evidence artifact](evidence/independent-recovery.md). This is a single-family independent context trial, not a Claude/Codex end-to-end test. The temporary absolute path in that artifact records the trial location and is not a runtime dependency.
+Observed result: the agent inspected source, avoided rewriting completed work, ran five direct string-case checks, preserved an unrelated user draft, marked old test history and authorship unknown, and saved a done/ready checkpoint. The saved checkpoint and reproduction procedure are retained in [the evidence artifact](evidence/independent-recovery.md). This is a single-family independent context trial, not a Claude/Codex end-to-end test. The local temporary path in that artifact is omitted for publication; the saved procedure and source hashes retain the useful trial evidence.
 
 ## Platform and format checks
 
@@ -66,4 +66,6 @@ The automated suite now comprises 27 tests, including bundled-license and public
 
 ## Publication status
 
-MIT licensing and public-facing documentation/CI configuration are complete. A remote Git repository and public release have not been created. When publishing is requested, select the real release destination, replace local-only installation paths with its actual URL where appropriate, and inspect the first hosted CI run. Do not report a hosted CI pass before one exists. Maintainer-reported successful use is accepted without another model-testing prerequisite for this update.
+MIT licensing, public documentation, shared Claude/Codex contributor entrypoints and CI configuration are complete. The maintainer explicitly authorized public repository creation. Publication remains blocked by available network/tool access: local GitHub CLI connectivity failed, the browser's github.com origin request was denied, and the available connector has no repository-creation action. No public remote, hosted release or hosted CI result is claimed. The publication runbook and release notes are in [releasing.md](releasing.md).
+
+The README and plugin metadata use the intended destination, kristianrolando/cross-agent-handoff, ready for publication. Once access is permitted or the maintainer creates the repo, verify its actual state, push main, inspect CI, validate the hosted install routes, and create v0.1.0. No further live model testing is required for this packaging update.

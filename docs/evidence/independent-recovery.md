@@ -6,7 +6,7 @@
 - writer: none
 
 ## Project
-Fixture: greeting library at /var/folders/fh/vwtm5lld5p36zps_qzfqtmfm0000gn/T/handoff-independent-_pqr97le.
+Fixture: greeting library in a disposable temporary directory (local path omitted).
 Implementation: greeting.py; no external services, packages, or Git repository.
 Instructions: AGENTS.md. Preserve user-notes.txt. No publication.
 
