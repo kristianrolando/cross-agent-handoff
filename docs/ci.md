@@ -15,7 +15,7 @@ All four jobs passed in the [first hosted run](https://github.com/kristianroland
 
 ## Scope
 
-The suite checks checkpoint mechanics, failure injection, dirty Git inventory, portability constraints, metadata, local Markdown file links, example checkpoint structure, plugin path references, and license inclusion. The Git fixture uses a temporary repository and local identity only. Symlink checks are skipped explicitly if the OS does not permit symlink creation; traversal checks still run.
+The whitespace step compares the committed tree against Git's empty tree, because a plain `git diff --check` has nothing to compare on a fresh checkout. The suite checks checkpoint mechanics, failure injection, dirty Git inventory, portability constraints, metadata, local Markdown file links, example checkpoint structure, plugin path references, and license inclusion. The Git fixture uses a temporary repository and local identity only. Symlink checks are skipped explicitly if the OS does not permit symlink creation; traversal checks still run.
 
 No package installation, vendor API key, subscription, model call or application deployment is required. The action runners download/select Python as needed. The action versions follow the official actions/checkout and actions/setup-python documentation checked during this update.
 
@@ -40,4 +40,4 @@ For updates, keep the root LICENSE and bundled skill LICENSE identical. Update t
 
 ## Release publication
 
-The separate Publish release workflow checks versioned notes and the package suite before publishing. Read permission is the default; only its publishing job receives contents-write permission. It accepts version tags and manual dispatch, with a narrow v0.1.0 bootstrap when its workflow file changes on main. Existing releases are left unchanged. The [initial publication run](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/41429718374) completed successfully. See docs/releasing.md for future releases.
+The separate Publish release workflow checks versioned notes and the package suite before publishing. Read permission is the default; only its publishing job receives contents-write permission. It runs only on version tags or manual dispatch with an explicit tag. Existing releases are left unchanged. The [initial publication run](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/41429718374) completed successfully. See docs/releasing.md for future releases.

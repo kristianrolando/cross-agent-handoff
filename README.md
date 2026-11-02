@@ -104,11 +104,11 @@ The checkpoint links to existing requirements, architecture and backlog instead 
 | **Claude Code** | Direct skill or included Claude plugin | Maintainer reports successful use; manifests validated and installer copy checked. Exact live version/settings were not recorded. |
 | **Codex** | Direct skill; optional UI metadata | Installer and independent fresh-agent recovery checked. Separate Codex CLI model discovery was not observed. |
 | **Antigravity** | Native skill in `.agents/skills/` | Official App/CLI/IDE discovery documented; live-app handoff not independently exercised here. |
-| **Cursor** | Native skill in `.agents/skills/` or `.cursor/skills/` | Official discovery/invocation documented; live-app handoff not exercised here. |
+| **Cursor** | Native skill in `.agents/skills/`, `.cursor/skills/` or `.claude/skills/` | Official discovery/invocation documented; live-app handoff not exercised here. |
 | **Gemini CLI** | Native skill in `.agents/skills/` or `.gemini/skills/` | Official discovery documented; activation consent/settings may apply; no live-app trial here. |
-| **GitHub Copilot** | Native skill in `.github/skills/` | Official agent support documented; IDE/CLI/cloud versions and locations vary; no live-app trial here. |
+| **GitHub Copilot** | Native skill in `.github/skills/`, `.agents/skills/` or `.claude/skills/` | Official agent support documented; loaded when relevant, with no documented slash command; surfaces and locations vary; no live-app trial here. |
 | **OpenCode** | Native skill in `.opencode/skills/` or `.agents/skills/` | Official skill-tool loading documented; permissions apply; no live-app trial here. |
-| **Cline** | Native skill in `.cline/skills/` | Official discovery/slash invocation documented; use manual path if installer differs; no live-app trial here. |
+| **Cline** | Native skill in `.cline/skills/` or `.claude/skills/` | Official discovery/slash invocation documented; `.agents/skills/` is not documented, so check the installer's destination; no live-app trial here. |
 | **Windsurf / other filesystem agents** | Explicitly read installed `SKILL.md` and checkpoint | Portable fallback; native discovery not verified for this package. |
 | Plain chat / uploads | Read supplied checkpoint and files | Snapshot only unless live filesystem tools are available. |
 | Optional Python helper | Python 3.9+, standard library | Hosted checks passed on Linux, macOS and Windows. |
@@ -131,7 +131,7 @@ New host routes were checked against [official documentation and installation pa
 
 Copy the complete `skills/cross-agent-handoff` directory, including LICENSE and supporting resources, to one supported location for each host.
 
-The [host guide](skills/cross-agent-handoff/references/agents.md#install-the-complete-skill) lists project and user locations for all eight named native-skill hosts. Shared `.agents/skills/` discovery can reuse one installed copy where documented. Cline and Claude have their own recommended project paths; keep every copy on the same version and use one canonical checkpoint.
+The [host guide](skills/cross-agent-handoff/references/agents.md#install-the-complete-skill) lists project and user locations for all eight named native-skill hosts. No single project folder reaches every host: Claude Code and Cline do not read `.agents/skills/`, while Codex, Antigravity and Gemini CLI do not read `.claude/skills/`. Mixed teams may need two copies; keep every copy on the same version and use one canonical checkpoint.
 
 Windows users can use their file manager; symlinks are not required. Inspect an existing installation before updating it rather than nesting a new copy inside its directory.
 

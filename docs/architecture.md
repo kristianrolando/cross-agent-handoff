@@ -54,7 +54,7 @@ Consulted official sources on 2026-11-02. Platform behavior is version/settings 
 - [Agent Skills specification](https://agentskills.io/specification): SKILL.md frontmatter, matching directory name, optional scripts/references/assets, progressive disclosure. The package uses portable name, description and license frontmatter.
 - [Claude Code skills](https://code.claude.com/docs/en/skills): direct skill directories and invocation. Plugin namespacing differs from direct installation.
 - [Claude project memory](https://code.claude.com/docs/en/memory): direct AGENTS.md support depends on version, settings and CLAUDE.md presence; an @AGENTS.md import is a compatibility route. Verify actual loading instead of changing global defaults.
-- [Codex skills](https://developers.openai.com/codex/skills/): repository/user .agents/skills discovery and product-specific agents/openai.yaml metadata.
+- [Codex skills](https://learn.chatgpt.com/docs/build-skills): repository/user .agents/skills discovery and product-specific agents/openai.yaml metadata.
 - [Codex project instructions](https://developers.openai.com/codex/guides/agents-md/): applicable scopes, overrides and discovery. A root file is not the only possible instruction owner.
 - [Claude plugin overview](https://code.claude.com/docs/en/plugins) and [marketplaces](https://code.claude.com/docs/en/plugin-marketplaces): separate packaging and catalog; no vendor tool integration is required to ship a skill.
 

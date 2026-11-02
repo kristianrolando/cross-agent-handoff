@@ -40,5 +40,6 @@ jobs:
           python-version: ${{ matrix.python }}
       - name: Run protocol and package checks
         run: python -m unittest discover -s tests -v
-      - name: Check patch whitespace
-        run: git diff --check
+      - name: Check committed whitespace
+        # Compare against the empty tree; a plain diff is empty on a fresh checkout.
+        run: git diff --check 4b825dc642cb6eb9a060e54bf8d69288fbee4904 HEAD

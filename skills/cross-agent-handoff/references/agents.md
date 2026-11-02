@@ -10,23 +10,25 @@ LICENSE, references, assets and scripts, into **one** supported location per hos
 below is a parent directory: append `cross-agent-handoff/SKILL.md` for the entry file.
 Inspect existing installations before replacing them. Avoid duplicate versions of the same skill.
 
-Official locations checked on 2026-11-02; features remain version/settings dependent.
+Official locations rechecked on 2026-11-02; features remain version/settings dependent.
 These are documented loading routes, not claims of live application tests.
 
 | Host | Project skill parent | User skill parent | Activation / discovery check |
 | --- | --- | --- | --- |
-| Claude Code | `.claude/skills/` | `~/.claude/skills/` | Direct: `/cross-agent-handoff`; bundled plugin: `/cross-agent-handoff:cross-agent-handoff`. |
-| Codex | `.agents/skills/` | `~/.agents/skills/` | Ask `Use $cross-agent-handoff to resume this project.` |
-| Google Antigravity | `.agents/skills/` | `~/.gemini/config/skills/` | App: `/cross-agent-handoff`; IDE: inspect Customizations. Otherwise request the skill by name. Legacy `.agent/skills/` is also documented. |
-| Cursor | `.agents/skills/` or `.cursor/skills/` | `~/.cursor/skills/` | Type `/cross-agent-handoff` in Agent chat. Remote agents need the skill in their actual workspace or supported sync route. |
-| Gemini CLI | `.agents/skills/` or `.gemini/skills/` | `~/.gemini/skills/` | Check `/skills list`; request the skill by name and accept required activation consent. `/skills reload` refreshes discovery. |
-| GitHub Copilot | `.github/skills/` | `~/.copilot/skills/` | Request the skill by name in a supported agent surface. Locations and feature availability depend on IDE/CLI/cloud surface. |
-| OpenCode | `.opencode/skills/` or `.agents/skills/` | `~/.config/opencode/skills/` | Ask it to load `cross-agent-handoff` using its skill tool; check skill permissions if missing. |
-| Cline | `.cline/skills/` | `~/.cline/skills/` | Enable the skill in Skills, then use `/cross-agent-handoff` or request it by name. |
+| Claude Code | `.claude/skills/` | `~/.claude/skills/` | Direct: `/cross-agent-handoff`; bundled plugin: `/cross-agent-handoff:cross-agent-handoff`. Does not read `.agents/skills/`. |
+| Codex | `.agents/skills/` (current directory up to repository root) | `~/.agents/skills/` | Ask `Use $cross-agent-handoff to resume this project.` or pick it from `/skills`. |
+| Google Antigravity | `.agents/skills/` (legacy `.agent/skills/`) | `~/.gemini/config/skills/` | App and CLI: `/cross-agent-handoff`; CLI `/skills reload` after adding it mid-session; IDE: inspect Customizations, then request the skill by name. |
+| Cursor | `.agents/skills/` or `.cursor/skills/`; also reads `.claude/skills/` | `~/.agents/skills/` or `~/.cursor/skills/` | Type `/cross-agent-handoff` in Agent chat. Remote agents need the skill in their actual workspace or supported sync route. |
+| Gemini CLI | `.agents/skills/` or `.gemini/skills/` (`.agents` wins) | `~/.agents/skills/` or `~/.gemini/skills/` | Check `/skills list`; request the skill by name and accept the activation consent prompt. `/skills reload` refreshes discovery. |
+| GitHub Copilot | `.github/skills/`, `.agents/skills/` or `.claude/skills/` | `~/.copilot/skills/` or `~/.agents/skills/` | No documented slash command; Copilot loads skills when relevant, so name the skill in the request. Locations and availability vary by app, CLI, IDE and cloud surface. |
+| OpenCode | `.opencode/skills/`, `.agents/skills/` or `.claude/skills/` | `~/.config/opencode/skills/`, `~/.agents/skills/` or `~/.claude/skills/` | Ask it to load `cross-agent-handoff` with its skill tool; check `permission.skill` if it is hidden or asks for approval. |
+| Cline | `.cline/skills/` (recommended), `.clinerules/skills/` or `.claude/skills/` | `~/.cline/skills/` | Skills are enabled when discovered; check its toggle in the Skills tab, then use `/cross-agent-handoff` or request it by name. Does not document `.agents/skills/`. |
 
-For project use, one `.agents/skills/cross-agent-handoff` copy can serve the documented
-shared-directory hosts. Add host-specific copies only where required, and update those copies
-together. All installations must point to the same project checkpoint, not agent-specific state.
+No single project folder reaches every host. `.agents/skills/` serves Codex, Antigravity,
+Cursor, Gemini CLI, Copilot and OpenCode; `.claude/skills/` serves Claude Code, Cursor, Copilot,
+OpenCode and Cline. A team using Claude Code with Codex therefore needs both copies, and hosts
+that read both folders then see the skill twice. Keep every copy on the same version and update
+them together. All installations must point to the same project checkpoint, not agent-specific state.
 
 The repository includes a Claude Code plugin wrapper only. A direct skill installation does not
 create a plugin, marketplace listing or native extension for another host.
@@ -72,7 +74,11 @@ Without write access, inspect and report limitations instead of claiming to save
 
 During initialization, inspect the active host's existing instructions, including relevant
 `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, IDE rules, or Copilot/Cline instruction files.
-Respect their actual scopes and host precedence. Keep the portable routing block in one
+Respect their actual scopes and host precedence. Two documented defaults matter most:
+Claude Code reads `AGENTS.md` only when no `CLAUDE.md` or `CLAUDE.local.md` applies, so an
+existing `CLAUDE.md` needs an `@AGENTS.md` import or plain pointer; Gemini CLI loads only
+`GEMINI.md` unless `context.fileName` includes `AGENTS.md`, so prefer a pointer in `GEMINI.md`
+over changing settings. Keep the portable routing block in one
 canonical place, normally `AGENTS.md`. If the host does not load it, add a small instruction
 to the existing supported entrypoint: `Read AGENTS.md and HANDOFF.md before substantial work.`
 Use actual paths and plain instructions; `@AGENTS.md` imports are not universal syntax.
@@ -86,11 +92,11 @@ files and checkpoint, reconcile branches, then verify the snapshot. No automatic
 
 ## Official sources
 
-- [Claude Code skills](https://code.claude.com/docs/en/skills)
-- [Codex skills](https://developers.openai.com/codex/skills/)
+- [Claude Code skills](https://code.claude.com/docs/en/skills) and [AGENTS.md loading](https://code.claude.com/docs/en/memory)
+- [Codex skills](https://learn.chatgpt.com/docs/build-skills) (formerly developers.openai.com/codex/skills)
 - [Antigravity skills](https://antigravity.google/docs/skills)
 - [Cursor skills](https://cursor.com/docs/skills)
-- [Gemini CLI skills](https://geminicli.com/docs/cli/skills/)
+- [Gemini CLI skills](https://geminicli.com/docs/cli/skills/) and [context files](https://geminicli.com/docs/cli/gemini-md/)
 - [GitHub Copilot skills](https://docs.github.com/en/copilot/concepts/customizations/agent-skills)
 - [OpenCode skills](https://opencode.ai/docs/skills)
 - [Cline skills](https://docs.cline.bot/customization/skills)

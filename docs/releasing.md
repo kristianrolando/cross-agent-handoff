@@ -39,7 +39,7 @@ The core has no cloud, vendor API, IDE or runtime dependency. Python 3.9+ is nee
 
 ## Release workflow
 
-The Publish release workflow checks the manifest version, versioned notes, and package suite before publishing with GitHub's built-in token. Write permission is limited to the publishing job. It accepts version-tag pushes or manual dispatch. A main-branch change to the workflow also attempts the fixed initial v0.1.0 release to bootstrap publication; if that release already exists, it leaves it unchanged. No personal token is required. Do not edit the bootstrap default to publish a future version; use a reviewed version/tag/notes update and explicit release trigger.
+The Publish release workflow checks the manifest version, versioned notes, and package suite before publishing with GitHub's built-in token. Write permission is limited to the publishing job. It runs only on a pushed version tag or a manual dispatch naming the tag; it never runs on ordinary main-branch pushes. An existing release is left unchanged. No personal token is required. The earlier v0.1.0 bootstrap trigger was removed after that release was published, because it would now fail against the 0.1.1 manifest. For a future version, update the manifest and versioned notes in a reviewed change, then trigger explicitly.
 
 ## Resolved desktop synchronization
 

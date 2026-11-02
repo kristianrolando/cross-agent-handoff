@@ -21,7 +21,7 @@
 | README.md | Public quick start, compatibility matrix, installation and workflows |
 | LICENSE | User-approved MIT license for the project |
 | skills/cross-agent-handoff/LICENSE | Same MIT notice bundled with direct skill installs |
-| .github/workflows/release.yml | Checked versioned release publication; initial v0.1.0 bootstrap |
+| .github/workflows/release.yml | Checked versioned release publication on explicit tag or dispatch |
 | docs/releases/v0.1.0.md | Initial public release notes and install commands |
 | .github/workflows/ci.yml | GitHub Actions matrix for automatic package/protocol checks |
 | docs/ci.md | CI scope, configured environments and local equivalent |

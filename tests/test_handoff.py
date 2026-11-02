@@ -176,7 +176,8 @@ class ProtocolTests(unittest.TestCase):
         lock = self.root / '.HANDOFF.md.save-lock'
         lock.write_text('unresolved writer')
         before = self.target.read_bytes()
-        self.save(checkpoint(), expected=2)
+        result = self.save(checkpoint(), expected=2)
+        self.assertIn('Save lock exists', result.stderr)
         self.assertEqual(lock.read_text(), 'unresolved writer')
         self.assertEqual(self.target.read_bytes(), before)
 
@@ -217,6 +218,10 @@ class ProtocolTests(unittest.TestCase):
     def test_duplicate_fields_and_sections_rejected(self):
         self.assertTrue(handoff.validate(checkpoint() + '\n- task_status: done\n'))
         self.assertTrue(handoff.validate(checkpoint() + '\n## Next\nOther action\n'))
+
+    def test_project_terms_are_not_template_placeholders(self):
+        self.assertFalse(handoff.validate(checkpoint(next_step='Switch the upsert to INSERT OR REPLACE.')))
+        self.assertTrue(handoff.validate(checkpoint(next_step='REPLACE with one actionable step.')))
 
     def test_windows_line_endings(self):
         self.target.write_text(checkpoint())

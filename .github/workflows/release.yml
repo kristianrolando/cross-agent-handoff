@@ -2,15 +2,12 @@ name: Publish release
 
 "on":
   push:
-    branches: [main]
-    paths: [.github/workflows/release.yml]
     tags: ['v*']
   workflow_dispatch:
     inputs:
       tag:
         description: Existing or new version tag matching the plugin manifest
         required: true
-        default: v0.1.0
         type: string
 
 permissions:
@@ -21,7 +18,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  RELEASE_TAG: ${{ github.ref_type == 'tag' && github.ref_name || inputs.tag || 'v0.1.0' }}
+  RELEASE_TAG: ${{ github.ref_type == 'tag' && github.ref_name || inputs.tag }}
 
 jobs:
   checks:
@@ -47,8 +44,9 @@ jobs:
           PY
       - name: Run package and protocol checks
         run: python -m unittest discover -s tests -v
-      - name: Check patch whitespace
-        run: git diff --check
+      - name: Check committed whitespace
+        # Compare against the empty tree; a plain diff is empty on a fresh checkout.
+        run: git diff --check 4b825dc642cb6eb9a060e54bf8d69288fbee4904 HEAD
   publish:
     needs: checks
     if: github.repository == 'kristianrolando/cross-agent-handoff'

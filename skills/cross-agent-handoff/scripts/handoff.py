@@ -50,7 +50,8 @@ def validate(text):
         found = re.findall(pattern, text, re.M | re.S)
         if len(found) != 1 or not found[0].strip():
             errors.append('Expected one nonempty section: ' + section)
-    if 'REPLACE' in text:
+    # Match template placeholders only, so project terms such as SQL REPLACE stay valid.
+    if re.search(r'\bREPLACE (?:with|from)\b', text):
         errors.append('Unfilled template: replace every REPLACE instruction')
     if text.count('```') % 2:
         errors.append('Unbalanced code fences')
@@ -135,7 +136,11 @@ def execute(args):
         return 2 if errors else (1 if warnings else 0)
     # Single helper writer guard, not a project lock. Never steal it by age.
     lock = target.with_name('.' + target.name + '.save-lock')
-    lock_fd = os.open(str(lock), os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
+    try:
+        lock_fd = os.open(str(lock), os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
+    except FileExistsError:
+        raise ValueError('Save lock exists: ' + lock.name + '. Another helper save may be running, or an '
+                         'interrupted save left it. Establish inactivity before removing it; it is never stolen by age.')
     try:
         with os.fdopen(lock_fd, 'w') as stream:
             stream.write(json.dumps({'pid': os.getpid(), 'checkpoint': args.checkpoint}))

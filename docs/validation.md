@@ -117,10 +117,12 @@ npx skills@1.7.4 add /path/to/cross-agent-handoff --skill cross-agent-handoff \
 ```
 
 The CLI produced two shared destinations: `.agents/skills/cross-agent-handoff` and
-`.claude/skills/cross-agent-handoff`. In both destinations all ten source package files matched
+`.claude/skills/cross-agent-handoff`. In both destinations all ten files from the local source folder matched
 byte-for-byte, including the new host guide, LICENSE, template and helper. A separate manual
 copy to the officially documented Cline destination, `.cline/skills/cross-agent-handoff`, also
-matched all ten files. Multiple selected hosts share the same physical folder; this is not
+matched all ten files. Correction (later review): the skill has nine tracked files; the tenth
+was most likely the untracked macOS `.DS_Store` in that local checkout, which a GitHub install
+does not receive. Installing from a local working folder copies untracked files too. Multiple selected hosts share the same physical folder; this is not
 eight independently observed host loaders. No global installation or settings changed.
 
 All 27 existing package/protocol checks passed again. Both changed hero SVGs were rendered
@@ -136,3 +138,24 @@ Hosted [Package checks for the expanded-agent feature](https://github.com/kristi
 successfully on commit `a2c92cccf05d01ecec78b2eb0e6b43753ff6d49b`, covering all four configured
 OS/Python jobs. GitHub-rendered README and the published host guide were read back successfully.
 Closing evidence updates follow that verified feature commit on main.
+
+## Critical review (2026-11-02, after b8ad312)
+
+Host paths and activation were rechecked against the official pages linked in the host guide.
+Corrections: Copilot also reads `.agents/skills/` and `.claude/skills/` and documents no slash
+command; Cursor also reads `.claude/skills/` and `~/.agents/skills/`; Gemini CLI and Copilot also
+read `~/.agents/skills/`; Cline enables discovered skills by default and does not document
+`.agents/skills/`; Antigravity CLI exposes skills as slash commands. Claude Code reads `AGENTS.md`
+only when no `CLAUDE.md` applies, and Gemini CLI loads only `GEMINI.md` by default. The Codex
+skills page now redirects to learn.chatgpt.com.
+
+Workflow fixes: the release workflow's v0.1.0 bootstrap trigger and default were removed because,
+with manifest 0.1.1, any main push touching that file or a default dispatch would fail the version
+check. Both workflows' whitespace step previously ran `git diff --check` on a fresh checkout,
+which compares nothing; they now check the committed tree against Git's empty tree. Locally that
+full-tree check passed on b8ad312. The new workflow YAML parsed; it has not run on GitHub yet.
+
+Helper fixes: placeholder detection now matches template phrases (`REPLACE with`/`REPLACE from`)
+instead of any uppercase `REPLACE`, so project terms such as SQL `INSERT OR REPLACE` no longer
+block saves; an existing save lock now reports a clear recovery message. 28 local tests pass
+(Python 3.9.6, macOS). No live host discovery or model handoff was exercised in this review.
