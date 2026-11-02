@@ -8,78 +8,58 @@
 ## Project
 Cross-Agent Handoff: portable sequential project continuity and a Claude Code plugin wrapper.
 Public source: https://github.com/kristianrolando/cross-agent-handoff
-Rules: AGENTS.md. Claude adapter: CLAUDE.md. Contributor workflow: CONTRIBUTING.md.
+Rules: AGENTS.md. Contributor workflow: CONTRIBUTING.md. Claude adapter: CLAUDE.md.
 User docs: README.md. Design: docs/architecture.md. Evidence: docs/validation.md.
 Host loading/routing: skills/cross-agent-handoff/references/agents.md.
-Release and synchronization history: docs/releasing.md.
+Release history: docs/releasing.md. Brand sources: docs/assets/brand-credits.md.
 
 ## Task
-Critical review of reliability, portability, usability and public accuracy, with justified
-fixes. The maintainer then approved all review recommendations: commit and push the fixes,
-confirm hosted CI, run live host trials where CLIs exist, and publish release v0.1.1.
-Still not authorized: global skill installs, vendor settings changes, moving v0.1.0.
+Update the GitHub README visuals to show recognizable logos for its eight documented coding
+agents. Preserve clear names, wide/mobile readability, local assets, source attribution and
+existing compatibility claims. Publish on main; do not create a new release or move tags.
 
 ## State
-At review start main matched origin/main at b8ad312. v0.1.1 is now released (Latest) from
-source 5eb5279; v0.1.0 remains unchanged at 666e04c. plugin.json is 0.1.1.
+Both README hero SVGs now embed marks for Claude Code, Codex, Antigravity, Cursor, Gemini CLI,
+GitHub Copilot, OpenCode and Cline. The wide layout uses one row; the narrow layout uses two
+rows with larger labels. Existing project-checkpoint illustration and palette are retained.
+The README alt text names all hosts, links to the compatibility matrix, and links asset credits.
+File-map documentation includes the logo provenance and license files.
 
-Review conclusion: the core lifecycle (SKILL.md, recovery, one checkpoint, ownership table,
-untrusted-history rules) is sound and concise. Defects found and fixed in ee5996d:
-- release.yml: removed the v0.1.0 bootstrap push trigger and default tag; with manifest 0.1.1
-  they would fail the version check on any main push touching the file or a default dispatch.
-- ci.yml and release.yml: `git diff --check` compared nothing on a fresh checkout; now checks
-  the committed tree against the empty tree.
-- references/agents.md and README: corrected host paths/activation from official docs (Copilot
-  reads `.agents`/`.claude` skills and has no slash command; Cursor reads `.claude/skills`;
-  Cline has no documented `.agents/skills` and enables skills by default; Antigravity CLI slash
-  commands; `~/.agents/skills` user paths). Replaced the claim that one `.agents` copy serves
-  the shared hosts with the actual two-folder coverage. Added the Claude AGENTS.md-vs-CLAUDE.md
-  rule and the Gemini CLI GEMINI.md default. Updated the redirected Codex docs link.
-- scripts/handoff.py: placeholder check no longer rejects legitimate uppercase `REPLACE`; clear
-  message when a save lock exists. Two tests added in tests/test_handoff.py.
-- docs: releasing.md, ci.md, file-map.md updated to match workflows; validation.md corrected
-  the "ten files" installer record (nine tracked files; the tenth was most likely `.DS_Store`)
-  and gained a dated review section.
-Decisions: no new hosts, files, dependencies or per-agent state; core SKILL.md unchanged.
+Marks come from pinned Lobe Icons source 8064bdc847be0a94c956c00440eb67586af2871f, with original
+geometry and colors retained. Monochrome marks use a dark foreground. Both banners embed SVG
+paths directly: no external image, font, script or CDN is required for these visuals.
+Upstream MIT notice is preserved in docs/assets/lobe-icons-LICENSE; source links and maintenance
+instructions are in brand-credits.md. No runtime dependency or installed-skill content changed.
+No overlapping product writers or background jobs continue.
 
-Approved follow-up: ee5996d pushed; Package checks 41452193109 passed all four jobs, including
-the new committed-whitespace step, and did not start the release workflow. Release source
-5eb5279 adds v0.1.1 notes, README badge and live-trial records; Package checks 41453750169
-passed all four jobs on it.
-Release: the agent's tag push was refused by its safety check, so the maintainer pushed the
-annotated v0.1.1 tag. Publish release run 41460822031 passed and created the release; the
-README v0.1.1 badge now resolves.
-
-Writers / operations: none. Trial agents ran in a disposable project outside the repository
-and have exited.
+Latest published release remains v0.1.1 at 5eb5279; v0.1.0 remains at 666e04c. Both tags stay
+frozen, and plugin.json stays 0.1.1. This visual update follows the released source on main.
+Previous reliability fixes and live-trial evidence remain in docs/validation.md and
+its linked live-trial artifact. Codex to Antigravity to Codex was exercised; Claude execution
+was blocked by expired sign-in, and the other five native host routes were not exercised live.
+Adding brand marks does not expand those validation claims.
 
 ## Evidence
-- `python3 -m unittest discover -s tests -v`: 28 passed locally (macOS, Python 3.9.6); hosted
-  runs above passed on Ubuntu 3.9/3.13, macOS 3.13 and Windows 3.13.
-- Workflow and openai.yaml YAML parsed with Ruby; actionlint not available.
-- Release: https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.1.1 is
-  Latest, not draft/prerelease, tag resolves to 5eb5279, body matches docs/releases/v0.1.1.md.
-  Publish run: https://github.com/kristianrolando/cross-agent-handoff/actions/runs/41460822031
-- Official docs fetched 2026-11-02 for Claude Code (skills, memory), Codex, Antigravity,
-  Cursor, Gemini CLI (skills, GEMINI.md), Copilot, OpenCode and Cline.
-- Live trial (docs/evidence/live-trial-2026-11-02.md): Codex CLI 0.166 → Antigravity CLI 1.2.3
-  → fresh Codex session finished GREET-1 from files only; final tests 2 passed. Claude Code
-  2.1.287 listed the skill but its sign-in had expired. Headless Antigravity denied shell
-  commands; the auto-approve flag was blocked by this session's safety check and not used.
-- `claude plugin validate .` and `.claude-plugin/plugin.json` passed; only the expected
-  root CLAUDE.md warning.
-- not_run: Cursor, Gemini CLI, Copilot, OpenCode and Cline live runs.
+- Seven existing package integrity checks passed for this documentation/asset change.
+- All six SVG sources parsed as XML; IDs were unique in each document, with no script/image tags.
+- Each hero contains eight embedded, labeled brand marks. Wide and mobile renders were
+  visually inspected; mobile brand labels were enlarged after inspection.
+- Brand-source MIT license was copied byte-for-byte; attribution records pinned source paths.
+- Patch whitespace and checkpoint structure checks passed before publication.
+- Prior review: 28 package/protocol checks and four OS/Python hosted jobs passed; release
+  v0.1.1 publication succeeded. See docs/validation.md for historical run links and limits.
+
+At task start main matched origin/main at 1718405 with a clean tree. A subsequent fetch showed
+no competing remote changes. Temporary downloaded sources and render tools remain outside Git.
 
 ## Next
-No work remains for this task. Open options, each needing a maintainer request: rerun the
-live trial with Claude Code after re-signing in, try Antigravity with shell access, or trial
-Cursor, Gemini CLI, Copilot, OpenCode or Cline. Never move the v0.1.0 or v0.1.1 tags.
+No implementation remains for this request. Check the published README and hosted CI for the
+visual-update commit. Future work should inspect actual Git status and project files first.
+No global installation, model trial, marketplace submission or new release is implied.
 
 ## Recent outcomes
-- Published MIT v0.1.0 and verified public discovery and Claude/Codex copy installation.
-- Added six documented native-skill host routes and a portable fallback for other agents.
-- Verified expanded installer selection, complete resources and existing package checks.
-- 2026-11-02 review: fixed release/CI workflow defects, host-path inaccuracies and helper
-  placeholder false positives; pushed with passing hosted checks.
-- 2026-11-02: live Codex → Antigravity → Codex trial recorded.
-- 2026-11-02: v0.1.1 released from 5eb5279 (maintainer pushed the tag); publish run verified.
+- Published MIT v0.1.0 and added documented native-skill routes for eight coding agents.
+- Fixed release/CI workflows, host-route inaccuracies and helper placeholder handling.
+- Recorded a live Codex to Antigravity to Codex handoff with explicit coverage limits.
+- Published v0.1.1; release tags and passing CI were subsequently verified.
+- Added eight attributed brand marks to responsive README hero artwork.

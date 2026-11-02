@@ -17,7 +17,9 @@
 | CLAUDE.md | Claude contributor adapter importing shared rules |
 | AGENTS.md | Canonical shared contributor instructions |
 | .github/pull_request_template.md | Focused change and validation review template |
-| docs/assets/*.svg | Editable README banner, handoff flow and checkpoint map |
+| docs/assets/*.svg | Editable README banner with eight agent logos, handoff flow and checkpoint map |
+| docs/assets/brand-credits.md | Pinned logo sources, attribution and maintenance notes |
+| docs/assets/lobe-icons-LICENSE | Upstream MIT notice for embedded Lobe Icons brand marks |
 | README.md | Public quick start, compatibility matrix, installation and workflows |
 | LICENSE | User-approved MIT license for the project |
 | skills/cross-agent-handoff/LICENSE | Same MIT notice bundled with direct skill installs |

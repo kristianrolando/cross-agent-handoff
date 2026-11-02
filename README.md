@@ -2,7 +2,7 @@
 
 <picture>
   <source media="(max-width: 600px)" srcset="docs/assets/readme-hero-mobile.svg">
-  <img src="docs/assets/readme-hero.svg" alt="Switch agents. Keep the work. Claude Code, Codex, Antigravity and other coding agents share context through the project checkpoint, one writer at a time.">
+  <img src="docs/assets/readme-hero.svg" alt="Switch agents. Keep the work. Claude Code, Codex, Antigravity, Cursor, Gemini CLI, GitHub Copilot, OpenCode and Cline share project context, one writer at a time. Logos identify documented skill routes; see Compatibility for validation coverage.">
 </picture>
 
 <p align="center">
@@ -18,7 +18,7 @@
 
 **Hit a usage limit? Switching agents? Returning in a new session?** Save the useful context in your project, then let the next agent inspect the files and continue.
 
-**Claude Code · Codex · Antigravity · Cursor · Gemini CLI · GitHub Copilot · OpenCode · Cline**
+Eight agent skill routes, one project checkpoint. [Compare compatibility and validation](#compatibility).
 
 One compact checkpoint preserves the goal, verified progress, unfinished work, decisions, evidence and next action. No cross-vendor API calls, extra cloud service or shared chat history are required.
 
@@ -184,7 +184,7 @@ python3 -m unittest discover -s tests -v
 
 Use `python` on systems where `python3` is unavailable. The [CI workflow](.github/workflows/ci.yml) checks pushes and pull requests without model calls or vendor credentials. The badge shows current status; [recorded evidence](docs/validation.md) separates automated checks, illustrative examples and live-use reports.
 
-Human and AI-assisted contributions use the same instructions, checkpoint and review process. Start with [CONTRIBUTING.md](CONTRIBUTING.md). Visual assets in `docs/assets/` are editable SVG files with wide and narrow layouts, descriptive alternative text, no external fonts and no embedded scripts.
+Human and AI-assisted contributions use the same instructions, checkpoint and review process. Start with [CONTRIBUTING.md](CONTRIBUTING.md). Visual assets in `docs/assets/` are editable SVG files with wide and narrow layouts, descriptive alternative text, no external fonts and no embedded scripts. Brand marks are embedded locally with [source credits and license](docs/assets/brand-credits.md).
 
 ## License
 
