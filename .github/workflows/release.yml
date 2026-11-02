@@ -1,0 +1,75 @@
+name: Publish release
+
+"on":
+  push:
+    branches: [main]
+    paths: [.github/workflows/release.yml]
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing or new version tag matching the plugin manifest
+        required: true
+        default: v0.1.0
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.repository }}-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  RELEASE_TAG: ${{ github.ref_type == 'tag' && github.ref_name || inputs.tag || 'v0.1.0' }}
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - name: Validate release version and notes
+        run: |
+          python - <<'PY'
+          import json, os, re
+          from pathlib import Path
+          tag = os.environ['RELEASE_TAG']
+          assert re.fullmatch(r'v[0-9]+\.[0-9]+\.[0-9]+', tag), 'Expected vMAJOR.MINOR.PATCH'
+          version = json.loads(Path('.claude-plugin/plugin.json').read_text())['version']
+          assert tag == 'v' + version, 'Tag must match plugin version'
+          assert Path('docs/releases', tag + '.md').is_file(), 'Release notes are missing'
+          PY
+      - name: Run package and protocol checks
+        run: python -m unittest discover -s tests -v
+      - name: Check patch whitespace
+        run: git diff --check
+  publish:
+    needs: checks
+    if: github.repository == 'kristianrolando/cross-agent-handoff'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Publish a versioned release without overwriting existing releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "Release $RELEASE_TAG already exists; leaving it unchanged."
+            exit 0
+          fi
+          gh release create "$RELEASE_TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title "Cross-Agent Handoff $RELEASE_TAG" \
+            --notes-file "docs/releases/$RELEASE_TAG.md"

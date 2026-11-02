@@ -34,3 +34,9 @@ Included:
 - Automated protocol/package checks and a configured cross-platform CI matrix.
 
 The core has no cloud, vendor API, IDE or runtime dependency. Python 3.9+ is needed only for the optional helper. The skills CLI installer has its own Node.js requirement. Maintainer-reported successful use and automated evidence are documented separately. The workflow is sequential; no automatic crash save, cross-device synchronization or overlapping-source lock is promised.
+
+## Release workflow
+
+The Publish release workflow checks the manifest version, versioned notes, and package suite before publishing with GitHub's built-in token. Write permission is limited to the publishing job. It accepts version-tag pushes or manual dispatch. A main-branch change to the workflow also attempts the fixed initial v0.1.0 release to bootstrap publication; if that release already exists, it leaves it unchanged. No personal token is required. Do not edit the bootstrap default to publish a future version; use a reviewed version/tag/notes update and explicit release trigger.
+
+The original desktop may retain an unpushed documentation-only commit 57c17ab from the environment interruption. Its five-file patch was restored on GitHub as fddd8d1. Before resuming that local checkout, inspect `git status`, fetch origin, and compare the local/remote log. If the worktree is clean, rebase the local main branch onto origin/main; Git can skip the already-applied equivalent patch. Preserve unfamiliar work, resolve any actual conflict, and never force-push or hard-reset merely to align state.
