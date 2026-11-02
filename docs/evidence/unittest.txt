@@ -1,0 +1,29 @@
+test_A_fresh_project (test_handoff.ProtocolTests) ... ok
+test_B_existing_files_untouched (test_handoff.ProtocolTests) ... ok
+test_C_claude_to_codex_simulation (test_handoff.ProtocolTests) ... ok
+test_D_codex_to_claude_simulation (test_handoff.ProtocolTests) ... ok
+test_E_interrupted_checkpoint_and_preserved_work (test_handoff.ProtocolTests) ... ok
+test_F_false_done_is_not_mechanically_proven (test_handoff.ProtocolTests) ... ok
+test_F_stale_observation_detected (test_handoff.ProtocolTests) ... ok
+test_G_bounded_read_without_history (test_handoff.ProtocolTests) ... ok
+test_H_relocated_skill_without_git (test_handoff.ProtocolTests) ... ok
+test_atomic_replace_failure_preserves_live (test_handoff.ProtocolTests) ... ok
+test_concurrent_helper_lock_not_stolen (test_handoff.ProtocolTests) ... ok
+test_duplicate_fields_and_sections_rejected (test_handoff.ProtocolTests) ... ok
+test_git_staged_dirty_and_untracked_inventory (test_handoff.ProtocolTests) ... ok
+test_historical_commands_are_not_executed (test_handoff.ProtocolTests) ... ok
+test_invalid_candidate_does_not_touch_backup (test_handoff.ProtocolTests) ... ok
+test_ready_with_active_writer_rejected (test_handoff.ProtocolTests) ... ok
+test_refuse_symlink_and_parent_traversal (test_handoff.ProtocolTests) ... ok
+test_stale_candidate_does_not_replace_new_state (test_handoff.ProtocolTests) ... ok
+test_windows_line_endings (test_handoff.ProtocolTests) ... ok
+test_core_reading_size (test_package.PackageTests) ... ok
+test_plugin_paths_resolve (test_package.PackageTests) ... ok
+test_portable_frontmatter (test_package.PackageTests) ... ok
+test_relative_markdown_links (test_package.PackageTests) ... ok
+test_runtime_has_no_personal_dependencies (test_package.PackageTests) ... ok
+
+----------------------------------------------------------------------
+Ran 24 tests in 1.077s
+
+OK

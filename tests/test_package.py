@@ -1,0 +1,53 @@
+"""Package integrity checks without third-party runtime dependencies."""
+from pathlib import Path
+import json
+import re
+import unittest
+
+ROOT = Path(__file__).resolve().parents[1]
+SKILL = ROOT / 'skills' / 'cross-agent-handoff'
+
+
+class PackageTests(unittest.TestCase):
+    def test_portable_frontmatter(self):
+        text = (SKILL / 'SKILL.md').read_text()
+        match = re.match(r'^---\n(.*?)\n---\n', text, re.S)
+        self.assertIsNotNone(match)
+        fields = dict(line.split(': ', 1) for line in match[1].splitlines())
+        self.assertEqual(set(fields), {'name', 'description'})
+        self.assertEqual(fields['name'], SKILL.name)
+        self.assertRegex(fields['name'], r'^[a-z0-9]+(?:-[a-z0-9]+)*$')
+        self.assertTrue(0 < len(fields['description']) <= 1024)
+        self.assertNotIn('[TODO', text)
+
+    def test_relative_markdown_links(self):
+        for path in ROOT.rglob('*.md'):
+            text = re.sub(r'```.*?```', '', path.read_text(), flags=re.S)
+            for link in re.findall(r'\]\(([^)]+)\)', text):
+                if '://' not in link and not link.startswith('#'):
+                    self.assertTrue((path.parent / link.split('#')[0]).exists(), (str(path), link))
+
+    def test_runtime_has_no_personal_dependencies(self):
+        for path in SKILL.rglob('*'):
+            if path.is_file() and '__pycache__' not in path.parts:
+                text = path.read_text()
+                self.assertNotIn('/Users/', text, str(path))
+                self.assertNotIn('/root/', text, str(path))
+                self.assertNotIn('ANTHROPIC_API_KEY', text, str(path))
+                self.assertNotIn('OPENAI_API_KEY', text, str(path))
+
+    def test_plugin_paths_resolve(self):
+        plugin = json.loads((ROOT / '.claude-plugin/plugin.json').read_text())
+        market = json.loads((ROOT / '.claude-plugin/marketplace.json').read_text())
+        for path in plugin['skills']:
+            self.assertTrue((ROOT / path / 'SKILL.md').is_file())
+        self.assertEqual(market['plugins'][0]['name'], plugin['name'])
+        self.assertTrue((ROOT / market['plugins'][0]['source']).is_dir())
+
+    def test_core_reading_size(self):
+        self.assertLess(len((SKILL / 'SKILL.md').read_text().split()), 1600)
+        self.assertLess(len((SKILL / 'assets/checkpoint.md').read_text().split()), 400)
+
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2)

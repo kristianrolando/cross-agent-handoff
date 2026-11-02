@@ -1,0 +1,14 @@
+{
+  "name": "cross-agent-tools",
+  "owner": {
+    "name": "Kristian Rolando Limantara"
+  },
+  "plugins": [
+    {
+      "name": "cross-agent-handoff",
+      "source": "./",
+      "description": "Portable project checkpoints and safe recovery."
+    }
+  ],
+  "description": "Portable sequential AI agent continuity skills"
+}
