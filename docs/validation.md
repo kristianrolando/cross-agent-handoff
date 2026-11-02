@@ -10,7 +10,7 @@ No global host settings, installed skill directories, subscription configuration
 
 The maintainer reported successful testing and smooth operation, then authorized MIT licensing and public documentation/CI improvements. Record that as successful maintainer feedback. Exact tested application versions, operating systems, settings, and scenario coverage were not supplied; do not invent them or relabel the original authoring-environment trial as a pass.
 
-The public package now includes MIT notices in both the repository and standalone skill, a short quick start, explicitly fictional before/after checkpoint examples, a compatibility matrix, and a GitHub Actions workflow. The configured Linux/macOS/Windows matrix has not run on GitHub from this environment. No additional live model testing was attempted for this documentation update.
+The public package now includes MIT notices in both the repository and standalone skill, a short quick start, explicitly fictional before/after checkpoint examples, a compatibility matrix, and a GitHub Actions workflow. The Linux/macOS/Windows matrix subsequently passed its first hosted run; see the hosted evidence below. No additional live model testing was attempted for this documentation update.
 
 ## Scenario coverage
 
@@ -64,8 +64,23 @@ The automated suite now comprises 27 tests, including bundled-license and public
 7. Kept durable criteria/decisions in existing owners; the checkpoint is not a second backlog. Existing equivalent formats remain supported manually.
 8. Clearly separated implementation, local protocol tests, independent-agent behavior, plugin-manifest validation, actual installation, and full cross-vendor verification.
 
+## Hosted CI evidence
+
+Public repository: [kristianrolando/cross-agent-handoff](https://github.com/kristianrolando/cross-agent-handoff).
+First hosted run: [Package checks #1](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/41401002913) on commit `74d2c5c4c7fae8adf72e3053e4db4cb22f829af2`.
+The GitHub API reported all four jobs completed successfully:
+
+| Runner / Python | Job ID | Result |
+| --- | --- | --- |
+| macos-latest / 3.13 | 125132595593 | success |
+| windows-latest / 3.13 | 125132595775 | success |
+| ubuntu-latest / 3.9 | 125132595843 | success |
+| ubuntu-latest / 3.13 | 125132595933 | success |
+
+Each job's package/protocol step and whitespace check succeeded. These are actual hosted checks, distinct from maintainer-reported live use and the earlier independent-agent trial.
+
 ## Publication status
 
-MIT licensing, public documentation, shared Claude/Codex contributor entrypoints and CI configuration are complete. The maintainer authorized public publication. Repository `kristianrolando/cross-agent-handoff` has been created and verified public. Source upload, hosted CI and initial release are in progress; no hosted success is claimed yet. See [releasing.md](releasing.md) for the release procedure.
+MIT source and local Git history are public on main, and origin/main matched the local pushed commit when inspected. The hosted CLAUDE.md was retrieved to verify contributor routing. README and plugin metadata point to the actual repository. Shared contributor instructions and the PR template are available.
 
-README commands and plugin metadata use the actual repository destination. The direct Codex skill route and Claude Code plugin route remain distinct. No additional live model testing is required for this packaging update.
+Release v0.1.0 is prepared for publication after the final documentation push and its CI. See [releasing.md](releasing.md). The direct Codex skill route and Claude Code plugin route remain distinct. The public install commands follow those distributions; no new native Codex plugin or extra live model trial is claimed.

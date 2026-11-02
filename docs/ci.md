@@ -11,7 +11,7 @@ The GitHub Actions workflow at `.github/workflows/ci.yml` runs on pushes, pull r
 | macos-latest | 3.13 | macOS filesystem behavior |
 | windows-latest | 3.13 | Windows paths and line endings |
 
-This is the configured matrix, not a claim of hosted passes. Record actual run results after the repository is hosted and GitHub Actions executes it. The local authoring run is documented separately in docs/validation.md.
+All four jobs passed in the [first hosted run](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/41401002913) on commit `74d2c5c4c7fae8adf72e3053e4db4cb22f829af2`. This establishes the automated suite on those runners, not model compliance or native host discovery. The badge and Actions history show subsequent results. Local authoring evidence is recorded separately in docs/validation.md.
 
 ## Scope
 

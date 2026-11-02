@@ -75,7 +75,7 @@ See the [full before/after checkpoint example](docs/checkpoint-example.md). Exam
 | Codex | Direct skill; optional UI metadata included | Maintainer reports successful use. Independent fresh-agent recovery exercised the workflow; separate Codex CLI discovery was not observed in the authoring environment. |
 | Other filesystem-capable agents | Explicitly read SKILL.md and project checkpoint | Portable procedure; host discovery and invocation are not verified. |
 | Plain chat or uploaded project | Read the provided checkpoint and files | Snapshot only unless live filesystem tools are available. No automatic synchronization. |
-| Optional Python helper | Python 3.9+; standard library only | Local checks passed on macOS with Python 3.9. CI is configured for Linux, macOS and Windows; hosted results are pending. |
+| Optional Python helper | Python 3.9+; standard library only | Local checks passed on macOS with Python 3.9. Hosted CI also passed on Linux (Python 3.9/3.13), macOS and Windows (Python 3.13). |
 | Concurrent agents editing overlapping files | Outside the sequential core | Requires separate areas/workspaces and an integrator. The checkpoint is not a source lock. |
 
 The maintainer reported that their own testing worked smoothly. This is recorded as maintainer feedback, separately from reproducible automated evidence. It does not establish every host version, operating system, or concurrency scenario. Details: [validation record](docs/validation.md).
@@ -137,7 +137,7 @@ python3 -m unittest discover -s tests -v
 
 On Windows, use `python` if `python3` is unavailable. [GitHub Actions](.github/workflows/ci.yml) runs the suite on pushes, pull requests and manual dispatch. It covers filesystem failure scenarios, metadata, local documentation links, bundled license consistency, and example checkpoint structure. It makes no model calls and needs no vendor credentials.
 
-The workflow is configured here; a hosted CI pass can only be reported after an actual GitHub run. See [CI scope and maintenance](docs/ci.md).
+The [first hosted CI run](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/41401002913) passed all four matrix jobs. The badge above reflects current workflow status. See [CI scope and maintenance](docs/ci.md).
 
 ## Documentation
 
