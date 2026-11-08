@@ -240,3 +240,11 @@ game chain, an abrupt-stop recovery, and the video and motion profiles in dispos
 All passed with observed limits: Antigravity used file tools only, the two Claude aliases were one
 account, and Codex hooks were never trusted. Three findings were fixed afterwards. Details,
 prompts and exclusions: [live-trial-2026-11-08.md](evidence/live-trial-2026-11-08.md).
+
+## Release v0.2.0 evidence (2026-11-08)
+
+- Source commit `3e5f3805441edb4ee17b170f8afe48e04cd92da7` on main passed all six Package checks jobs ([run 42438749174](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/42438749174)).
+- Annotated tag `v0.2.0` (object `49811bb`) targets that commit. The maintainer approved the release; the agent pushed the tag after the maintainer's own attempt did not reach the remote.
+- [Publish release run 42439322328](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/42439322328): checks and publish jobs succeeded.
+- [Release v0.2.0](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.2.0) is Latest, not a draft or prerelease, published 2026-11-08T02:37:36Z. Its body matches docs/releases/v0.2.0.md apart from the final newline.
+- Tags v0.1.0 (`666e04c`) and v0.1.1 (`f496f6e` → `5eb5279`) are unchanged.

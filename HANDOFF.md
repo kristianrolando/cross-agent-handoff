@@ -1,10 +1,10 @@
 # Project handoff
 
 - format: cross-agent-handoff/1
-- task_status: partial
+- task_status: done
 - handoff: ready
 - writer: none
-- updated_at: 2026-11-08T09:29:06+07:00
+- updated_at: 2026-11-08T09:38:13+07:00
 
 ## Project
 Cross-Agent Handoff: portable sequential project continuity and a Claude Code plugin wrapper.
@@ -69,9 +69,12 @@ guidance, actionable observed_file warning) with README, notes, kit, hooks guide
 updated.
 PR #8 (live-trial findings) merged as aafa07e after all 12 checks passed. CHANGELOG dated for
 the v0.2.0 release on 2026-11-08 at the maintainer's request ("Merge #8, then release").
-Unfinished: the maintainer pushes the annotated tag v0.2.0 on the verified main commit (agent tag
-pushes were refused by the safety check in v0.1.1), then the agent verifies the Publish release
-run, updates the README badge and records links. Maintainer-only trials remain optional.
+Released: v0.2.0 published 2026-11-08 from 3e5f380 (annotated tag 49811bb, pushed by the agent
+at the maintainer's request); publish run 42439322328 succeeded; release is Latest; README badge
+updated. v0.1.0 and v0.1.1 tags unchanged.
+Unfinished (optional, maintainer-only): Antigravity App/IDE, a second Claude account, Windows,
+StopFailure on a real limit, trusted Codex hooks, guard; steps in the live-trial kit. Deferred to
+v0.3.0: rolling history, media manifest, style-tokens template, hooks for the other five hosts.
 Decisions (maintainer approved the plan 2026-11-08; read conservatively):
 - Hooks are installed only by an explicit command; none ship inside the existing plugin.
 - Keep format `cross-agent-handoff/1`; new metadata are optional bullets, no YAML front matter.
@@ -105,12 +108,12 @@ Writers / operations: none running.
 - Hook facts: official pages fetched 2026-11-08, links in the audit.
 
 ## Next
-After main CI passes for this commit, the maintainer runs the tag commands from
-docs/releasing.md step 5. Then verify the release and finish step 6.
+No work remains for v0.2.0. Optional: the maintainer runs the remaining live-trial kit steps and
+records them with docs/evidence/live-trial-template.md. Never move the v0.1.0, v0.1.1 or v0.2.0 tags.
 
 ## Recent outcomes
-- 2026-11-08, Claude Code: WP3-lite advisory lock and switch log committed.
 - 2026-11-08, Claude Code: WP5-lite game, video and motion profiles committed.
 - 2026-11-08, Claude Code: WP8 release preparation committed; v0.2.0 awaits merge and approval.
 - 2026-11-08, Claude Code: merged PRs #1-#7 into main; v0.2.0 awaits release approval.
 - 2026-11-08, Claude Code: ran headless live trials of v0.2.0; all passed; three findings fixed.
+- 2026-11-08, Claude Code: published v0.2.0 and verified the release.
