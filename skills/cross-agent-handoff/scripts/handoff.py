@@ -27,6 +27,7 @@ OPTIONAL = {
                 'lowercase profile names separated by commas, such as video or game, motion'),
 }
 CLOCK_SKEW = timedelta(minutes=5)
+PROFILES = Path(__file__).resolve().parent.parent / 'assets' / 'profiles'
 
 
 def digest(data):
@@ -76,6 +77,31 @@ def validate_optional(text):
     return errors
 
 
+def profile_names(text):
+    values = fields(text.replace('\r\n', '\n'), 'profile')
+    return [name.strip() for name in values[0].split(',')] if len(values) == 1 else []
+
+
+def with_profiles(template, names):
+    """Insert profile sections after State and record them in the metadata."""
+    available = sorted(path.stem for path in PROFILES.glob('*.md'))
+    unknown = [name for name in names if name not in available]
+    if unknown:
+        raise ValueError('Unknown profile(s): {}. Available: {}'.format(', '.join(unknown), ', '.join(available)))
+    sections = ''.join((PROFILES / (name + '.md')).read_text(encoding='utf-8').rstrip('\n') + '\n\n'
+                       for name in names)
+    marker = '\n## Evidence\n'
+    if marker not in template or '\n- writer: ' not in template:
+        raise ValueError('Template lacks the writer line or Evidence section')
+    template = template.replace(marker, '\n' + sections.rstrip('\n') + '\n' + marker, 1)
+    head, rest = template.split('\n- writer: ', 1)
+    line, rest = rest.split('\n', 1)
+    updated = rest.split('\n', 1) if rest.startswith('- updated_at: ') else None
+    if updated:
+        return '{}\n- writer: {}\n{}\n- profile: {}\n{}'.format(head, line, updated[0], ', '.join(names), updated[1])
+    return '{}\n- writer: {}\n- profile: {}\n{}'.format(head, line, ', '.join(names), rest)
+
+
 def validate(text):
     text = text.replace('\r\n', '\n')
     errors = []
@@ -112,6 +138,9 @@ def observations(root, text):
                 warnings.append('Observed file changed or is missing: ' + record['path'])
         except (ValueError, KeyError, TypeError, OSError) as exc:
             warnings.append('Invalid file observation: ' + str(exc))
+    for name in profile_names(text):
+        if not re.search(r'^## Profile: ' + re.escape(name) + r'\s*$', text, re.M):
+            warnings.append('profile lists ' + name + ' but the checkpoint has no "## Profile: ' + name + '" section.')
     saved = updated_at(text)
     if saved and saved > datetime.now(timezone.utc) + CLOCK_SKEW:
         warnings.append('updated_at is in the future; check the clock or the recorded time.')
@@ -161,8 +190,12 @@ def execute(args):
         raise ValueError('Checkpoint parent directory must already exist')
     if args.command == 'init':
         template = Path(__file__).resolve().parent.parent / 'assets' / 'checkpoint.md'
+        content = template.read_bytes()
+        names = [name.strip() for name in (args.profile or '').split(',') if name.strip()]
+        if names:
+            content = with_profiles(content.decode('utf-8'), list(dict.fromkeys(names))).encode('utf-8')
         with target.open('xb') as stream:
-            stream.write(template.read_bytes())
+            stream.write(content)
         print('Created a draft; fill every REPLACE field before check/save. Existing instructions were not edited.')
         return 0
     if args.command == 'inspect':
@@ -217,6 +250,7 @@ def main():
     parser.add_argument('--file', action='append', default=[])
     parser.add_argument('--candidate')
     parser.add_argument('--expected-sha')
+    parser.add_argument('--profile', help='init: comma-separated profiles from assets/profiles, e.g. video,motion')
     args = parser.parse_args()
     if args.command == 'save' and (not args.candidate or not args.expected_sha):
         parser.error('save requires --candidate and --expected-sha from inspect')

@@ -5,6 +5,8 @@
 | skills/cross-agent-handoff/SKILL.md | Portable lifecycle, information ownership and boundaries |
 | skills/cross-agent-handoff/agents/openai.yaml | Optional Codex UI metadata; ignored by the portable core |
 | skills/cross-agent-handoff/assets/checkpoint.md | The single default project checkpoint template |
+| skills/cross-agent-handoff/assets/profiles/*.md | Optional game, video and motion checkpoint sections |
+| skills/cross-agent-handoff/references/profiles.md | When to use each profile, rules and contribution guide |
 | skills/cross-agent-handoff/references/agents.md | Host installation paths, activation, routing and official sources |
 | skills/cross-agent-handoff/references/setup.md | Non-destructive setup, migration and removal |
 | skills/cross-agent-handoff/references/recovery.md | Interrupted/stale/conflicting state and concurrency boundaries |
@@ -48,6 +50,7 @@
 | tests/test_autosave.py | Snapshot, resume-context and abrupt-stop scenarios |
 | tests/test_install.py | Installer idempotency, doctor, v0.1.1-layout upgrade and uninstall |
 | tests/test_lock.py | Lock acquisition, blocked and confirmed takeover, switch log, heartbeat |
+| tests/test_profiles.py | Profile sections, size budgets and running-render surfacing |
 | tests/test_hooks.py | Hook configuration merge, removal and command execution |
 | .gitignore | Exclude generated Python caches |
 

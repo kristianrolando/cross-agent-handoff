@@ -23,6 +23,8 @@ spec = importlib.util.spec_from_file_location('cross_agent_handoff_lock', HERE /
 lock = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(lock)
 LISTED_FILES = 15
+# Lines a successor must see before rerunning long jobs (base template and profiles).
+OPERATIONS = re.compile(r'^(?:Writers / operations|Running renders|Renders):', re.I)
 
 
 def section(text, name, limit):
@@ -86,6 +88,10 @@ def build(root, checkpoint, config):
     lines.extend('  ' + line for line in section(text, 'Task', 8))
     lines.append('Next:')
     lines.extend('  ' + line for line in section(text, 'Next', 6))
+    operations = [line.strip() for line in text.splitlines() if OPERATIONS.match(line.strip())]
+    if operations:
+        lines.append('Running operations (check before rerunning anything):')
+        lines.extend('  ' + line for line in operations[:6])
     if changes['files']:
         lines.append('Changed after the checkpoint (newest first):')
         for rel, size, mtime in changes['files'][:LISTED_FILES]:

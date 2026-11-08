@@ -221,3 +221,9 @@ alias, a stale lock still needing `--confirm-takeover`, logged takeover and forc
 alias from the environment, rejection of email-like aliases, heartbeat refresh only for the
 lock's host, the inject warning, and a corrupt lock not being overwritten. Agent names are
 labels; no host ran.
+
+WP5-lite profiles (2026-11-08): 79 local checks passed (macOS, Python 3.9.6). They cover the
+profile file format and per-profile word budget (150), combined draft budget (700),
+`init --profile` section order and metadata, rejection of unknown profiles before writing,
+the missing-section warning, and `inject.py` printing a recorded running render. Profiles
+were not exercised by a live agent.
