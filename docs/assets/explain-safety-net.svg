@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="510" viewBox="0 0 1280 510" role="img" aria-labelledby="title desc">
+  <title id="title">Automatic safety net</title>
+  <desc id="desc">Three optional helpers: a camera that records changes, a welcome message that warns about stale notes, and a one-time reminder.</desc>
+  <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M1 1L6 4L1 7" fill="none" stroke="#798c80" stroke-width="1.5"/></marker></defs>
+  <rect width="1280" height="510" rx="20" fill="#f3efe6"/>
+  <g font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif">
+    <text x="40" y="50" fill="#607065" font-size="16" font-weight="700" letter-spacing="2">WHEN AN AGENT FORGETS TO WRITE NOTES</text>
+    <text x="40" y="98" fill="#17342c" font-size="34" font-weight="700" letter-spacing="-.7">A safety net you switch on yourself.</text>
+<rect x="40" y="138" width="384" height="250" rx="16" fill="#fffdf8" stroke="#d9dcd1"/>
+<circle cx="79" cy="178" r="18" fill="#f2dfd0"/><text x="73" y="184" fill="#8f5135" font-size="16" font-weight="700">1</text>
+<text x="64" y="239" fill="#17342c" font-size="23" font-weight="700">Camera</text>
+<text x="64" y="276" fill="#53665a" font-size="19">When an agent stops or</text>
+<text x="64" y="306" fill="#53665a" font-size="19">errors, it records which</text>
+<text x="64" y="336" fill="#53665a" font-size="19">files and commits changed.</text>
+<text x="64" y="366" fill="#53665a" font-size="19">No AI judgment involved.</text>
+<rect x="448" y="138" width="384" height="250" rx="16" fill="#173c32" stroke="none"/>
+<circle cx="487" cy="178" r="18" fill="#bce1c6"/><text x="481" y="184" fill="#173c32" font-size="16" font-weight="700">2</text>
+<text x="472" y="239" fill="#f5f5e9" font-size="23" font-weight="700">Welcome message</text>
+<text x="472" y="276" fill="#c5dbcb" font-size="19">When an agent starts, it</text>
+<text x="472" y="306" fill="#c5dbcb" font-size="19">sees the notebook at once.</text>
+<text x="472" y="336" fill="#c5dbcb" font-size="19">A warning appears if work</text>
+<text x="472" y="366" fill="#c5dbcb" font-size="19">happened after the notes.</text>
+<rect x="856" y="138" width="384" height="250" rx="16" fill="#fffdf8" stroke="#d9dcd1"/>
+<circle cx="895" cy="178" r="18" fill="#f2dfd0"/><text x="889" y="184" fill="#8f5135" font-size="16" font-weight="700">3</text>
+<text x="880" y="239" fill="#17342c" font-size="23" font-weight="700">Reminder (optional)</text>
+<text x="880" y="276" fill="#53665a" font-size="19">Before stopping with stale</text>
+<text x="880" y="306" fill="#53665a" font-size="19">notes, the agent is asked</text>
+<text x="880" y="336" fill="#53665a" font-size="19">once to update them.</text>
+<text x="880" y="366" fill="#53665a" font-size="19">Never loops.</text>
+<text x="40" y="436" fill="#53665a" font-size="19">All three are off by default. You switch them on per project, and you can remove them at any time.</text>
+<text x="40" y="464" fill="#53665a" font-size="19">They only fill gaps when an agent forgets to write notes. They never replace the notebook.</text>
+  </g>
+</svg>

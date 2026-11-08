@@ -4,7 +4,7 @@
 - task_status: done
 - handoff: ready
 - writer: none
-- updated_at: 2026-11-08T09:38:13+07:00
+- updated_at: 2026-11-08T13:58:00+07:00
 
 ## Project
 Cross-Agent Handoff: portable sequential project continuity and a Claude Code plugin wrapper.
@@ -22,6 +22,9 @@ WP5-lite → WP8. WP7 tests go with each package. Deferred to v0.3.0: rolling hi
 media manifest/style tokens, hooks for the other five hosts, Beads.
 
 ## State
+Done: plain-language README guide on local branch `docs/readme-visual-guide` (not pushed, no PR
+yet): four explainer SVGs `docs/assets/explain-*.svg`, a new "In plain words" README section and
+a file-map line. Renders checked as images; 81 tests pass; `git diff --check` clean.
 Done: Step 0 on local branch `chore/v0.2.0-roadmap` (roadmap docs, 6-job CI matrix).
 Done: WP4-lite on stacked branch `feat/wp4-checkpoint-metadata`. handoff.py validates optional
 `updated_at`, `language` and `profile` lines (clear errors, future-time warning) and exposes
