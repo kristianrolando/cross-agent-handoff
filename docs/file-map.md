@@ -36,7 +36,7 @@
 | .github/workflows/release.yml | Checked versioned release publication on explicit tag or dispatch |
 | docs/releases/v0.1.0.md | Initial public release notes and install commands |
 | CHANGELOG.md | Version history with links to release notes |
-| docs/releases/v0.2.0.md | v0.2.0 notes and upgrade steps from v0.1.1 (unreleased) |
+| docs/releases/v0.2.0.md | v0.2.0 notes and upgrade steps from v0.1.1 |
 | docs/evidence/live-trial-kit-v0.2.0.md | Step-by-step live trials for the maintainer, results left empty |
 | docs/evidence/live-trial-2026-11-08.md | Headless Claude Code, Codex and Antigravity CLI trials of v0.2.0 |
 | docs/evidence/live-trial-template.md | Record form for live trials |

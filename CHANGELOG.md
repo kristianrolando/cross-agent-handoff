@@ -3,7 +3,7 @@
 Versions follow the Claude plugin manifest and the skill's `VERSION` file. Release notes with
 install commands live in [docs/releases/](docs/releases/).
 
-## 0.2.0 (unreleased)
+## 0.2.0 (2026-11-08)
 
 Built for rotating agents and accounts on one project, including media work. Everything new
 is opt-in; updating the skill alone keeps v0.1.1 behavior apart from guidance text.

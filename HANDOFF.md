@@ -4,7 +4,7 @@
 - task_status: partial
 - handoff: ready
 - writer: none
-- updated_at: 2026-11-08T09:26:55+07:00
+- updated_at: 2026-11-08T09:29:06+07:00
 
 ## Project
 Cross-Agent Handoff: portable sequential project continuity and a Claude Code plugin wrapper.
@@ -67,9 +67,11 @@ motion profiles all passed; record in docs/evidence/live-trial-2026-11-08.md. Th
 fixed on branch `fix/live-trial-findings` (Antigravity Stop event name, clock-read updated_at
 guidance, actionable observed_file warning) with README, notes, kit, hooks guide and validation
 updated.
-Unfinished: maintainer-only trials (Antigravity App/IDE, second Claude account, Windows,
-StopFailure on a real limit, trusted Codex hooks, guard); merge the findings PR; then the
-v0.2.0 release steps in docs/releasing.md, with the tag pushed by the maintainer after approval.
+PR #8 (live-trial findings) merged as aafa07e after all 12 checks passed. CHANGELOG dated for
+the v0.2.0 release on 2026-11-08 at the maintainer's request ("Merge #8, then release").
+Unfinished: the maintainer pushes the annotated tag v0.2.0 on the verified main commit (agent tag
+pushes were refused by the safety check in v0.1.1), then the agent verifies the Publish release
+run, updates the README badge and records links. Maintainer-only trials remain optional.
 Decisions (maintainer approved the plan 2026-11-08; read conservatively):
 - Hooks are installed only by an explicit command; none ship inside the existing plugin.
 - Keep format `cross-agent-handoff/1`; new metadata are optional bullets, no YAML front matter.
@@ -83,7 +85,7 @@ placeholders unfilled).
 Writers / operations: none running.
 
 ## Evidence
-- 82 tests OK after live-trial fixes (macOS, Python 3.9.6).
+- 82 tests OK on main aafa07e (macOS, Python 3.9.6); PR #8 passed six hosted jobs.
 - 80 tests OK on main 99e3acf (macOS, Python 3.9.6). All seven PR heads passed six hosted jobs
   before merge; main's own run 42436655218 was in progress when this was saved.
 - 79 tests OK after WP5-lite (macOS, Python 3.9.6).
@@ -103,8 +105,8 @@ Writers / operations: none running.
 - Hook facts: official pages fetched 2026-11-08, links in the audit.
 
 ## Next
-Check hosted CI on the live-trial findings PR, then ask the maintainer to merge it and decide
-whether to run the remaining maintainer-only trials before releasing v0.2.0.
+After main CI passes for this commit, the maintainer runs the tag commands from
+docs/releasing.md step 5. Then verify the release and finish step 6.
 
 ## Recent outcomes
 - 2026-11-08, Claude Code: WP3-lite advisory lock and switch log committed.
