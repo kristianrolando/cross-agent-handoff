@@ -63,6 +63,9 @@ class PackageTests(unittest.TestCase):
                 capture_output=True, text=True)
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
+    def test_version_file(self):
+        self.assertRegex((SKILL / 'VERSION').read_text(), r'^[0-9]+\.[0-9]+\.[0-9]+(?:-dev)?\n$')
+
     def test_core_reading_size(self):
         self.assertLess(len((SKILL / 'SKILL.md').read_text().split()), 1600)
         self.assertLess(len((SKILL / 'assets/checkpoint.md').read_text().split()), 400)

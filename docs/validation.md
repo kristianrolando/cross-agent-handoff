@@ -203,3 +203,14 @@ status line; after the turn, `.handoff/auto/latest.json` recorded event `Stop` f
 `claude`. This shows the two hooks ran once in one session. It does not cover `StopFailure`
 (a real rate-limit error was not produced), `PreCompact`, the guard, interactive sessions,
 Windows, Codex or Antigravity hooks, or whether the model then follows the resume procedure.
+
+WP2 installer (2026-11-08): 65 local checks passed after `install.py` was added (macOS,
+Python 3.9.6). They cover all eight hosts mapping to two folders, idempotent reinstall,
+doctor detection of an edited and a missing copy, drift, refusal to replace another skill,
+confirmation before replacing edited copies, `--with-hooks`, uninstall keeping `HANDOFF.md`
+and `.handoff/`, user folders under a temporary home, and an installed copy installing other
+hosts. The automated upgrade test removes the v0.2.0-only files from the current source,
+because CI checkouts have no tags. A manual check used the real tag: `git archive v0.1.1`
+copies in `.claude/skills/` and `.agents/skills/` were reported as unknown version without
+manifest, replaced by `--update --yes`, and then reported healthy; HANDOFF.md was unchanged.
+Windows behavior of the installer is covered only by hosted CI.

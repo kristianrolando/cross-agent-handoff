@@ -33,7 +33,32 @@ them together. All installations must point to the same project checkpoint, not 
 The repository includes a Claude Code plugin wrapper only. A direct skill installation does not
 create a plugin, marketplace listing or native extension for another host.
 
-## Installer option
+## Bundled installer and doctor
+
+With Python 3.9+, the skill can copy itself to every project folder the chosen hosts read.
+No Node.js, Git or symlinks are needed. Run it from a checkout or any installed copy:
+
+```sh
+python3 SKILL/scripts/install.py --project PROJECT --hosts claude,codex,antigravity --dry-run
+python3 SKILL/scripts/install.py --project PROJECT --hosts claude,codex,antigravity
+python3 SKILL/scripts/install.py --project PROJECT --doctor
+```
+
+It uses the fewest folders: `.agents/skills/` for Codex, Antigravity, Cursor, Gemini CLI,
+Copilot and OpenCode, and `.claude/skills/` for Claude Code and Cline. Each copy gets
+`VERSION` and `MANIFEST.sha256`. `--doctor` reports edited copies, copies that differ from each
+other, copies missing for `--hosts`, hooks pointing at missing scripts, and personal hook files
+not ignored by Git. Exit codes: 0 healthy, 1 warnings, 2 problems.
+
+An existing copy that differs is never replaced silently: `--update` lists local edits and
+asks for confirmation (`--yes` skips it). Copies from v0.1.x or another installer have no
+manifest, so their edits cannot be detected; review them first. `--uninstall` removes only
+verified copies of this skill and its own hook entries, never `HANDOFF.md`, `.handoff/` or
+other skills. `--with-hooks` also runs the opt-in hook setup in [hooks.md](hooks.md).
+`--user` uses the user folders in the table above; it changes nothing in the project.
+`--dry-run` works with every mutating action.
+
+## Skills CLI option
 
 From the consumer project, use the public Skills CLI and select the target host:
 
@@ -53,6 +78,10 @@ for example, the checked installer lists legacy Antigravity global paths and a s
 project path. Use the documented manual paths above if the installed host does not discover
 that destination. Do not assume `--global` works identically across products or versions.
 Do not install into every host or change global settings merely to enable handoff.
+The Skills CLI and the bundled installer write the same folders, and `install.py --doctor`
+also checks copies made by the Skills CLI. The Claude plugin is separate: Claude Code keeps it
+in its own plugin cache, which the bundled installer neither reads nor changes. Use one route
+per host so Claude Code does not see the plugin and a direct copy at the same time.
 
 ## Activate and route project context
 
