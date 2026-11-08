@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="460" viewBox="0 0 1280 460" role="img" aria-labelledby="title desc">
+  <title id="title">A day with a usage limit</title>
+  <desc id="desc">Agent A works and saves notes, stops suddenly, you open Agent B, B reads the notes and checks the files, then continues.</desc>
+  <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M1 1L6 4L1 7" fill="none" stroke="#798c80" stroke-width="1.5"/></marker></defs>
+  <rect width="1280" height="460" rx="20" fill="#f3efe6"/>
+  <g font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif">
+    <text x="40" y="50" fill="#607065" font-size="16" font-weight="700" letter-spacing="2">WHAT YOU WILL SEE</text>
+    <text x="40" y="98" fill="#17342c" font-size="34" font-weight="700" letter-spacing="-.7">From limit hit to back at work.</text>
+<rect x="40" y="138" width="224" height="229" rx="16" fill="#fffdf8" stroke="#d9dcd1"/>
+<circle cx="79" cy="178" r="18" fill="#f2dfd0"/><text x="73" y="184" fill="#8f5135" font-size="16" font-weight="700">1</text>
+<text x="64" y="239" fill="#17342c" font-size="23" font-weight="700">Work and save</text>
+<text x="64" y="276" fill="#53665a" font-size="19">Agent A works and</text>
+<text x="64" y="306" fill="#53665a" font-size="19">updates the notebook</text>
+<text x="64" y="336" fill="#53665a" font-size="19">after each step.</text>
+<path d="M268 252H280" stroke="#798c80" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="284" y="138" width="224" height="229" rx="16" fill="#fffdf8" stroke="#d9dcd1"/>
+<circle cx="323" cy="178" r="18" fill="#f2dfd0"/><text x="317" y="184" fill="#8f5135" font-size="16" font-weight="700">2</text>
+<text x="308" y="239" fill="#17342c" font-size="23" font-weight="700">It stops</text>
+<text x="308" y="276" fill="#53665a" font-size="19">The limit is reached</text>
+<text x="308" y="306" fill="#53665a" font-size="19">or the session ends</text>
+<text x="308" y="336" fill="#53665a" font-size="19">without warning.</text>
+<path d="M512 252H524" stroke="#798c80" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="528" y="138" width="224" height="229" rx="16" fill="#fffdf8" stroke="#d9dcd1"/>
+<circle cx="567" cy="178" r="18" fill="#f2dfd0"/><text x="561" y="184" fill="#8f5135" font-size="16" font-weight="700">3</text>
+<text x="552" y="239" fill="#17342c" font-size="23" font-weight="700">You open Agent B</text>
+<text x="552" y="276" fill="#53665a" font-size="19">Any supported agent,</text>
+<text x="552" y="306" fill="#53665a" font-size="19">on the same</text>
+<text x="552" y="336" fill="#53665a" font-size="19">project folder.</text>
+<path d="M756 252H768" stroke="#798c80" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="772" y="138" width="224" height="229" rx="16" fill="#173c32" stroke="none"/>
+<circle cx="811" cy="178" r="18" fill="#bce1c6"/><text x="805" y="184" fill="#173c32" font-size="16" font-weight="700">4</text>
+<text x="796" y="239" fill="#f5f5e9" font-size="23" font-weight="700">Read, then check</text>
+<text x="796" y="276" fill="#c5dbcb" font-size="19">B reads the notebook</text>
+<text x="796" y="306" fill="#c5dbcb" font-size="19">and inspects files.</text>
+<text x="796" y="336" fill="#c5dbcb" font-size="19">Stale notes flagged.</text>
+<path d="M1000 252H1012" stroke="#798c80" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="1016" y="138" width="224" height="229" rx="16" fill="#fffdf8" stroke="#d9dcd1"/>
+<circle cx="1055" cy="178" r="18" fill="#f2dfd0"/><text x="1049" y="184" fill="#8f5135" font-size="16" font-weight="700">5</text>
+<text x="1040" y="239" fill="#17342c" font-size="23" font-weight="700">Carry on</text>
+<text x="1040" y="276" fill="#53665a" font-size="19">B continues from</text>
+<text x="1040" y="306" fill="#53665a" font-size="19">the next step and</text>
+<text x="1040" y="336" fill="#53665a" font-size="19">keeps half-done work.</text>
+<text x="40" y="412" fill="#53665a" font-size="19">Nothing here needs a cloud service or shared chat history. Everything lives in files inside your project.</text>
+  </g>
+</svg>

@@ -7,6 +7,7 @@
 
 <p align="center">
   <a href="#quick-start">Quick start</a> ·
+  <a href="#in-plain-words">In plain words</a> ·
   <a href="#how-it-works">How it works</a> ·
   <a href="#compatibility">Compatibility</a> ·
   <a href="#documentation">Documentation</a>
@@ -56,6 +57,26 @@ If the host does not discover the skill, use the [explicit-file fallback](skills
 For games, video edits or motion graphics, add `Profile: game`, `Profile: video` or `Profile: motion` (combinable) to the prompt. The checkpoint then also records render commands, outputs, style tokens or playtests. See [profiles](skills/cross-agent-handoff/references/profiles.md).
 
 The agent inspects existing instructions and documentation, reuses a suitable checkpoint or creates `HANDOFF.md`, and adds short project routing where needed. For a new project, include your goal and acceptance criteria. Initialization does not scaffold an application or choose a stack.
+
+## In plain words
+
+No coding knowledge is needed to understand the idea. Think of a shift change at a hospital: the nurse going home writes a handover notebook, and the next nurse reads it before checking the patient. Cross-Agent Handoff gives your AI agents the same notebook.
+
+<img src="docs/assets/explain-notebook.svg" alt="Agent A works and writes progress into HANDOFF.md, the shared notebook holding the goal, finished work, half-done work, proof and one next step. Agent B reads it, checks the real files and continues.">
+
+**What it looks like when an agent hits a limit:**
+
+<img src="docs/assets/explain-day.svg" alt="Five steps: Agent A works and saves; it stops suddenly; you open Agent B on the same folder; B reads the notebook and checks the files, flagging stale notes; B carries on from the next step.">
+
+**Optional safety net.** Agents sometimes stop before they write their notes. Three helpers fill that gap, and you switch them on yourself per project (see [hooks](skills/cross-agent-handoff/references/hooks.md)):
+
+<img src="docs/assets/explain-safety-net.svg" alt="Three optional helpers, all off by default: a camera that records changed files when an agent stops, a welcome message that shows the notebook and warns about stale notes, and a one-time reminder to update stale notes.">
+
+**Two agents never write at once.** A lock file lets one agent work. A second agent must ask you before taking over, and every takeover is logged (see [lock](skills/cross-agent-handoff/references/lock.md)):
+
+<img src="docs/assets/explain-one-writer.svg" alt="Four steps: the working agent takes a lock; another agent sees it and asks you first; you confirm the first agent is really finished; the takeover is logged with who, why and when.">
+
+The diagrams are illustrative. Details and exact commands follow below.
 
 ## How it works
 

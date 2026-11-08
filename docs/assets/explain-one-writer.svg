@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="490" viewBox="0 0 1280 490" role="img" aria-labelledby="title desc">
+  <title id="title">One writer at a time</title>
+  <desc id="desc">A lock file lets one agent work. A second agent must ask you before taking over, and takeovers are logged.</desc>
+  <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M1 1L6 4L1 7" fill="none" stroke="#798c80" stroke-width="1.5"/></marker></defs>
+  <rect width="1280" height="490" rx="20" fill="#f3efe6"/>
+  <g font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif">
+    <text x="40" y="50" fill="#607065" font-size="16" font-weight="700" letter-spacing="2">WHY AGENTS DO NOT COLLIDE</text>
+    <text x="40" y="98" fill="#17342c" font-size="34" font-weight="700" letter-spacing="-.7">One writer at a time.</text>
+<rect x="40" y="138" width="288" height="229" rx="16" fill="#fffdf8" stroke="#d9dcd1"/>
+<circle cx="79" cy="178" r="18" fill="#f2dfd0"/><text x="73" y="184" fill="#8f5135" font-size="16" font-weight="700">1</text>
+<text x="64" y="239" fill="#17342c" font-size="23" font-weight="700">Take the key</text>
+<text x="64" y="276" fill="#53665a" font-size="19">The working agent takes</text>
+<text x="64" y="306" fill="#53665a" font-size="19">a lock file in the project,</text>
+<text x="64" y="336" fill="#53665a" font-size="19">like a key to one room.</text>
+<path d="M331 252H345" stroke="#798c80" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="348" y="138" width="288" height="229" rx="16" fill="#fffdf8" stroke="#d9dcd1"/>
+<circle cx="387" cy="178" r="18" fill="#f2dfd0"/><text x="381" y="184" fill="#8f5135" font-size="16" font-weight="700">2</text>
+<text x="372" y="239" fill="#17342c" font-size="23" font-weight="700">Another one knocks</text>
+<text x="372" y="276" fill="#53665a" font-size="19">A second agent sees the</text>
+<text x="372" y="306" fill="#53665a" font-size="19">key is taken. It stops</text>
+<text x="372" y="336" fill="#53665a" font-size="19">and asks you first.</text>
+<path d="M639 252H653" stroke="#798c80" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="656" y="138" width="288" height="229" rx="16" fill="#173c32" stroke="none"/>
+<circle cx="695" cy="178" r="18" fill="#bce1c6"/><text x="689" y="184" fill="#173c32" font-size="16" font-weight="700">3</text>
+<text x="680" y="239" fill="#f5f5e9" font-size="23" font-weight="700">You decide</text>
+<text x="680" y="276" fill="#c5dbcb" font-size="19">Only you confirm the first</text>
+<text x="680" y="306" fill="#c5dbcb" font-size="19">agent is really finished.</text>
+<text x="680" y="336" fill="#c5dbcb" font-size="19">An old key proves nothing.</text>
+<path d="M947 252H961" stroke="#798c80" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="964" y="138" width="288" height="229" rx="16" fill="#fffdf8" stroke="#d9dcd1"/>
+<circle cx="1003" cy="178" r="18" fill="#f2dfd0"/><text x="997" y="184" fill="#8f5135" font-size="16" font-weight="700">4</text>
+<text x="988" y="239" fill="#17342c" font-size="23" font-weight="700">It is logged</text>
+<text x="988" y="276" fill="#53665a" font-size="19">Who took over from whom,</text>
+<text x="988" y="306" fill="#53665a" font-size="19">why, and when is saved</text>
+<text x="988" y="336" fill="#53665a" font-size="19">in a simple log file.</text>
+<text x="40" y="412" fill="#53665a" font-size="19">The goal: two agents never write the same files at the same moment, and every switch leaves a trace.</text>
+<text x="40" y="440" fill="#53665a" font-size="19">Agents are named by labels like claude-A or claude-B, never by email or personal data.</text>
+  </g>
+</svg>
