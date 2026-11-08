@@ -227,3 +227,8 @@ profile file format and per-profile word budget (150), combined draft budget (70
 `init --profile` section order and metadata, rejection of unknown profiles before writing,
 the missing-section warning, and `inject.py` printing a recorded running render. Profiles
 were not exercised by a live agent.
+
+WP8 release preparation (2026-11-08): version set to 0.2.0 in `plugin.json` and `VERSION`, with
+notes, CHANGELOG and a package test tying them together. A live-trial kit and record template
+were added with results left empty; no trial in the kit has been run yet. A Windows CI failure
+in WP5 was fixed: profile composition now handles CRLF templates from Windows checkouts.

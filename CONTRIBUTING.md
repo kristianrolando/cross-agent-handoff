@@ -66,4 +66,4 @@ PR descriptions should explain the concrete change and validation, with known co
 
 ## Release maintenance
 
-A release needs an explicit maintainer request. Keep plugin version and release tag consistent, review hosted CI, update installation links only to real repository locations, and describe included changes. Do not change the consumer checkpoint format silently. The documented Codex distribution is a direct skill; do not advertise an unimplemented native Codex plugin.
+A release needs an explicit maintainer request. Keep plugin version, skill VERSION, CHANGELOG and release tag consistent, review hosted CI, update installation links only to real repository locations, and describe included changes. Do not change the consumer checkpoint format silently. The documented Codex distribution is a direct skill; do not advertise an unimplemented native Codex plugin.

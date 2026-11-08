@@ -10,6 +10,24 @@ All four release-source CI jobs and the release workflow succeeded; the public S
 
 Keep a release frozen at its verified source commit. Closing handoff/evidence updates may follow on main without moving that tag. Never force-move an existing public tag.
 
+## v0.2.0 release checklist
+
+Prepared on branch `feat/wp8-release-prep`; publishing needs the maintainer's explicit approval.
+
+1. Merge the stacked PRs into `main` in order (#1 to #7) with merge commits, and confirm the
+   six-job Package checks pass on `main`.
+2. Confirm `.claude-plugin/plugin.json` and `skills/cross-agent-handoff/VERSION` read 0.2.0,
+   [docs/releases/v0.2.0.md](releases/v0.2.0.md) exists, and the CHANGELOG has a 0.2.0 entry
+   (a package test checks all four).
+3. Optionally run the [live-trial kit](evidence/live-trial-kit-v0.2.0.md) first and adjust the
+   notes' validation paragraph to what was observed.
+4. Change the CHANGELOG heading `0.2.0 (unreleased)` to the release date.
+5. Push an annotated tag `v0.2.0` on the verified `main` commit (the maintainer runs this):
+   `git tag -a v0.2.0 -m "Cross-Agent Handoff v0.2.0"` then `git push origin v0.2.0`.
+   The Publish release workflow checks version and notes, runs the suite and publishes.
+6. After publication, update the README release badge to v0.2.0, record the run and release
+   links in docs/validation.md and this file, and never move the v0.1.0 or v0.1.1 tags.
+
 ## Release procedure
 
 1. Verify repository ownership, visibility and current state. Do not overwrite unrelated work.

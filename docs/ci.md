@@ -14,7 +14,7 @@ All four jobs of the original matrix passed in the [first hosted run](https://gi
 
 ## Scope
 
-The whitespace step compares the committed tree against Git's empty tree, because a plain `git diff --check` has nothing to compare on a fresh checkout. The suite checks checkpoint mechanics, failure injection, dirty Git inventory, portability constraints, metadata, local Markdown file links, example checkpoint structure, plugin path references, and license inclusion. The Git fixture uses a temporary repository and local identity only. Symlink checks are skipped explicitly if the OS does not permit symlink creation; traversal checks still run.
+The whitespace step compares the committed tree against Git's empty tree, because a plain `git diff --check` has nothing to compare on a fresh checkout. The suite checks checkpoint mechanics, optional metadata, snapshots and resume context (including an abrupt-stop scenario), hook configuration merge/removal, the installer and doctor, the advisory lock and switch log, profile sections and size budgets, version consistency, failure injection, dirty Git inventory, portability constraints, metadata, local Markdown file links, example checkpoint structure, plugin path references, and license inclusion. The Git fixture uses a temporary repository and local identity only. Symlink checks are skipped explicitly if the OS does not permit symlink creation; traversal checks still run.
 
 No package installation, vendor API key, subscription, model call or application deployment is required. The action runners download/select Python as needed. The action versions follow the official actions/checkout and actions/setup-python documentation checked during this update.
 

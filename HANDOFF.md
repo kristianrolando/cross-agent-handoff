@@ -1,10 +1,10 @@
 # Project handoff
 
 - format: cross-agent-handoff/1
-- task_status: in_progress
+- task_status: partial
 - handoff: ready
 - writer: none
-- updated_at: 2026-11-08T08:41:54+07:00
+- updated_at: 2026-11-08T08:52:15+07:00
 
 ## Project
 Cross-Agent Handoff: portable sequential project continuity and a Claude Code plugin wrapper.
@@ -51,7 +51,13 @@ sections inserted after State by `handoff.py init --profile`, `profile:` metadat
 a listed profile without a section, inject prints running operations and renders,
 references/profiles.md, README/SKILL/setup/helper/architecture/file map/validation.
 Deferred to v0.3.0: media_manifest.py and a style-tokens template.
-Unfinished: WP8 (docs, live-trial kit, CHANGELOG, migration notes, version 0.2.0).
+Fixed: WP5 Windows CI failure (CRLF template in profile composition), commit d3f1bbd.
+Done: WP8 on stacked branch `feat/wp8-release-prep`: live-trial kit and record template in
+docs/evidence/ (results empty), CHANGELOG.md, docs/releases/v0.2.0.md with upgrade notes,
+version 0.2.0 in plugin.json and VERSION with a consistency test, README rows and links,
+v0.2.0 checklist in docs/releasing.md. README badge stays v0.1.1 until the release exists.
+Unfinished: maintainer merges #1-#7 in order, optional live trials, then the release steps in
+docs/releasing.md (tag pushed by the maintainer only after explicit approval).
 Decisions (maintainer approved the plan 2026-11-08; read conservatively):
 - Hooks are installed only by an explicit command; none ship inside the existing plugin.
 - Keep format `cross-agent-handoff/1`; new metadata are optional bullets, no YAML front matter.
@@ -65,6 +71,8 @@ placeholders unfilled).
 Writers / operations: none running.
 
 ## Evidence
+- 85 tests OK after WP8 (macOS, Python 3.9.6). CI on #5 green; #6 failed on Windows
+  (CRLF), fixed in d3f1bbd, rerun not yet observed.
 - 79 tests OK after WP5-lite (macOS, Python 3.9.6).
 - 73 tests OK after WP3-lite (macOS, Python 3.9.6). WP2 PR #4 CI green on all six jobs.
 - 65 tests OK after WP2 (macOS, Python 3.9.6); real v0.1.1 tag upgrade checked manually.
@@ -82,14 +90,12 @@ Writers / operations: none running.
 - Hook facts: official pages fetched 2026-11-08, links in the audit.
 
 ## Next
-Check hosted CI on the WP5 PR. Then create `feat/wp8-release-prep` from `feat/wp5-profiles`:
-live-trial kit in docs/evidence/ (template plus steps, results empty), CHANGELOG.md,
-migration notes, README sections, version 0.2.0 in plugin.json/VERSION/badge, release notes.
-Do not tag or publish without the maintainer's explicit approval.
+Check hosted CI on PRs #6 and #7. Then wait for the maintainer to merge the stack and decide
+on live trials and the v0.2.0 release. Do not tag or publish without explicit approval.
 
 ## Recent outcomes
-- 2026-11-08, Claude Code: WP4-lite optional metadata validated and committed locally.
 - 2026-11-08, Claude Code: WP1 snapshot, inject and opt-in hooks committed locally; Claude hooks ran live once.
 - 2026-11-08, Claude Code: WP2 installer and doctor committed; v0.1.1 upgrade verified.
 - 2026-11-08, Claude Code: WP3-lite advisory lock and switch log committed.
 - 2026-11-08, Claude Code: WP5-lite game, video and motion profiles committed.
+- 2026-11-08, Claude Code: WP8 release preparation committed; v0.2.0 awaits merge and approval.

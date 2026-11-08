@@ -64,7 +64,12 @@ class PackageTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
     def test_version_file(self):
-        self.assertRegex((SKILL / 'VERSION').read_text(), r'^[0-9]+\.[0-9]+\.[0-9]+(?:-dev)?\n$')
+        version = (SKILL / 'VERSION').read_text()
+        self.assertRegex(version, r'^[0-9]+\.[0-9]+\.[0-9]+(?:-dev)?\n$')
+        plugin = json.loads((ROOT / '.claude-plugin/plugin.json').read_text())
+        self.assertEqual(version.strip().replace('-dev', ''), plugin['version'])
+        self.assertTrue((ROOT / 'docs' / 'releases' / ('v' + plugin['version'] + '.md')).is_file())
+        self.assertIn('## ' + plugin['version'], (ROOT / 'CHANGELOG.md').read_text())
 
     def test_core_reading_size(self):
         self.assertLess(len((SKILL / 'SKILL.md').read_text().split()), 1600)
