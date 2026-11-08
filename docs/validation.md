@@ -214,3 +214,10 @@ because CI checkouts have no tags. A manual check used the real tag: `git archiv
 copies in `.claude/skills/` and `.agents/skills/` were reported as unknown version without
 manifest, replaced by `--update --yes`, and then reported healthy; HANDOFF.md was unchanged.
 Windows behavior of the installer is covered only by hosted CI.
+
+WP3-lite lock (2026-11-08): 73 local checks passed after `lock.py` was added (macOS, Python
+3.9.6). They cover acquire/release, the switch log `from`/`to`, a fresh lock blocking another
+alias, a stale lock still needing `--confirm-takeover`, logged takeover and force-release,
+alias from the environment, rejection of email-like aliases, heartbeat refresh only for the
+lock's host, the inject warning, and a corrupt lock not being overwritten. Agent names are
+labels; no host ran.
