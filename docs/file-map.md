@@ -33,6 +33,7 @@
 | docs/examples/after.md | Complete illustrative successor checkpoint |
 | docs/architecture.md | Reference critique, alternatives, trade-offs and official sources |
 | docs/validation.md | Observed results and unvalidated areas |
+| docs/roadmap/ | Maintainer v0.2.0 brief (verbatim) and the approved Phase 0 audit and plan |
 | docs/evidence/ | Test output, independent-agent recovery and the 2026-11-02 live Codex/Antigravity trial |
 | tests/test_handoff.py | Disposable filesystem and failure-injection scenarios |
 | tests/test_package.py | Package integrity and portable metadata/link checks |

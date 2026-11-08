@@ -1,7 +1,7 @@
 # Project handoff
 
 - format: cross-agent-handoff/1
-- task_status: done
+- task_status: in_progress
 - handoff: ready
 - writer: none
 
@@ -11,55 +11,41 @@ Public source: https://github.com/kristianrolando/cross-agent-handoff
 Rules: AGENTS.md. Contributor workflow: CONTRIBUTING.md. Claude adapter: CLAUDE.md.
 User docs: README.md. Design: docs/architecture.md. Evidence: docs/validation.md.
 Host loading/routing: skills/cross-agent-handoff/references/agents.md.
-Release history: docs/releasing.md. Brand sources: docs/assets/brand-credits.md.
+Release history: docs/releasing.md. Roadmap: docs/roadmap/.
 
 ## Task
-Update the GitHub README visuals to show recognizable logos for its eight documented coding
-agents. Preserve clear names, wide/mobile readability, local assets, source attribution and
-existing compatibility claims. Publish on main; do not create a new release or move tags.
+v0.2.0 roadmap. Brief: docs/roadmap/v0.2.0-mission-brief.md (verbatim). Approved plan and
+host hook facts: docs/roadmap/v0.2.0-audit.md. Talk to the maintainer in Indonesian; write
+code and docs in English. Order: Step 0 (roadmap + CI) → WP4-lite → WP1 → WP2 → WP3-lite →
+WP5-lite → WP8. WP7 tests go with each package. Deferred to v0.3.0: rolling history, full
+media manifest/style tokens, hooks for the other five hosts, Beads.
 
 ## State
-Both README hero SVGs now embed marks for Claude Code, Codex, Antigravity, Cursor, Gemini CLI,
-GitHub Copilot, OpenCode and Cline. The wide layout uses one row; the narrow layout uses two
-rows with larger labels. Existing project-checkpoint illustration and palette are retained.
-The README alt text names all hosts, links to the compatibility matrix, and links asset credits.
-File-map documentation includes the logo provenance and license files.
-
-Marks come from pinned Lobe Icons source 8064bdc847be0a94c956c00440eb67586af2871f, with original
-geometry and colors retained. Monochrome marks use a dark foreground. Both banners embed SVG
-paths directly: no external image, font, script or CDN is required for these visuals.
-Upstream MIT notice is preserved in docs/assets/lobe-icons-LICENSE; source links and maintenance
-instructions are in brand-credits.md. No runtime dependency or installed-skill content changed.
-No overlapping product writers or background jobs continue.
-
-Latest published release remains v0.1.1 at 5eb5279; v0.1.0 remains at 666e04c. Both tags stay
-frozen, and plugin.json stays 0.1.1. This visual update follows the released source on main.
-Previous reliability fixes and live-trial evidence remain in docs/validation.md and
-its linked live-trial artifact. Codex to Antigravity to Codex was exercised; Claude execution
-was blocked by expired sign-in, and the other five native host routes were not exercised live.
-Adding brand marks does not expand those validation claims.
+Current step: Step 0 done on local branch `chore/v0.2.0-roadmap` (roadmap docs, checkpoint,
+CI matrix widened to 3 OS × Python 3.9/3.14, docs/ci.md and file map updated).
+Unfinished: WP4-lite and every later package.
+Decisions (maintainer approved the plan 2026-11-08; read conservatively):
+- Hooks are installed only by an explicit command; none ship inside the existing plugin.
+- Keep format `cross-agent-handoff/1`; new metadata are optional bullets, no YAML front matter.
+- Lock is advisory and opt-in; takeover of a stale lock needs user confirmation and a reason.
+- Account aliases come from the session (prompt or env var); never persisted as identity.
+- Branches are stacked locally, one per package. No push or PR until the maintainer allows it.
+Open questions for the maintainer: push/PR permission; agents and accounts available for live
+trials (brief placeholders unfilled).
+Writers / operations: none running.
 
 ## Evidence
-- Seven existing package integrity checks passed for this documentation/asset change.
-- All six SVG sources parsed as XML; IDs were unique in each document, with no script/image tags.
-- Each hero contains eight embedded, labeled brand marks. Wide and mobile renders were
-  visually inspected; mobile brand labels were enlarged after inspection.
-- Brand-source MIT license was copied byte-for-byte; attribution records pinned source paths.
-- Patch whitespace and checkpoint structure checks passed before publication.
-- Prior review: 28 package/protocol checks and four OS/Python hosted jobs passed; release
-  v0.1.1 publication succeeded. See docs/validation.md for historical run links and limits.
-
-At task start main matched origin/main at 1718405 with a clean tree. A subsequent fetch showed
-no competing remote changes. Temporary downloaded sources and render tools remain outside Git.
+- `python3 -m unittest discover -s tests -v`: 28 tests OK, macOS 27.0.1, Python 3.9.6.
+- Widened CI matrix not yet run on GitHub (nothing pushed). setup-python manifest checked:
+  3.9 resolves to 3.9.13 on macOS arm64 and Windows x64; 3.14.10 exists on all three OSes.
+- Hook facts: official pages fetched 2026-11-08, links in the audit.
 
 ## Next
-No implementation remains for this request. Check the published README and hosted CI for the
-visual-update commit. Future work should inspect actual Git status and project files first.
-No global installation, model trial, marketplace submission or new release is implied.
+Create branch `feat/wp4-checkpoint-metadata` from `chore/v0.2.0-roadmap` and add optional
+`updated_at`, `language` and `profile` bullets with validator checks and tests.
 
 ## Recent outcomes
-- Published MIT v0.1.0 and added documented native-skill routes for eight coding agents.
-- Fixed release/CI workflows, host-route inaccuracies and helper placeholder handling.
-- Recorded a live Codex to Antigravity to Codex handoff with explicit coverage limits.
-- Published v0.1.1; release tags and passing CI were subsequently verified.
+- Published v0.1.1; release tags and passing CI were verified.
 - Added eight attributed brand marks to responsive README hero artwork.
+- 2026-11-08, Claude Code: completed the v0.2.0 Phase 0 audit; maintainer approved the plan.
+- 2026-11-08, Claude Code: Step 0 committed locally (roadmap docs, 6-job CI matrix).
