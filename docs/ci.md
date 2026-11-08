@@ -4,14 +4,13 @@ The GitHub Actions workflow at `.github/workflows/ci.yml` runs on pushes, pull r
 
 ## Matrix
 
-| Runner | Python | Purpose |
-| --- | --- | --- |
-| ubuntu-latest | 3.9 | Minimum helper language version |
-| ubuntu-latest | 3.13 | Newer Python on Linux |
-| macos-latest | 3.13 | macOS filesystem behavior |
-| windows-latest | 3.13 | Windows paths and line endings |
+Six jobs: `ubuntu-latest`, `macos-latest` and `windows-latest`, each with Python 3.9 (the
+minimum helper version, and the macOS system Python) and Python 3.14 (newest stable). On
+macOS arm64 and Windows x64, `setup-python` resolves 3.9 to 3.9.13, the last 3.9 build it
+publishes for those platforms. The matrix was widened from four jobs for v0.2.0 so every new
+script runs on the minimum and newest Python on each operating system.
 
-All four jobs passed in the [first hosted run](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/41401002913) on commit `74d2c5c4c7fae8adf72e3053e4db4cb22f829af2`. This establishes the automated suite on those runners, not model compliance or native host discovery. The badge and Actions history show subsequent results. Local authoring evidence is recorded separately in docs/validation.md.
+All four jobs of the original matrix passed in the [first hosted run](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/41401002913) on commit `74d2c5c4c7fae8adf72e3053e4db4cb22f829af2`. This establishes the automated suite on those runners, not model compliance or native host discovery. The badge and Actions history show subsequent results. Local authoring evidence is recorded separately in docs/validation.md.
 
 ## Scope
 
