@@ -4,7 +4,7 @@
 - task_status: in_progress
 - handoff: ready
 - writer: none
-- updated_at: 2026-11-08T08:07:31+07:00
+- updated_at: 2026-11-08T08:12:24+07:00
 
 ## Project
 Cross-Agent Handoff: portable sequential project continuity and a Claude Code plugin wrapper.
@@ -42,9 +42,11 @@ Decisions (maintainer approved the plan 2026-11-08; read conservatively):
 - Keep format `cross-agent-handoff/1`; new metadata are optional bullets, no YAML front matter.
 - Lock is advisory and opt-in; takeover of a stale lock needs user confirmation and a reason.
 - Account aliases come from the session (prompt or env var); never persisted as identity.
-- Branches are stacked locally, one per package. No push or PR until the maintainer allows it.
-Open questions for the maintainer: push/PR permission; agents and accounts available for live
-trials (brief placeholders unfilled).
+- One branch and draft PR per package, stacked: #1 roadmap → main, #2 WP4-lite → #1, #3 WP1 → #2.
+  Maintainer allowed push and PRs 2026-11-08. Merge in order; fixes to a lower branch are merged up.
+  gh's active account lacks write access; PR commands use the owner's token via GH_TOKEN only.
+Open question for the maintainer: agents and accounts available for live trials (brief
+placeholders unfilled).
 Writers / operations: none running.
 
 ## Evidence
@@ -54,13 +56,15 @@ Writers / operations: none running.
 - Live: Claude Code 2.1.318 ran the installed SessionStart and Stop hooks once in a
   disposable project; the model quoted the injected context. Details and limits in
   docs/validation.md. StopFailure, PreCompact, guard, Codex and Antigravity hooks not run live.
-- Widened CI matrix not yet run on GitHub (nothing pushed). setup-python manifest checked:
-  3.9 resolves to 3.9.13 on macOS arm64 and Windows x64; 3.14.10 exists on all three OSes.
+- First hosted runs: macOS 3.9/3.14 and Ubuntu 3.14 passed. Ubuntu 3.9 failed setup because
+  ubuntu-latest is now 26.04 with no 3.9 build (fixed: pinned ubuntu-24.04). Windows failed one
+  test: NUL stdin reports isatty, so hooks.py hit EOFError (fixed: EOF means no confirmation).
+  Re-runs with both fixes not yet observed. Main's own CI will hit the same Ubuntu 3.9 issue.
 - Hook facts: official pages fetched 2026-11-08, links in the audit.
 
 ## Next
-Wait for the maintainer's answers (push/PR permission, live-trial agents). Then create
-`feat/wp2-installer` from `feat/wp1-auto-snapshot` and write `scripts/install.py`
+Check hosted CI on PRs #1-#3 (Windows hooks fix and ubuntu-24.04 pin pending). When green,
+create `feat/wp2-installer` from `feat/wp1-auto-snapshot` and write `scripts/install.py`
 (hosts, doctor with VERSION and MANIFEST.sha256, update, uninstall, dry-run) reusing hooks.py.
 
 ## Recent outcomes

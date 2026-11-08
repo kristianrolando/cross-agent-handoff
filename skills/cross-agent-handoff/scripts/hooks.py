@@ -182,9 +182,13 @@ def ignored_by_git(root, path):
 def confirm(message, assume_yes):
     if assume_yes:
         return True
+    required = 'Confirmation required: rerun with --yes after reviewing the change, or use --dry-run.'
     if not sys.stdin.isatty():
-        raise HookError('Confirmation required: rerun with --yes after reviewing the change, or use --dry-run.')
-    return input(message + ' [y/N] ').strip().lower() in ('y', 'yes')
+        raise HookError(required)
+    try:
+        return input(message + ' [y/N] ').strip().lower() in ('y', 'yes')
+    except EOFError:  # Windows NUL reports isatty() but has no input.
+        raise HookError(required)
 
 
 def write(path, data):
