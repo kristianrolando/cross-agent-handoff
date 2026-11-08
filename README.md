@@ -113,8 +113,9 @@ The checkpoint links to existing requirements, architecture and backlog instead 
 | **Cline** | Native skill in `.cline/skills/` or `.claude/skills/` | Official discovery/slash invocation documented; `.agents/skills/` is not documented, so check the installer's destination; no live-app trial here. |
 | **Windsurf / other filesystem agents** | Explicitly read installed `SKILL.md` and checkpoint | Portable fallback; native discovery not verified for this package. |
 | Plain chat / uploads | Read supplied checkpoint and files | Snapshot only unless live filesystem tools are available. |
-| Optional Python helper | Python 3.9+, standard library | Hosted checks passed on Linux, macOS and Windows. |
-| Concurrent overlapping writers | Requires separate coordination | The sequential checkpoint does not lock source files. |
+| Optional Python scripts | Python 3.9+, standard library: helper, installer, snapshot, inject, hooks, lock | Hosted checks on Linux, macOS and Windows with Python 3.9 and 3.14. |
+| Opt-in hooks | Claude Code, Codex, Antigravity | Event names and formats from official docs. Claude Code SessionStart and Stop ran once live; StopFailure, Codex and Antigravity hooks not yet exercised live. See the [hook guide](skills/cross-agent-handoff/references/hooks.md). |
+| Concurrent overlapping writers | Requires separate coordination | An optional advisory lock makes a second writer visible; nothing locks source files. |
 
 New host routes were checked against [official documentation and installation paths](skills/cross-agent-handoff/references/agents.md), reviewed on 2026-11-02. Documented compatibility, installer checks and actual model trials are distinct; only Codex and Antigravity CLI have a recorded live handoff. See [validation and coverage](docs/validation.md).
 
@@ -192,7 +193,9 @@ To update, review and replace the installed skill while retaining project record
 | [Checkpoint example](docs/checkpoint-example.md) | [Architecture and trade-offs](docs/architecture.md) |
 | [Contributing with any coding agent](CONTRIBUTING.md) | [Validation evidence and limits](docs/validation.md) |
 | [Setup and migration](skills/cross-agent-handoff/references/setup.md) | [File map](docs/file-map.md) |
-| [Agent installation and activation](skills/cross-agent-handoff/references/agents.md) | [Release process](docs/releasing.md) |
+| [Agent installation and activation](skills/cross-agent-handoff/references/agents.md) | [Release process](docs/releasing.md) and [changelog](CHANGELOG.md) |
+| [Snapshots and hooks](skills/cross-agent-handoff/references/hooks.md) | [Live-trial kit](docs/evidence/live-trial-kit-v0.2.0.md) |
+| [Profiles for game, video, motion](skills/cross-agent-handoff/references/profiles.md) | [Advisory lock](skills/cross-agent-handoff/references/lock.md) |
 
 ## Checks and contributions
 

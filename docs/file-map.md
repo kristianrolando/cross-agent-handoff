@@ -35,6 +35,10 @@
 | skills/cross-agent-handoff/LICENSE | Same MIT notice bundled with direct skill installs |
 | .github/workflows/release.yml | Checked versioned release publication on explicit tag or dispatch |
 | docs/releases/v0.1.0.md | Initial public release notes and install commands |
+| CHANGELOG.md | Version history with links to release notes |
+| docs/releases/v0.2.0.md | v0.2.0 notes and upgrade steps from v0.1.1 (unreleased) |
+| docs/evidence/live-trial-kit-v0.2.0.md | Step-by-step live trials for the maintainer, results left empty |
+| docs/evidence/live-trial-template.md | Record form for live trials |
 | docs/releases/v0.1.1.md | Expanded host guide, helper and workflow fixes release notes |
 | .github/workflows/ci.yml | GitHub Actions matrix for automatic package/protocol checks |
 | docs/ci.md | CI scope, configured environments and local equivalent |
