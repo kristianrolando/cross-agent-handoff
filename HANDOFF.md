@@ -4,7 +4,7 @@
 - task_status: partial
 - handoff: ready
 - writer: none
-- updated_at: 2026-11-08T09:01:09+07:00
+- updated_at: 2026-11-08T09:26:55+07:00
 
 ## Project
 Cross-Agent Handoff: portable sequential project continuity and a Claude Code plugin wrapper.
@@ -61,8 +61,15 @@ Merged into main 2026-11-08 at the maintainer's request, in order, with merge co
 tested #7 head 0204fa7. Merged branches were deleted. Incident: deleting #1's branch closed #2
 because this repo does not retarget PRs; the base was restored at the same commit, #2 reopened
 and retargeted, and later PRs were retargeted before their base was deleted. No code was lost.
-Unfinished: optional live trials (docs/evidence/live-trial-kit-v0.2.0.md), then the v0.2.0
-release steps in docs/releasing.md. The maintainer pushes the tag, only after explicit approval.
+Live trials run 2026-11-08 at the maintainer's request (headless CLIs, disposable projects):
+GAME chain Claude Code → Codex → Antigravity CLI → Claude Code, abrupt-stop recovery, video and
+motion profiles all passed; record in docs/evidence/live-trial-2026-11-08.md. Three findings
+fixed on branch `fix/live-trial-findings` (Antigravity Stop event name, clock-read updated_at
+guidance, actionable observed_file warning) with README, notes, kit, hooks guide and validation
+updated.
+Unfinished: maintainer-only trials (Antigravity App/IDE, second Claude account, Windows,
+StopFailure on a real limit, trusted Codex hooks, guard); merge the findings PR; then the
+v0.2.0 release steps in docs/releasing.md, with the tag pushed by the maintainer after approval.
 Decisions (maintainer approved the plan 2026-11-08; read conservatively):
 - Hooks are installed only by an explicit command; none ship inside the existing plugin.
 - Keep format `cross-agent-handoff/1`; new metadata are optional bullets, no YAML front matter.
@@ -76,6 +83,7 @@ placeholders unfilled).
 Writers / operations: none running.
 
 ## Evidence
+- 82 tests OK after live-trial fixes (macOS, Python 3.9.6).
 - 80 tests OK on main 99e3acf (macOS, Python 3.9.6). All seven PR heads passed six hosted jobs
   before merge; main's own run 42436655218 was in progress when this was saved.
 - 79 tests OK after WP5-lite (macOS, Python 3.9.6).
@@ -95,12 +103,12 @@ Writers / operations: none running.
 - Hook facts: official pages fetched 2026-11-08, links in the audit.
 
 ## Next
-Confirm the Package checks run on main for 99e3acf. Then the maintainer decides between running
-the live-trial kit first or releasing v0.2.0 (docs/releasing.md, steps 3-6).
+Check hosted CI on the live-trial findings PR, then ask the maintainer to merge it and decide
+whether to run the remaining maintainer-only trials before releasing v0.2.0.
 
 ## Recent outcomes
-- 2026-11-08, Claude Code: WP2 installer and doctor committed; v0.1.1 upgrade verified.
 - 2026-11-08, Claude Code: WP3-lite advisory lock and switch log committed.
 - 2026-11-08, Claude Code: WP5-lite game, video and motion profiles committed.
 - 2026-11-08, Claude Code: WP8 release preparation committed; v0.2.0 awaits merge and approval.
 - 2026-11-08, Claude Code: merged PRs #1-#7 into main; v0.2.0 awaits release approval.
+- 2026-11-08, Claude Code: ran headless live trials of v0.2.0; all passed; three findings fixed.

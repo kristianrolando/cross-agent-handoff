@@ -26,6 +26,10 @@ Changed:
 - CI runs Ubuntu, macOS and Windows on Python 3.9 and 3.14 (six jobs).
 - The template records `updated_at` and running operations in more detail.
 
+Fixed after the 2026-11-08 live trial: Antigravity snapshots record the Stop event name, the
+skill asks agents to read `updated_at` from the clock, and malformed file observations get an
+actionable warning.
+
 Compatibility: checkpoint format stays `cross-agent-handoff/1`. See the migration notes in
 [docs/releases/v0.2.0.md](docs/releases/v0.2.0.md).
 

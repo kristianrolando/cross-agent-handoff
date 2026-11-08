@@ -223,6 +223,8 @@ class AutosaveTests(unittest.TestCase):
         active = dict(stop, stop_hook_active=True)
         self.assertEqual(self.run_script('snapshot', '--hook', '--guard', payload=active).stdout, '')
         agy = {'workspacePaths': [str(self.root)], 'terminationReason': 'model_stop'}
+        self.run_script('snapshot', '--hook', '--host', 'antigravity', '--event', 'Stop', payload=agy)
+        self.assertEqual(self.latest()['event']['hook_event_name'], 'Stop')
         result = json.loads(self.run_script('snapshot', '--hook', '--host', 'antigravity', '--guard',
                                             payload=agy).stdout)
         self.assertEqual(result['decision'], 'continue')

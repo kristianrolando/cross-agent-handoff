@@ -38,7 +38,7 @@ HOSTS = {
         'PreCompact': ('snapshot.py', '--hook --host codex')}),
     'antigravity': ('.agents/hooks.json', '.agents/skills/' + SKILL, {
         'SessionStart': ('inject.py', '--hook --format antigravity'),
-        'Stop': ('snapshot.py', '--hook --host antigravity')}),
+        'Stop': ('snapshot.py', '--hook --host antigravity --event Stop')}),
 }
 NOTES = {
     'claude': 'Claude Code reads .claude/settings.local.json for this project on this machine only. '

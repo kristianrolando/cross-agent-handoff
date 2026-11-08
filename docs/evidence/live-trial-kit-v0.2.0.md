@@ -11,8 +11,8 @@ trial as it happened.
 | Item | Status on 2026-11-08 |
 | --- | --- |
 | Codex → Antigravity CLI → Codex handoff | Passed once (v0.1.1, [record](live-trial-2026-11-02.md)) |
-| Claude Code SessionStart and Stop hooks | Ran once in print mode; model quoted injected context ([validation](../validation.md)) |
-| Claude Code handoff, Antigravity App/IDE, StopFailure, Codex hooks, Antigravity hooks, Windows hooks, profiles | Not run |
+| Headless Claude Code ↔ Codex ↔ Antigravity CLI chain, abrupt stop, video and motion profiles | Passed ([record](live-trial-2026-11-08.md)) |
+| Antigravity App/IDE, second Claude account, Windows, StopFailure, trusted Codex hooks, guard | Not run; trials below still needed |
 
 ## Setup (once per trial)
 

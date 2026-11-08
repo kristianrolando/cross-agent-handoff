@@ -63,9 +63,11 @@ project-root variable; rerun `install` after moving the project. Without a usage
 the last snapshot is from the end of the last completed turn. Edits made during an
 interrupted turn still appear in the live inject scan.
 
-Live evidence so far: one Claude Code 2.1.318 print-mode session ran the `SessionStart` and
-`Stop` hooks in a disposable project, and the model quoted the injected context. `StopFailure`,
-`PreCompact`, the guard, Codex and Antigravity hooks have not run in a live host session.
+Live evidence so far (docs/evidence/live-trial-2026-11-08.md): Claude Code 2.1.318
+print-mode sessions ran `SessionStart` and `Stop`, and the model quoted the injected context.
+Antigravity CLI 1.4.12 ran `Stop` and wrote snapshots. Not yet observed: `StopFailure` on a real
+limit, `PreCompact`, the guard, Codex hooks after trust in `/hooks`, and whether Antigravity's
+`injectSteps` context reaches the model.
 
 ## Optional staleness guard
 

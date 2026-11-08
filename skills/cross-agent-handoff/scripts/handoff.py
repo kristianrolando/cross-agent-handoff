@@ -141,7 +141,8 @@ def observations(root, text):
             if not path.is_file() or digest(path.read_bytes()) != record['sha256']:
                 warnings.append('Observed file changed or is missing: ' + record['path'])
         except (ValueError, KeyError, TypeError, OSError) as exc:
-            warnings.append('Invalid file observation: ' + str(exc))
+            warnings.append('Invalid file observation ({}): write it as one JSON object from inspect, for example '
+                            '- observed_file: {{"path":"src/app.py","sha256":"..."}}; or drop the line.'.format(exc))
     for name in profile_names(text):
         if not re.search(r'^## Profile: ' + re.escape(name) + r'\s*$', text, re.M):
             warnings.append('profile lists ' + name + ' but the checkpoint has no "## Profile: ' + name + '" section.')

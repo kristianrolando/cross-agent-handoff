@@ -121,6 +121,7 @@ class HookTests(unittest.TestCase):
         ours = data['cross-agent-handoff']
         self.assertEqual(set(ours), {'SessionStart', 'Stop'})
         self.assertIn('--format antigravity', ours['SessionStart'][0]['command'])
+        self.assertIn('--event Stop', ours['Stop'][0]['command'])
         self.hooks('remove', '--host', 'antigravity', '--yes')
         self.assertEqual(set(self.read('.agents/hooks.json')), {'lint'})
 

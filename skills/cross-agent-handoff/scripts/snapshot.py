@@ -315,10 +315,13 @@ def run(argv=None, stdin=None):
     parser.add_argument('--host', default='generic', choices=('generic', 'claude', 'codex', 'antigravity'))
     parser.add_argument('--partial-hash', action='store_true', help='Hash first and last 1 MB of media')
     parser.add_argument('--guard', action='store_true', help='Stop hook: ask once to refresh a stale checkpoint')
+    parser.add_argument('--event', help='Event name to record when the hook input has none (Antigravity)')
     args = parser.parse_args(argv)
     event, payload = read_event((stdin or sys.stdin).read()) if args.hook else ({}, {})
     if args.host != 'generic':
         event['host'] = args.host
+    if args.event and not (event.get('hook_event_name') or event.get('hookEventName')):
+        event['hook_event_name'] = args.event[:100]
     workspaces = payload.get('workspacePaths') or []
     start = (args.project or payload.get('cwd') or (workspaces[0] if workspaces else None)
              or os.environ.get('CLAUDE_PROJECT_DIR') or os.getcwd())
