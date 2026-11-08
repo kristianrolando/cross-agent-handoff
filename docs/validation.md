@@ -183,3 +183,23 @@ is published as Latest, not a draft or prerelease. The annotated tag resolves to
 - [Package checks on the release source](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/41453750169): all four OS/Python jobs passed.
 - [Publish release](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/41460822031): version/notes validation, package checks, committed-whitespace check and publication passed.
 - The release body matches `docs/releases/v0.1.1.md` apart from a trailing newline. The maintainer pushed the tag; an agent session's attempt was blocked by its safety check.
+
+## v0.2.0 development (unreleased, 2026-11-08)
+
+Automated: 54 package/protocol checks passed locally on macOS 27.0.1 with Python 3.9.6 after
+the WP1 scripts (`snapshot.py`, `inject.py`, `hooks.py`) and WP4-lite metadata. They cover an
+abrupt stop without a semantic save, clean clones, commits after the checkpoint, paths with
+spaces, CRLF, 2,000-file scans, guard loop protection, and merge/removal of hook entries with
+other entries preserved. Hook payloads in tests are hand-written fixtures, not host output.
+The widened six-job CI matrix has not run on GitHub yet.
+
+Live Claude Code hook check: Claude Code 2.1.318 (signed in, print mode, default model) ran in
+a disposable Git project containing a project-local skill copy and hooks installed by
+`hooks.py install --host claude --yes` into `.claude/settings.local.json`. A file newer than
+the checkpoint simulated unsaved work. The prompt asked the model to quote any SessionStart
+context without using tools. Observed: the reply quoted
+`SessionStart:startup hook success: cross-agent-handoff resume context ...` and the checkpoint
+status line; after the turn, `.handoff/auto/latest.json` recorded event `Stop` from host
+`claude`. This shows the two hooks ran once in one session. It does not cover `StopFailure`
+(a real rate-limit error was not produced), `PreCompact`, the guard, interactive sessions,
+Windows, Codex or Antigravity hooks, or whether the model then follows the resume procedure.

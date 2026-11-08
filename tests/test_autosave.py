@@ -96,6 +96,9 @@ class AutosaveTests(unittest.TestCase):
         (self.root / 'app.js').write_text('changed')
         (self.root / 'node_modules').mkdir()
         (self.root / 'node_modules' / 'dep.js').write_text('vendor')
+        skill_copy = self.root / '.claude' / 'skills' / 'cross-agent-handoff'
+        skill_copy.mkdir(parents=True)
+        (skill_copy / 'SKILL.md').write_text('installed tooling')
         self.run_script('snapshot', '--project', str(self.root))
         record = self.latest()
         self.assertTrue(record['git']['available'])
@@ -103,6 +106,7 @@ class AutosaveTests(unittest.TestCase):
         paths = [item['path'] for item in record['recent_files']['files']]
         self.assertIn('app.js', paths)
         self.assertNotIn('node_modules/dep.js', paths)
+        self.assertNotIn('.claude/skills/cross-agent-handoff/SKILL.md', paths)
         self.assertFalse(any(path.startswith('.handoff') for path in paths))
 
     def test_snapshot_outside_continuity_project_records_nothing(self):

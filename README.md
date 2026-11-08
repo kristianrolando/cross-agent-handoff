@@ -120,7 +120,7 @@ New host routes were checked against [official documentation and installation pa
 
 - **Project files carry context.** Applicable instructions and the inspected filesystem remain authoritative; the checkpoint guides the next inspection.
 - **One writer at a time.** Stop overlapping source and output writers before handing over. Use separate areas/workspaces and an integrator for simultaneous work.
-- **Save after meaningful progress.** There is no emergency-save daemon; unsaved facts can be lost during a crash or usage limit.
+- **Save after every completed step.** Unsaved intent can be lost at a crash or usage limit. Optional snapshots and a resume-time check flag files changed after the last checkpoint, so the next agent knows to recover from the files. They are scripts started by the host or by you, not a background daemon, and they record what changed, not why.
 - **Check the actual environment.** The core needs filesystem access. Git and Python are optional; the helper requires Python 3.9+.
 - **Keep records with the work.** Moving devices requires transferring relevant dirty/untracked files and verifying the snapshot. No automatic cross-device synchronization is provided.
 
@@ -138,6 +138,15 @@ Windows users can use their file manager; symlinks are not required. Inspect an 
 For local Claude plugin development, the marketplace command can point to this checkout. Root `AGENTS.md` and `CLAUDE.md` guide repository maintenance; installing the plugin does not automatically load those files into consumer projects. Initialization adds reviewed project routing when needed.
 
 The included plugin wrapper is for Claude Code. Other hosts use direct skills or explicit file reading; this repository does not ship their native plugin wrappers.
+
+</details>
+
+<details>
+<summary><strong>Automatic snapshots and opt-in hooks</strong></summary>
+
+With Python 3.9+, `scripts/inject.py` prints resume context and warns when files or commits are newer than the checkpoint, which is what an abrupt stop leaves behind. `scripts/snapshot.py` records Git state, recently changed files and media metadata in a self-ignored `.handoff/auto/` folder.
+
+Hooks can run these automatically in Claude Code, Codex and Antigravity. They are never installed by default: run `scripts/hooks.py install` yourself, review the printed change, and remove it the same way. Claude Code also snapshots when a turn ends with a rate-limit error. See the [hook guide](skills/cross-agent-handoff/references/hooks.md) for verified and unverified behavior per host.
 
 </details>
 

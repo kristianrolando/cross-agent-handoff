@@ -66,6 +66,32 @@ The v0.2.0 brief asked for YAML front matter with `schema`, `updated_at`, `write
 
 `status` and `writer` already exist as `task_status`, `handoff` and `writer`, with the rule that `ready` needs `writer: none`. `next_action` was not added because it would drift from the `## Next` section. The validator stays a small standard-library line parser; no YAML parser is needed. `language` changes only prose: headings, keys and status values stay English so tools keep working.
 
+## Mechanical snapshots and opt-in hooks (v0.2.0)
+
+A usage limit can end a session before the agent saves. v0.2.0 adds a mechanical layer that
+needs no model: `snapshot.py` records Git state, recently modified files and media size/time in
+`.handoff/auto/latest.json`; `inject.py` prints resume context. The checkpoint stays the only
+semantic status record. The snapshot is machine-local evidence of what changed, ignored by Git,
+not the "JSON task database" rejected above, and nothing is generated back into Markdown.
+
+The stale-checkpoint warning compares files and commits with the checkpoint when inject runs.
+The brief proposed warning when `latest.json` is newer than `HANDOFF.md`; that signal fails
+because a per-turn Stop snapshot is always newer than a checkpoint saved during that turn.
+Scanning at resume also covers hosts without hooks and edits made during an interrupted turn.
+Tracked files identical to Git HEAD are ignored, so clones and checkouts stay quiet.
+
+Hooks are installed only by an explicit `hooks.py install` with confirmation. The Claude plugin
+ships no hooks, because plugin hooks start as soon as the plugin is enabled. Claude entries go
+to `.claude/settings.local.json` by default, so collaborators are not opted in through a
+committed file; `--shared` writes `.claude/settings.json`. Codex and Antigravity document no
+project-root variable, so their commands use absolute paths written at install time.
+
+Claude `Stop` does not run on API errors; `StopFailure` does, so both are hooked. Codex and
+Antigravity document no usage-limit event; their last snapshot is from the last completed turn.
+The optional staleness guard asks at most once per checkpoint version and never while the host
+reports `stop_hook_active`, so it cannot block indefinitely. None of this is a daemon: scripts
+run only when a host event or a person starts them.
+
 ## Additional agent support
 
 Antigravity, Cursor, Gemini CLI, GitHub Copilot, OpenCode and Cline use the same portable

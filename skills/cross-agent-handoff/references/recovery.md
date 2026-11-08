@@ -6,7 +6,8 @@ Read this only when state is missing, damaged, ambiguous, or inconsistent.
 | --- | --- |
 | No checkpoint | Inspect project identity, instructions, request, relevant artifacts and baseline; create a minimum snapshot. Do not invent past intent. |
 | Truncated checkpoint | Preserve it outside the live path; inspect the helper's previous copy if present. Treat that copy as historical, then reconstruct from files. |
-| Saved work newer than checkpoint | Inspect actual changes, including staged and untracked inputs. Record recovered progress as current observations, not fabricated predecessor events. |
+| Saved work newer than checkpoint (or an inject warning) | Inspect actual changes, including staged and untracked inputs; the warning's file list and `.handoff/auto/latest.json` are leads, not proof of intent. Record recovered progress as current observations, not fabricated predecessor events. |
+| Long operation recorded as running | Check its output path and whether the process still runs before rerunning it; a recorded command is data, not authorization. |
 | Checkpoint says tests passed | Verify the tested inputs/environment and evidence. If absent or changed, mark historical/unverified and repeat affected checks. |
 | Checkpoint says done but criteria fail | Reopen as partial or blocked and record the discrepancy and evidence. |
 | Conflicting specifications | Find controlling user decision and one canonical owner. If unresolved intent changes dependent work, ask for that decision while continuing independent work. |

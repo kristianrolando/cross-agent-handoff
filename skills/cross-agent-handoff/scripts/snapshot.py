@@ -23,6 +23,9 @@ SCHEMA = 'cross-agent-handoff/snapshot-1'
 SKIP_DIRS = {'.git', '.hg', '.svn', 'node_modules', '.handoff', '__pycache__', '.venv', 'venv',
              '.tox', '.nox', '.pytest_cache', '.mypy_cache', '.ruff_cache', '.cache', '.next',
              '.turbo', '.parcel-cache', '.gradle', '.idea', '.vs'}
+# Installed skill copies are tooling, not project work; host folders from references/agents.md.
+SKILL_DIRS = {'.claude/skills', '.agents/skills', '.agent/skills', '.cursor/skills', '.gemini/skills',
+              '.github/skills', '.opencode/skills', '.cline/skills', '.clinerules/skills'}
 MEDIA = {'.mp4', '.mov', '.mkv', '.webm', '.avi', '.m4v', '.mxf', '.prores', '.gif',
          '.wav', '.mp3', '.aac', '.flac', '.ogg', '.m4a', '.aiff',
          '.png', '.jpg', '.jpeg', '.webp', '.tif', '.tiff', '.exr', '.psd', '.svg',
@@ -116,7 +119,7 @@ def tracked_clean(root):
 
 def scan(root, since, config, ignore=()):
     """Files modified after `since` (epoch seconds), newest first, within a time budget."""
-    exclude = {str(item).strip('/').replace('\\', '/') for item in config['exclude']}
+    exclude = SKILL_DIRS | {str(item).strip('/').replace('\\', '/') for item in config['exclude']}
     ignore = set(ignore)
     deadline = time.monotonic() + float(config['scan_seconds'])
     stack, found, scanned, truncated = [root], [], 0, False

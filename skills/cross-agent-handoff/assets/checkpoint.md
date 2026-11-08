@@ -18,7 +18,7 @@ Acceptance criteria: REPLACE with a canonical link/section, or list observable c
 Verified: REPLACE with inspected artifacts and reusable progress, or state nothing verified yet.
 Unfinished / unknown: REPLACE with actual remaining work and uncertainty.
 Decisions: REPLACE with canonical links, or small decisions plus rationale if none exist.
-Writers / operations: REPLACE with known active writers, jobs and target paths, or state none observed and the inspection basis.
+Writers / operations: REPLACE with known active writers, and for each running job its exact command, output path and start time, or state none observed and the inspection basis.
 
 ## Evidence
 REPLACE with checks, results, tested input identity and coverage limits; use not_run with a reason when applicable.
