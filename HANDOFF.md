@@ -71,7 +71,7 @@ placeholders unfilled).
 Writers / operations: none running.
 
 ## Evidence
-- 85 tests OK after WP8 (macOS, Python 3.9.6). CI on #5 green; #6 failed on Windows
+- 80 tests OK after WP8 (macOS, Python 3.9.6). CI on #5 green; #6 failed on Windows
   (CRLF), fixed in d3f1bbd, rerun not yet observed.
 - 79 tests OK after WP5-lite (macOS, Python 3.9.6).
 - 73 tests OK after WP3-lite (macOS, Python 3.9.6). WP2 PR #4 CI green on all six jobs.
