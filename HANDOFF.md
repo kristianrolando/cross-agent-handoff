@@ -4,7 +4,7 @@
 - task_status: in_progress
 - handoff: ready
 - writer: none
-- updated_at: 2026-11-08T08:00:00+07:00
+- updated_at: 2026-11-08T08:12:00+07:00
 
 ## Project
 Cross-Agent Handoff: portable sequential project continuity and a Claude Code plugin wrapper.
@@ -27,7 +27,16 @@ Done: WP4-lite on stacked branch `feat/wp4-checkpoint-metadata`. handoff.py vali
 `updated_at`, `language` and `profile` lines (clear errors, future-time warning) and exposes
 `updated_at()` for WP1. The template gains an `updated_at` line. SKILL.md, helper.md, setup.md
 (migration note), architecture.md (decision) and the after example were updated.
-Unfinished: WP1 and every later package.
+In progress: WP1 on stacked branch `feat/wp1-auto-snapshot`. Done so far: skill scripts
+`snapshot.py` (Git state, recent files, media size/mtime, optional partial hash, atomic
+`.handoff/auto/latest.json`, pruned `history.jsonl`, self-ignoring `.handoff/auto/.gitignore`,
+once-per-checkpoint staleness guard, always exit 0) and `inject.py` (resume context with a
+live scan for files and commits after the checkpoint; works without hooks), plus
+tests/test_autosave.py. Deliberate correction to the brief: "latest.json newer than
+HANDOFF.md" is not used as the warning signal, because a per-turn Stop snapshot is always
+newer; the warning uses files or commits newer than the checkpoint instead.
+Unfinished in WP1: `scripts/hooks.py` (install/remove/status for Claude, Codex, Antigravity),
+`references/hooks.md`, SKILL.md/setup.md/recovery.md routing, README/architecture updates.
 Decisions (maintainer approved the plan 2026-11-08; read conservatively):
 - Hooks are installed only by an explicit command; none ship inside the existing plugin.
 - Keep format `cross-agent-handoff/1`; new metadata are optional bullets, no YAML front matter.
@@ -39,15 +48,18 @@ trials (brief placeholders unfilled).
 Writers / operations: none running.
 
 ## Evidence
-- `python3 -m unittest discover -s tests -v`: 32 tests OK after WP4-lite, macOS 27.0.1,
-  Python 3.9.6. New tests: v0.1.1 checkpoints stay valid, valid/malformed metadata, future time.
+- `python3 -m unittest discover -s tests -v`: 47 tests OK after the WP1 scripts, macOS
+  27.0.1, Python 3.9.6. Includes abrupt-stop scenario, fresh-clone false-positive check,
+  guard loop protection, 2,000-file speed check, paths with spaces, CRLF.
+- Manual run on this repo: inject 0.11 s, snapshot 41 ms.
 - Widened CI matrix not yet run on GitHub (nothing pushed). setup-python manifest checked:
   3.9 resolves to 3.9.13 on macOS arm64 and Windows x64; 3.14.10 exists on all three OSes.
 - Hook facts: official pages fetched 2026-11-08, links in the audit.
 
 ## Next
-Create branch `feat/wp1-auto-snapshot` from `feat/wp4-checkpoint-metadata`. Start with
-`scripts/inject.py` resume-time scan (works without hooks), then `scripts/snapshot.py`.
+Write `skills/cross-agent-handoff/scripts/hooks.py` to merge and remove opt-in hook entries
+for Claude Code (settings.local.json by default), Codex (.codex/hooks.json) and Antigravity
+(.agents/hooks.json), with --dry-run and tests.
 
 ## Recent outcomes
 - Published v0.1.1; release tags and passing CI were verified.
