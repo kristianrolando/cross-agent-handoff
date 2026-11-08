@@ -92,6 +92,21 @@ The optional staleness guard asks at most once per checkpoint version and never 
 reports `stop_hook_active`, so it cannot block indefinitely. None of this is a daemon: scripts
 run only when a host event or a person starts them.
 
+## Bundled installer (v0.2.0)
+
+Weakness addressed: no single project folder reaches every host, so copies drift. `install.py`
+writes the fewest folders, two at most: `.agents/skills/` and `.claude/skills/`. Cline uses
+`.claude/skills/`, which its docs list, instead of a third `.cline/skills/` copy. Copies are
+plain directories, because symlinks need privileges on Windows and break some loaders.
+
+A copy is built beside its destination and swapped in, so an interrupted update leaves the
+old or new copy, not a mix. Each copy carries `VERSION` and a per-file `MANIFEST.sha256`, so
+the doctor can tell a local edit (manifest mismatch) from drift (copies differ) without the
+source repository. Copies made by the Skills CLI have no manifest; the doctor still compares
+them. The installer replaces a directory only when its SKILL.md names this skill, and
+uninstall never touches checkpoint records. It is optional: manual copying and the Skills CLI
+remain supported, and the Claude plugin cache is out of its scope.
+
 ## Additional agent support
 
 Antigravity, Cursor, Gemini CLI, GitHub Copilot, OpenCode and Cline use the same portable

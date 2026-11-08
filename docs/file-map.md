@@ -12,6 +12,8 @@
 | skills/cross-agent-handoff/scripts/handoff.py | Standard-library draft/check/inspect/save helper |
 | skills/cross-agent-handoff/scripts/snapshot.py | Mechanical snapshot into `.handoff/auto/` and the optional staleness guard |
 | skills/cross-agent-handoff/scripts/inject.py | Resume context with a live check for work newer than the checkpoint |
+| skills/cross-agent-handoff/scripts/install.py | Multi-host project/user install, update, doctor and uninstall |
+| skills/cross-agent-handoff/VERSION | Package version written into each installed copy |
 | skills/cross-agent-handoff/scripts/hooks.py | Opt-in install/remove/status of Claude Code, Codex and Antigravity hooks |
 | skills/cross-agent-handoff/references/hooks.md | Snapshot layers, hook support per host, guard and removal |
 | .claude-plugin/plugin.json | Standalone Claude Code plugin wrapper |
@@ -42,6 +44,7 @@
 | tests/test_handoff.py | Disposable filesystem and failure-injection scenarios |
 | tests/test_package.py | Package integrity and portable metadata/link checks |
 | tests/test_autosave.py | Snapshot, resume-context and abrupt-stop scenarios |
+| tests/test_install.py | Installer idempotency, doctor, v0.1.1-layout upgrade and uninstall |
 | tests/test_hooks.py | Hook configuration merge, removal and command execution |
 | .gitignore | Exclude generated Python caches |
 

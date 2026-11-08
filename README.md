@@ -129,7 +129,14 @@ New host routes were checked against [official documentation and installation pa
 <details>
 <summary><strong>Manual installation, locations and plugin loading</strong></summary>
 
-Copy the complete `skills/cross-agent-handoff` directory, including LICENSE and supporting resources, to one supported location for each host.
+Copy the complete `skills/cross-agent-handoff` directory, including LICENSE and supporting resources, to one supported location for each host. With Python 3.9+, the bundled installer does this for several hosts at once and checks the copies later:
+
+```sh
+python3 skills/cross-agent-handoff/scripts/install.py --project /path/to/project --hosts claude,codex,antigravity
+python3 skills/cross-agent-handoff/scripts/install.py --project /path/to/project --doctor
+```
+
+It never replaces an edited copy without asking, and `--uninstall` keeps `HANDOFF.md` and other project data.
 
 The [host guide](skills/cross-agent-handoff/references/agents.md#install-the-complete-skill) lists project and user locations for all eight named native-skill hosts. No single project folder reaches every host: Claude Code and Cline do not read `.agents/skills/`, while Codex, Antigravity and Gemini CLI do not read `.claude/skills/`. Mixed teams may need two copies; keep every copy on the same version and use one canonical checkpoint.
 
