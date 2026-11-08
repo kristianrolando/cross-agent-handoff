@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Optional checkpoint mechanics. Python 3.9+, standard library only."""
 import argparse
+from datetime import datetime, timedelta, timezone
 import hashlib
 import json
 import os
@@ -14,6 +15,18 @@ SECTIONS = ('Project', 'Task', 'State', 'Evidence', 'Next', 'Recent outcomes')
 VALUES = {'format': {'cross-agent-handoff/1'},
           'task_status': {'in_progress', 'partial', 'blocked', 'done', 'superseded'},
           'handoff': {'working', 'ready', 'recovery'}}
+# Optional metadata added in v0.2.0. Absent fields keep v0.1.x checkpoints valid.
+TIMESTAMP = re.compile(r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d{3}|\.\d{6})?)?(?:Z|[+-]\d{2}:\d{2})')
+NAME = r'[a-z0-9]+(?:-[a-z0-9]+)*'
+OPTIONAL = {
+    'updated_at': (None, 'an ISO 8601 time with a UTC offset, such as '
+                         '2026-11-08T14:05:00+07:00 or 2026-11-08T07:05:00Z'),
+    'language': (re.compile(r'[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*'),
+                 'a language code such as en, id or pt-BR'),
+    'profile': (re.compile(NAME + r'(?:, *' + NAME + r')*'),
+                'lowercase profile names separated by commas, such as video or game, motion'),
+}
+CLOCK_SKEW = timedelta(minutes=5)
 
 
 def digest(data):
@@ -33,6 +46,36 @@ def fields(text, key):
     return re.findall(r'^- ' + re.escape(key) + r': (.+)$', text, re.M)
 
 
+def parse_timestamp(value):
+    """Return an aware datetime for a valid updated_at value, otherwise None."""
+    value = value.strip()
+    if not TIMESTAMP.fullmatch(value):
+        return None
+    try:  # Python 3.9 fromisoformat does not accept a trailing Z.
+        return datetime.fromisoformat(value[:-1] + '+00:00' if value.endswith('Z') else value)
+    except ValueError:
+        return None
+
+
+def updated_at(text):
+    """The checkpoint's optional updated_at as an aware datetime, or None."""
+    values = fields(text.replace('\r\n', '\n'), 'updated_at')
+    return parse_timestamp(values[0]) if len(values) == 1 else None
+
+
+def validate_optional(text):
+    errors = []
+    for key, (pattern, expected) in OPTIONAL.items():
+        values = [value.strip() for value in fields(text, key)]
+        if len(values) > 1:
+            errors.append('Expected at most one ' + key)
+        elif values:
+            valid = parse_timestamp(values[0]) if key == 'updated_at' else pattern.fullmatch(values[0])
+            if not valid:
+                errors.append(key + ' must be ' + expected + '; got ' + repr(values[0]))
+    return errors
+
+
 def validate(text):
     text = text.replace('\r\n', '\n')
     errors = []
@@ -45,6 +88,7 @@ def validate(text):
         errors.append('Expected one nonempty writer')
     if fields(text, 'handoff') == ['ready'] and writers != ['none']:
         errors.append('ready requires writer: none; process inactivity still needs human/agent verification')
+    errors.extend(validate_optional(text))
     for section in SECTIONS:
         pattern = r'^## ' + re.escape(section) + r'\n(.*?)(?=^## |\Z)'
         found = re.findall(pattern, text, re.M | re.S)
@@ -68,6 +112,9 @@ def observations(root, text):
                 warnings.append('Observed file changed or is missing: ' + record['path'])
         except (ValueError, KeyError, TypeError, OSError) as exc:
             warnings.append('Invalid file observation: ' + str(exc))
+    saved = updated_at(text)
+    if saved and saved > datetime.now(timezone.utc) + CLOCK_SKEW:
+        warnings.append('updated_at is in the future; check the clock or the recorded time.')
     if len(text.split()) > 1200:
         warnings.append('Checkpoint exceeds the 1,200-word reading target; compact only resolved detail.')
     return warnings

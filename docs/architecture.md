@@ -60,6 +60,12 @@ Consulted official sources on 2026-11-02. Platform behavior is version/settings 
 
 These sources support packaging/loading mechanisms, not guaranteed handoff accuracy. Actual model compliance and operational savings require repeated real trials. Ordinary chat uploads provide a snapshot unless live filesystem tools are available.
 
+## Optional metadata (v0.2.0)
+
+The v0.2.0 brief asked for YAML front matter with `schema`, `updated_at`, `writer`, `profile`, `status`, `next_action` and `language`. The checkpoint already has machine-readable `- key: value` metadata, so a second block would duplicate it. A schema bump would also make v0.1.x helper copies, which may still be installed for another host, reject new checkpoints. The maintainer approved the alternative on 2026-11-08: keep `cross-agent-handoff/1` and add three optional lines, `updated_at`, `language` and `profile`.
+
+`status` and `writer` already exist as `task_status`, `handoff` and `writer`, with the rule that `ready` needs `writer: none`. `next_action` was not added because it would drift from the `## Next` section. The validator stays a small standard-library line parser; no YAML parser is needed. `language` changes only prose: headings, keys and status values stay English so tools keep working.
+
 ## Additional agent support
 
 Antigravity, Cursor, Gemini CLI, GitHub Copilot, OpenCode and Cline use the same portable

@@ -223,6 +223,46 @@ class ProtocolTests(unittest.TestCase):
         self.assertFalse(handoff.validate(checkpoint(next_step='Switch the upsert to INSERT OR REPLACE.')))
         self.assertTrue(handoff.validate(checkpoint(next_step='REPLACE with one actionable step.')))
 
+    def with_metadata(self, *lines):
+        return checkpoint().replace('- writer: none\n', '- writer: none\n' + ''.join(line + '\n' for line in lines))
+
+    def test_v011_checkpoint_without_optional_metadata_stays_valid(self):
+        self.assertEqual(handoff.validate(checkpoint()), [])
+        for name in ('before.md', 'after.md'):
+            text = (ROOT / 'docs' / 'examples' / name).read_text()
+            self.assertEqual(handoff.validate(text), [], name)
+
+    def test_valid_optional_metadata(self):
+        for stamp in ('2026-11-08T14:05:00+07:00', '2026-11-08T07:05Z', '2026-11-08T07:05:00.123456-03:30'):
+            text = self.with_metadata('- updated_at: ' + stamp, '- language: id', '- profile: video, motion')
+            self.assertEqual(handoff.validate(text), [], stamp)
+            self.assertIsNotNone(handoff.updated_at(text))
+        self.assertEqual(handoff.validate(self.with_metadata('- language: pt-BR', '- profile: game')), [])
+
+    def test_malformed_optional_metadata_rejected_clearly(self):
+        cases = {
+            '- updated_at: 2026-11-08 14:05': 'updated_at must be an ISO 8601 time with a UTC offset',
+            '- updated_at: 2026-11-08T14:05:00': 'updated_at must be',  # No offset.
+            '- updated_at: 2026-13-08T14:05:00Z': 'updated_at must be',  # Impossible month.
+            '- updated_at: yesterday': "got 'yesterday'",
+            '- language: Indonesian': 'language must be a language code',
+            '- profile: Video': 'profile must be lowercase profile names',
+            '- profile: video;motion': 'profile must be',
+        }
+        for line, message in cases.items():
+            errors = handoff.validate(self.with_metadata(line))
+            self.assertEqual(len(errors), 1, (line, errors))
+            self.assertIn(message, errors[0])
+        duplicated = self.with_metadata('- language: id', '- language: en')
+        self.assertIn('Expected at most one language', handoff.validate(duplicated))
+
+    def test_future_updated_at_warns(self):
+        self.target.write_text(self.with_metadata('- updated_at: 2999-01-01T00:00:00Z'))
+        result = json.loads(self.cli('check', expected=1).stdout)
+        self.assertIn('updated_at is in the future', result['warnings'][0])
+        self.target.write_text(self.with_metadata('- updated_at: 2026-11-08T00:00:00Z'))
+        self.cli('check')
+
     def test_windows_line_endings(self):
         self.target.write_text(checkpoint())
         self.save(checkpoint().replace('\n', '\r\n'))

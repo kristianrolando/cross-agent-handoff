@@ -23,6 +23,18 @@ This validates the candidate, refuses a stale digest, creates HANDOFF.md.previou
 
 A short `.HANDOFF.md.save-lock` excludes simultaneous helper saves. A crash can leave it behind. Establish inactivity before removing it; the helper never steals it based on elapsed time. Manual editors bypass the guard. No cross-file transaction, source lock, power-loss durability, or synchronization across machines is promised. Keep only one writer. Custom relative checkpoint paths are supported through `--checkpoint`; parent directories must exist. Symlink checkpoint targets and paths escaping the project are refused.
 
+## Optional metadata
+
+Since v0.2.0, `check` and `save` also validate three optional metadata lines. Each may appear at most once:
+
+| Line | Accepted values | Example |
+| --- | --- | --- |
+| `- updated_at:` | ISO 8601 time with a UTC offset (`Z` or `+HH:MM`) | `2026-11-08T14:05:00+07:00` |
+| `- language:` | Language code; prose language only | `id`, `en`, `pt-BR` |
+| `- profile:` | Lowercase names separated by commas | `video` or `game, motion` |
+
+Malformed values are errors that name the field, the expected form and the received value. An `updated_at` more than five minutes in the future is a warning. The format stays `cross-agent-handoff/1`, so v0.1.x helpers ignore these lines and older checkpoints without them stay valid. The helper never writes `updated_at` for you; the saving agent sets it in the candidate.
+
 ## Optional stale-file detection
 
 Use a small selection of relevant source/config/input files, not the whole project:
