@@ -49,6 +49,6 @@ Copy each returned observation into the Evidence section as one line:
 - observed_file: {"path":"src/example.py","sha256":"actual returned digest"}
 ```
 
-`check` warns when those files change or disappear, or the checkpoint exceeds the reading budget. It cannot detect unobserved changes, missing dependencies, false evidence, changed requirements, or secret leakage. A matching hash does not prove a test passed.
+For automatic change detection across the whole project, use `snapshot.py` and `inject.py` instead; see [hooks.md](hooks.md). `check` warns when those files change or disappear, or the checkpoint exceeds the reading budget. It cannot detect unobserved changes, missing dependencies, false evidence, changed requirements, or secret leakage. A matching hash does not prove a test passed.
 
 Exit codes: `0` mechanical checks passed (or command succeeded), `1` warnings need review, `2` invalid records or an operation error. A valid structure is not proof that the project is ready for handoff. Run the agent's resume/recovery procedure regardless.

@@ -10,6 +10,10 @@
 | skills/cross-agent-handoff/references/recovery.md | Interrupted/stale/conflicting state and concurrency boundaries |
 | skills/cross-agent-handoff/references/helper.md | Optional helper commands and exact limitations |
 | skills/cross-agent-handoff/scripts/handoff.py | Standard-library draft/check/inspect/save helper |
+| skills/cross-agent-handoff/scripts/snapshot.py | Mechanical snapshot into `.handoff/auto/` and the optional staleness guard |
+| skills/cross-agent-handoff/scripts/inject.py | Resume context with a live check for work newer than the checkpoint |
+| skills/cross-agent-handoff/scripts/hooks.py | Opt-in install/remove/status of Claude Code, Codex and Antigravity hooks |
+| skills/cross-agent-handoff/references/hooks.md | Snapshot layers, hook support per host, guard and removal |
 | .claude-plugin/plugin.json | Standalone Claude Code plugin wrapper |
 | .claude-plugin/marketplace.json | Local/Git marketplace catalog for that wrapper |
 | docs/releasing.md | Publication runbook, resolved synchronization record and release notes |
@@ -37,9 +41,11 @@
 | docs/evidence/ | Test output, independent-agent recovery and the 2026-11-02 live Codex/Antigravity trial |
 | tests/test_handoff.py | Disposable filesystem and failure-injection scenarios |
 | tests/test_package.py | Package integrity and portable metadata/link checks |
+| tests/test_autosave.py | Snapshot, resume-context and abrupt-stop scenarios |
+| tests/test_hooks.py | Hook configuration merge, removal and command execution |
 | .gitignore | Exclude generated Python caches |
 
-A consumer project normally gains only HANDOFF.md plus reviewed routing additions to existing instructions. Helper saves additionally create HANDOFF.md.previous; the save lock and replacement temp files are transient unless interrupted. Existing project formats may be reused without helper tooling.
+A consumer project normally gains only HANDOFF.md plus reviewed routing additions to existing instructions. Snapshots, when used, add a self-ignored `.handoff/auto/` folder; opt-in hooks add entries to the host configuration files listed in the hook guide. Helper saves additionally create HANDOFF.md.previous; the save lock and replacement temp files are transient unless interrupted. Existing project formats may be reused without helper tooling.
 
 ## Project and distribution scope
 
