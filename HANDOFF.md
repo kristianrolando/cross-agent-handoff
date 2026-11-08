@@ -4,7 +4,7 @@
 - task_status: partial
 - handoff: ready
 - writer: none
-- updated_at: 2026-11-08T08:52:15+07:00
+- updated_at: 2026-11-08T09:01:09+07:00
 
 ## Project
 Cross-Agent Handoff: portable sequential project continuity and a Claude Code plugin wrapper.
@@ -56,23 +56,28 @@ Done: WP8 on stacked branch `feat/wp8-release-prep`: live-trial kit and record t
 docs/evidence/ (results empty), CHANGELOG.md, docs/releases/v0.2.0.md with upgrade notes,
 version 0.2.0 in plugin.json and VERSION with a consistency test, README rows and links,
 v0.2.0 checklist in docs/releasing.md. README badge stays v0.1.1 until the release exists.
-Unfinished: maintainer merges #1-#7 in order, optional live trials, then the release steps in
-docs/releasing.md (tag pushed by the maintainer only after explicit approval).
+Merged into main 2026-11-08 at the maintainer's request, in order, with merge commits: #1 fa65c0c,
+#2 47302e2, #3 c9bddf2, #4 0d195da, #5 c80fa13, #6 7d2cbd2, #7 99e3acf. main's tree equals the
+tested #7 head 0204fa7. Merged branches were deleted. Incident: deleting #1's branch closed #2
+because this repo does not retarget PRs; the base was restored at the same commit, #2 reopened
+and retargeted, and later PRs were retargeted before their base was deleted. No code was lost.
+Unfinished: optional live trials (docs/evidence/live-trial-kit-v0.2.0.md), then the v0.2.0
+release steps in docs/releasing.md. The maintainer pushes the tag, only after explicit approval.
 Decisions (maintainer approved the plan 2026-11-08; read conservatively):
 - Hooks are installed only by an explicit command; none ship inside the existing plugin.
 - Keep format `cross-agent-handoff/1`; new metadata are optional bullets, no YAML front matter.
 - Lock is advisory and opt-in; takeover of a stale lock needs user confirmation and a reason.
 - Account aliases come from the session (prompt or env var); never persisted as identity.
-- One branch and draft PR per package, stacked: #1 roadmap → main, #2 WP4-lite → #1, #3 WP1 → #2.
-  Maintainer allowed push and PRs 2026-11-08. Merge in order; fixes to a lower branch are merged up.
+- Packages were delivered as stacked PRs #1-#7, now merged. For future stacks here, retarget the
+  next PR to main before deleting a merged base branch.
   gh's active account lacks write access; PR commands use the owner's token via GH_TOKEN only.
 Open question for the maintainer: agents and accounts available for live trials (brief
 placeholders unfilled).
 Writers / operations: none running.
 
 ## Evidence
-- 80 tests OK after WP8 (macOS, Python 3.9.6). CI on #5 green; #6 failed on Windows
-  (CRLF), fixed in d3f1bbd, rerun not yet observed.
+- 80 tests OK on main 99e3acf (macOS, Python 3.9.6). All seven PR heads passed six hosted jobs
+  before merge; main's own run 42436655218 was in progress when this was saved.
 - 79 tests OK after WP5-lite (macOS, Python 3.9.6).
 - 73 tests OK after WP3-lite (macOS, Python 3.9.6). WP2 PR #4 CI green on all six jobs.
 - 65 tests OK after WP2 (macOS, Python 3.9.6); real v0.1.1 tag upgrade checked manually.
@@ -90,12 +95,12 @@ Writers / operations: none running.
 - Hook facts: official pages fetched 2026-11-08, links in the audit.
 
 ## Next
-Check hosted CI on PRs #6 and #7. Then wait for the maintainer to merge the stack and decide
-on live trials and the v0.2.0 release. Do not tag or publish without explicit approval.
+Confirm the Package checks run on main for 99e3acf. Then the maintainer decides between running
+the live-trial kit first or releasing v0.2.0 (docs/releasing.md, steps 3-6).
 
 ## Recent outcomes
-- 2026-11-08, Claude Code: WP1 snapshot, inject and opt-in hooks committed locally; Claude hooks ran live once.
 - 2026-11-08, Claude Code: WP2 installer and doctor committed; v0.1.1 upgrade verified.
 - 2026-11-08, Claude Code: WP3-lite advisory lock and switch log committed.
 - 2026-11-08, Claude Code: WP5-lite game, video and motion profiles committed.
 - 2026-11-08, Claude Code: WP8 release preparation committed; v0.2.0 awaits merge and approval.
+- 2026-11-08, Claude Code: merged PRs #1-#7 into main; v0.2.0 awaits release approval.
