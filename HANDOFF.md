@@ -4,7 +4,7 @@
 - task_status: in_progress
 - handoff: ready
 - writer: none
-- updated_at: 2026-11-08T08:12:24+07:00
+- updated_at: 2026-11-08T08:19:26+07:00
 
 ## Project
 Cross-Agent Handoff: portable sequential project continuity and a Claude Code plugin wrapper.
@@ -59,11 +59,12 @@ Writers / operations: none running.
 - First hosted runs: macOS 3.9/3.14 and Ubuntu 3.14 passed. Ubuntu 3.9 failed setup because
   ubuntu-latest is now 26.04 with no 3.9 build (fixed: pinned ubuntu-24.04). Windows failed one
   test: NUL stdin reports isatty, so hooks.py hit EOFError (fixed: EOF means no confirmation).
-  Re-runs with both fixes not yet observed. Main's own CI will hit the same Ubuntu 3.9 issue.
+  Re-runs passed: PR checks green on #1 (d92b18c), #2 (f58f0e1) and #3 (04a985b), all six jobs.
+  Main's own CI will hit the Ubuntu 3.9 issue until #1 is merged.
 - Hook facts: official pages fetched 2026-11-08, links in the audit.
 
 ## Next
-Check hosted CI on PRs #1-#3 (Windows hooks fix and ubuntu-24.04 pin pending). When green,
+Maintainer reviews and merges #1 → #2 → #3 in order (merge commits, not squash). Then
 create `feat/wp2-installer` from `feat/wp1-auto-snapshot` and write `scripts/install.py`
 (hosts, doctor with VERSION and MANIFEST.sha256, update, uninstall, dry-run) reusing hooks.py.
 
