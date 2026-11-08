@@ -24,6 +24,13 @@ jobs:
         # setup-python resolves 3.9 to 3.9.13 on macOS arm64 and Windows x64.
         os: [ubuntu-latest, macos-latest, windows-latest]
         python: ['3.9', '3.14']
+        exclude:
+          # ubuntu-latest is Ubuntu 26.04, which has no setup-python 3.9 build.
+          - os: ubuntu-latest
+            python: '3.9'
+        include:
+          - os: ubuntu-24.04
+            python: '3.9'
     steps:
       - name: Check out source
         uses: actions/checkout@v7
