@@ -4,7 +4,7 @@
 - task_status: in_progress
 - handoff: ready
 - writer: none
-- updated_at: 2026-11-08T08:26:19+07:00
+- updated_at: 2026-11-08T08:38:52+07:00
 
 ## Project
 Cross-Agent Handoff: portable sequential project continuity and a Claude Code plugin wrapper.
@@ -41,7 +41,12 @@ folders, --user, --update with local-edit report and confirmation, --uninstall k
 records and removing own hooks, --doctor with VERSION and MANIFEST.sha256, --with-hooks,
 --dry-run), `VERSION` 0.2.0-dev, tests/test_install.py, docs (agents.md, setup.md, README,
 architecture, file map, validation). Cline maps to `.claude/skills/` to avoid a third copy.
-Unfinished: WP3-lite, WP5-lite, WP8.
+Done: WP3-lite on stacked branch `feat/wp3-lock`: `scripts/lock.py` (status, acquire,
+release, force-release; held locks, fresh or stale, need --confirm-takeover after user
+confirmation; alias from flag or HANDOFF_AGENT_ALIAS, email-like labels rejected), switch log
+`.handoff/log.jsonl`, lock ignored via `.handoff/.gitignore`, heartbeat refreshed by hook
+snapshots for the same host, inject warning, references/lock.md, docs. Rolling history deferred.
+Unfinished: WP5-lite, WP8.
 Decisions (maintainer approved the plan 2026-11-08; read conservatively):
 - Hooks are installed only by an explicit command; none ship inside the existing plugin.
 - Keep format `cross-agent-handoff/1`; new metadata are optional bullets, no YAML front matter.
@@ -55,6 +60,7 @@ placeholders unfilled).
 Writers / operations: none running.
 
 ## Evidence
+- 73 tests OK after WP3-lite (macOS, Python 3.9.6). WP2 PR #4 CI green on all six jobs.
 - 65 tests OK after WP2 (macOS, Python 3.9.6); real v0.1.1 tag upgrade checked manually.
 - `python3 -m unittest discover -s tests -v`: 54 tests OK after WP1, macOS 27.0.1,
   Python 3.9.6 (abrupt stop, clean clone, commits after checkpoint, spaces, CRLF, 2,000 files,
@@ -70,13 +76,13 @@ Writers / operations: none running.
 - Hook facts: official pages fetched 2026-11-08, links in the audit.
 
 ## Next
-Check hosted CI on the WP2 PR (Windows install paths). Then create `feat/wp3-lock` from
-`feat/wp2-installer`: advisory `.handoff/lock.json` with takeover only after user confirmation,
-append-only `.handoff/log.jsonl`, session-supplied alias, heartbeat from snapshot.py.
+Check hosted CI on the WP3 PR. Then create `feat/wp5-profiles` from `feat/wp3-lock`: game,
+video and motion profiles as optional checkpoint sections (assets/profiles/), init with
+`Profile: video`, size budget test, references/profiles.md.
 
 ## Recent outcomes
-- 2026-11-08, Claude Code: completed the v0.2.0 Phase 0 audit; maintainer approved the plan.
 - 2026-11-08, Claude Code: Step 0 committed locally (roadmap docs, 6-job CI matrix).
 - 2026-11-08, Claude Code: WP4-lite optional metadata validated and committed locally.
 - 2026-11-08, Claude Code: WP1 snapshot, inject and opt-in hooks committed locally; Claude hooks ran live once.
 - 2026-11-08, Claude Code: WP2 installer and doctor committed; v0.1.1 upgrade verified.
+- 2026-11-08, Claude Code: WP3-lite advisory lock and switch log committed.

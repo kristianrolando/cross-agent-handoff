@@ -119,7 +119,7 @@ New host routes were checked against [official documentation and installation pa
 ## What to expect
 
 - **Project files carry context.** Applicable instructions and the inspected filesystem remain authoritative; the checkpoint guides the next inspection.
-- **One writer at a time.** Stop overlapping source and output writers before handing over. Use separate areas/workspaces and an integrator for simultaneous work.
+- **One writer at a time.** Stop overlapping source and output writers before handing over. An optional advisory lock makes a second active writer visible and records each switch, but it cannot block edits. Use separate areas/workspaces and an integrator for simultaneous work.
 - **Save after every completed step.** Unsaved intent can be lost at a crash or usage limit. Optional snapshots and a resume-time check flag files changed after the last checkpoint, so the next agent knows to recover from the files. They are scripts started by the host or by you, not a background daemon, and they record what changed, not why.
 - **Check the actual environment.** The core needs filesystem access. Git and Python are optional; the helper requires Python 3.9+.
 - **Keep records with the work.** Moving devices requires transferring relevant dirty/untracked files and verifying the snapshot. No automatic cross-device synchronization is provided.

@@ -30,7 +30,7 @@ already has the checkpoint or a `.handoff/` folder, never raise inside a hook, a
 `--partial-hash` to hash the first and last 1 MB. The scan stops after 1.5 seconds or 50,000
 entries and says so. Optional `.handoff/config.json` keys: `snapshot.window_minutes` (120),
 `snapshot.exclude` (folder paths), `snapshot.partial_hash`, `snapshot.history_max_lines`
-(500), `guard.files` (5), `guard.minutes` (30), `inject.max_lines` (150).
+(500), `guard.files` (5), `guard.minutes` (30), `inject.max_lines` (150), `lock.stale_minutes` (10). A hook snapshot also refreshes the heartbeat of an advisory lock taken for the same host; see [lock.md](lock.md).
 
 ## Install hooks only on request
 

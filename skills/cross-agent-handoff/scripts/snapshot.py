@@ -32,7 +32,8 @@ MEDIA = {'.mp4', '.mov', '.mkv', '.webm', '.avi', '.m4v', '.mxf', '.prores', '.g
          '.lottie', '.blend', '.fbx', '.glb', '.gltf', '.obj', '.ttf', '.otf', '.woff2'}
 DEFAULTS = {'window_minutes': 120, 'exclude': [], 'partial_hash': False,
             'history_max_lines': 500, 'scan_seconds': 1.5, 'max_entries': 50000,
-            'max_files': 200, 'guard_files': 5, 'guard_minutes': 30, 'max_lines': 150}
+            'max_files': 200, 'guard_files': 5, 'guard_minutes': 30, 'max_lines': 150,
+            'lock_stale_minutes': 10}
 EVENT_FIELDS = ('hook_event_name', 'hookEventName', 'source', 'error', 'terminationReason')
 PARTIAL = 1024 * 1024
 TOLERANCE = 2.0  # Seconds of filesystem timestamp slack.
@@ -74,9 +75,9 @@ def load_config(root):
     if path.is_file():
         try:
             data = json.loads(path.read_text(encoding='utf-8'))
-            for section in ('snapshot', 'guard', 'inject'):
+            for section in ('snapshot', 'guard', 'inject', 'lock'):
                 for key, value in (data.get(section) or {}).items():
-                    config[key if section != 'guard' else 'guard_' + key] = value
+                    config[section + '_' + key if section in ('guard', 'lock') else key] = value
         except (OSError, ValueError, AttributeError) as exc:
             warn('ignoring unreadable .handoff/config.json: ' + str(exc))
     return config
@@ -281,6 +282,23 @@ def snapshot(root, checkpoint, config, event, hashes):
     return record
 
 
+def refresh_lock_heartbeat(root, host):
+    """Refresh the advisory lock's heartbeat when it was taken for this hook host.
+
+    Two accounts of the same host cannot be told apart here; the lock stays advisory.
+    """
+    path = root / '.handoff' / 'lock.json'
+    try:
+        record = json.loads(path.read_text(encoding='utf-8'))
+    except (OSError, ValueError):
+        return False
+    if not isinstance(record, dict) or not host or record.get('host') != host:
+        return False
+    record['heartbeat'] = iso()
+    handoff.atomic(path, (json.dumps(record, indent=2) + '\n').encode('utf-8'))
+    return True
+
+
 def append_history(path, summary, limit):
     with open(path, 'a', encoding='utf-8') as stream:
         stream.write(json.dumps(summary) + '\n')
@@ -310,6 +328,8 @@ def run(argv=None, stdin=None):
         return 0
     config = load_config(root)
     snapshot(root, args.checkpoint, config, event, args.partial_hash)
+    if args.host != 'generic':
+        refresh_lock_heartbeat(root, args.host)
     if args.guard:
         decision = guard_decision(root, args.checkpoint, config, root / '.handoff' / 'auto' / 'guard.json',
                                   args.host, payload)

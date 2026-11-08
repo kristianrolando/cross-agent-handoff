@@ -19,6 +19,9 @@ spec = importlib.util.spec_from_file_location('cross_agent_handoff_snapshot', HE
 snapshot = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(snapshot)
 handoff = snapshot.handoff
+spec = importlib.util.spec_from_file_location('cross_agent_handoff_lock', HERE / 'lock.py')
+lock = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(lock)
 LISTED_FILES = 15
 
 
@@ -67,6 +70,11 @@ def build(root, checkpoint, config):
     if changes['truncated']:
         warnings.append('The change scan stopped early after {} entries; inspect the project directly.'.format(
             changes['scanned']))
+    held = lock.state(root, float(config['lock_stale_minutes']))
+    if held['state'] != 'free':
+        warnings.append('Advisory lock held by {} ({}, heartbeat {} min ago). Do not edit overlapping files until '
+                        'the user confirms that session has stopped; then take over with lock.py acquire '
+                        '--confirm-takeover.'.format(held['holder'], held['state'], held.get('heartbeat_minutes')))
     last = latest_snapshot(root)
     event = (last or {}).get('event') or {}
     if event.get('error') and last.get('checkpoint', {}).get('sha256') == handoff.digest(path.read_bytes()):

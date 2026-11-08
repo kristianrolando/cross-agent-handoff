@@ -107,6 +107,26 @@ them. The installer replaces a directory only when its SKILL.md names this skill
 uninstall never touches checkpoint records. It is optional: manual copying and the Skills CLI
 remain supported, and the Claude plugin cache is out of its scope.
 
+## Advisory lock (v0.2.0)
+
+The original design rejected required source locks: they cannot stop manual edits and can
+leave stale ownership. The maintainer asked for protection against two active writers, and
+approved this revision on 2026-11-08. The lock is opt-in and advisory: `lock.py` writes
+`.handoff/lock.json`, and inject warns when it is held. It enforces nothing and does not
+change the one-writer rule.
+
+Takeover always needs `--confirm-takeover`, given only after the user confirms. The brief
+allowed silent takeover of stale locks, but the existing rule says a stale timestamp does not
+prove inactivity. Heartbeats refresh only when a hook snapshot runs for the lock's host, so a
+session without hooks, or a long turn, looks stale while still writing.
+
+Account aliases come from the user per session (flag or `HANDOFF_AGENT_ALIAS`). They are
+never inferred or reused, because two accounts of one host share a machine and folder. Alias
+labels reject `@` and other characters, so emails cannot be stored. The append-only switch
+log records reported reasons and takeovers. It is not a resume source, so it does not compete
+with the checkpoint. Rolling checkpoint copies were deferred: `HANDOFF.md.previous` and Git
+already keep history, and committed copies would add noise.
+
 ## Additional agent support
 
 Antigravity, Cursor, Gemini CLI, GitHub Copilot, OpenCode and Cline use the same portable
