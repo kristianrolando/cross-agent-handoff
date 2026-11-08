@@ -4,7 +4,7 @@
 
 Inspect instructions, setup docs, task/backlog, and current status before adding files. Include the active host's existing rules; use [agents.md](agents.md) for host-specific discovery and routing. Prefer an existing checkpoint with sufficient information; record its path in the entrypoint. Do not create HANDOFF.md if an existing document already owns that information. The helper only handles its default format; use manual saves for adapted formats.
 
-If no equivalent exists, copy assets/checkpoint.md to HANDOFF.md at the chosen project root and replace every REPLACE line using inspected facts. Alternatively use the optional helper's init command, then populate the draft. Initialization must not claim unknown project history or successful checks.
+If no equivalent exists, copy assets/checkpoint.md to HANDOFF.md at the chosen project root and replace every REPLACE line using inspected facts. Alternatively use the optional helper's init command, then populate the draft. Initialization must not claim unknown project history or successful checks. If the user names a profile, add its section as described in [profiles.md](profiles.md).
 
 Append the following small block to AGENTS.md after checking for an existing equivalent. Create AGENTS.md only if absent. Adapt the checkpoint path when reusing existing records. Retain other instructions and nested/override scopes.
 

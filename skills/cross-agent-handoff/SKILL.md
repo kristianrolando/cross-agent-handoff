@@ -17,6 +17,7 @@ Make the project the source of truth. Preserve useful facts and unfinished work,
 - For optional mechanical checks and atomic saves, read [helper.md](references/helper.md). Do not load the script source routinely.
 - For automatic snapshots, the stale-checkpoint warning, or opt-in hooks, read [hooks.md](references/hooks.md). Install hooks only when the user asks.
 - If `.handoff/lock.json` exists or the user wants writer visibility, read [lock.md](references/lock.md).
+- If the user names a profile (game, video, motion) or the work is mainly media, read [profiles.md](references/profiles.md).
 - Use [checkpoint.md](assets/checkpoint.md) only when creating a new checkpoint. Reuse an existing equivalent instead of adding a competing status file.
 
 ## Information ownership

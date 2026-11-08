@@ -127,6 +127,21 @@ log records reported reasons and takeovers. It is not a resume source, so it doe
 with the checkpoint. Rolling checkpoint copies were deferred: `HANDOFF.md.previous` and Git
 already keep history, and committed copies would add noise.
 
+## Domain profiles (v0.2.0)
+
+The default template is code-oriented. Profiles add one section each for game, video and motion
+work after State, so the six base sections and the helper's validation stay the same, and
+v0.1.x helpers still accept profiled checkpoints. Profiles are templates of
+`Label: REPLACE with ...` lines rather than new files or schemas. They point to existing
+EDLs, style-tokens files and trackers instead of copying them, which keeps the checkpoint
+within its reading budget; tests enforce per-profile and combined word limits.
+
+The most expensive mistake after a switch in media work is rerunning a long render. Running
+renders and operations are therefore recorded with command, output path and start time, and
+`inject.py` prints them before anything else is done. The brief's media manifest command and
+style-tokens template were deferred to v0.3.0: snapshot already records media size and time,
+and a style-tokens file belongs to the project, so the profile only links it.
+
 ## Additional agent support
 
 Antigravity, Cursor, Gemini CLI, GitHub Copilot, OpenCode and Cline use the same portable

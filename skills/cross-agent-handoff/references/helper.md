@@ -8,7 +8,7 @@ python3 SKILL/scripts/handoff.py inspect --project PROJECT
 python3 SKILL/scripts/handoff.py check --project PROJECT
 ```
 
-`init` creates only a draft HANDOFF.md using exclusive creation. It never overwrites an existing checkpoint, edits instructions, installs dependencies or initializes Git. Fill every REPLACE line before claiming initialization complete. `inspect` reads Git metadata when available and emits the checkpoint SHA-256. It does not inspect diffs, source contents, ignored assets, or writer activity for you.
+`init --profile video,motion` adds domain profile sections; see [profiles.md](profiles.md). `init` creates only a draft HANDOFF.md using exclusive creation. It never overwrites an existing checkpoint, edits instructions, installs dependencies or initializes Git. Fill every REPLACE line before claiming initialization complete. `inspect` reads Git metadata when available and emits the checkpoint SHA-256. It does not inspect diffs, source contents, ignored assets, or writer activity for you.
 
 ## Save safely
 

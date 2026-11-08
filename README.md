@@ -53,6 +53,8 @@ Choose your host in the installer. For Antigravity, select **Antigravity** or ap
 
 If the host does not discover the skill, use the [explicit-file fallback](skills/cross-agent-handoff/references/agents.md#activate-and-route-project-context). Antigravity IDE discovery can be checked in Customizations; Gemini CLI exposes `/skills list`.
 
+For games, video edits or motion graphics, add `Profile: game`, `Profile: video` or `Profile: motion` (combinable) to the prompt. The checkpoint then also records render commands, outputs, style tokens or playtests. See [profiles](skills/cross-agent-handoff/references/profiles.md).
+
 The agent inspects existing instructions and documentation, reuses a suitable checkpoint or creates `HANDOFF.md`, and adds short project routing where needed. For a new project, include your goal and acceptance criteria. Initialization does not scaffold an application or choose a stack.
 
 ## How it works
