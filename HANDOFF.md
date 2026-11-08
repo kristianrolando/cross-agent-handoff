@@ -4,6 +4,7 @@
 - task_status: in_progress
 - handoff: ready
 - writer: none
+- updated_at: 2026-11-08T08:00:00+07:00
 
 ## Project
 Cross-Agent Handoff: portable sequential project continuity and a Claude Code plugin wrapper.
@@ -21,9 +22,12 @@ WP5-lite → WP8. WP7 tests go with each package. Deferred to v0.3.0: rolling hi
 media manifest/style tokens, hooks for the other five hosts, Beads.
 
 ## State
-Current step: Step 0 done on local branch `chore/v0.2.0-roadmap` (roadmap docs, checkpoint,
-CI matrix widened to 3 OS × Python 3.9/3.14, docs/ci.md and file map updated).
-Unfinished: WP4-lite and every later package.
+Done: Step 0 on local branch `chore/v0.2.0-roadmap` (roadmap docs, 6-job CI matrix).
+Done: WP4-lite on stacked branch `feat/wp4-checkpoint-metadata`. handoff.py validates optional
+`updated_at`, `language` and `profile` lines (clear errors, future-time warning) and exposes
+`updated_at()` for WP1. The template gains an `updated_at` line. SKILL.md, helper.md, setup.md
+(migration note), architecture.md (decision) and the after example were updated.
+Unfinished: WP1 and every later package.
 Decisions (maintainer approved the plan 2026-11-08; read conservatively):
 - Hooks are installed only by an explicit command; none ship inside the existing plugin.
 - Keep format `cross-agent-handoff/1`; new metadata are optional bullets, no YAML front matter.
@@ -35,17 +39,19 @@ trials (brief placeholders unfilled).
 Writers / operations: none running.
 
 ## Evidence
-- `python3 -m unittest discover -s tests -v`: 28 tests OK, macOS 27.0.1, Python 3.9.6.
+- `python3 -m unittest discover -s tests -v`: 32 tests OK after WP4-lite, macOS 27.0.1,
+  Python 3.9.6. New tests: v0.1.1 checkpoints stay valid, valid/malformed metadata, future time.
 - Widened CI matrix not yet run on GitHub (nothing pushed). setup-python manifest checked:
   3.9 resolves to 3.9.13 on macOS arm64 and Windows x64; 3.14.10 exists on all three OSes.
 - Hook facts: official pages fetched 2026-11-08, links in the audit.
 
 ## Next
-Create branch `feat/wp4-checkpoint-metadata` from `chore/v0.2.0-roadmap` and add optional
-`updated_at`, `language` and `profile` bullets with validator checks and tests.
+Create branch `feat/wp1-auto-snapshot` from `feat/wp4-checkpoint-metadata`. Start with
+`scripts/inject.py` resume-time scan (works without hooks), then `scripts/snapshot.py`.
 
 ## Recent outcomes
 - Published v0.1.1; release tags and passing CI were verified.
 - Added eight attributed brand marks to responsive README hero artwork.
 - 2026-11-08, Claude Code: completed the v0.2.0 Phase 0 audit; maintainer approved the plan.
 - 2026-11-08, Claude Code: Step 0 committed locally (roadmap docs, 6-job CI matrix).
+- 2026-11-08, Claude Code: WP4-lite optional metadata validated and committed locally.

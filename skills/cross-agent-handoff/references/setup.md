@@ -29,6 +29,8 @@ New project: establish identity, scope, and observable criteria from the request
 
 Replace the installed skill folder after reviewing the new source; retain project HANDOFF.md and user documentation. Keep the checkpoint format stable; inspect and migrate deliberately if a future format changes. Do not overwrite an edited integration block with an old template.
 
+From v0.1.x to v0.2.0 the format stays `cross-agent-handoff/1`; no migration is required. To adopt the optional metadata, add `- updated_at:` (and `- language:` or `- profile:` if wanted) below the `writer` line at the next save. Update every installed copy of the skill together so all hosts validate the same fields.
+
 ## Remove
 
 Remove only the installed skill directory and the exact integration block after reviewing it. Remove a host-specific pointer or added `@AGENTS.md` import only if it was introduced solely for this integration and is no longer needed. Keep checkpoint, decisions, source, history, and any preexisting instructions by default. If deleting the checkpoint is explicitly requested, first migrate still-needed decisions/backlog and remove references to it. No automatic cleanup command removes project data.

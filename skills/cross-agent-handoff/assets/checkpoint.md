@@ -4,6 +4,7 @@
 - task_status: partial
 - handoff: recovery
 - writer: none
+- updated_at: REPLACE with the save time in ISO 8601 with a UTC offset, such as 2026-11-08T14:05:00+07:00.
 
 ## Project
 Identity: REPLACE with project name and distinguishing purpose.

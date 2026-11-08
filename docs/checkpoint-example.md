@@ -37,4 +37,4 @@ The [after checkpoint](examples/after.md) records completion of the named task, 
 | Handoff | Partial task, ready | Completed task, ready |
 | Next action | Add missing fallback | Await next goal |
 
-These documents use the same default format as the real template. They are outside the installed skill so normal resume does not load demonstration material.
+These documents use the same default format as the real template. The after checkpoint shows the optional `updated_at` line; the before checkpoint omits it, as v0.1.x checkpoints do. Both are valid. They are outside the installed skill so normal resume does not load demonstration material.
