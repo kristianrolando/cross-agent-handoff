@@ -65,6 +65,16 @@ class ProfileTests(unittest.TestCase):
         self.target.write_text(fill(draft))
         self.assertEqual(json.loads(self.helper('check').stdout)['warnings'], [])
 
+    def test_crlf_template_and_profiles_compose(self):
+        spec = __import__('importlib.util').util.spec_from_file_location('helper_crlf', HELPER)
+        helper = __import__('importlib.util').util.module_from_spec(spec)
+        spec.loader.exec_module(helper)
+        template = (SKILL / 'assets' / 'checkpoint.md').read_text().replace('\n', '\r\n')
+        result = helper.with_profiles(template, ['game'])
+        self.assertIn('\r\n## Profile: game\r\n', result)
+        self.assertIn('\r\n- profile: game\r\n', result)
+        self.assertNotIn('\n\n\n', result.replace('\r\n', '\n'))
+
     def test_unknown_profile_creates_nothing(self):
         result = self.helper('init', '--profile', 'video,film', expected=2)
         self.assertIn('Unknown profile(s): film', result.stderr)

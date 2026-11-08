@@ -88,8 +88,10 @@ def with_profiles(template, names):
     unknown = [name for name in names if name not in available]
     if unknown:
         raise ValueError('Unknown profile(s): {}. Available: {}'.format(', '.join(unknown), ', '.join(available)))
-    sections = ''.join((PROFILES / (name + '.md')).read_text(encoding='utf-8').rstrip('\n') + '\n\n'
-                       for name in names)
+    crlf = '\r\n' in template  # Windows checkouts may convert line endings; keep the template's style.
+    template = template.replace('\r\n', '\n')
+    sections = ''.join((PROFILES / (name + '.md')).read_text(encoding='utf-8').replace('\r\n', '\n').rstrip('\n')
+                       + '\n\n' for name in names)
     marker = '\n## Evidence\n'
     if marker not in template or '\n- writer: ' not in template:
         raise ValueError('Template lacks the writer line or Evidence section')
@@ -98,8 +100,10 @@ def with_profiles(template, names):
     line, rest = rest.split('\n', 1)
     updated = rest.split('\n', 1) if rest.startswith('- updated_at: ') else None
     if updated:
-        return '{}\n- writer: {}\n{}\n- profile: {}\n{}'.format(head, line, updated[0], ', '.join(names), updated[1])
-    return '{}\n- writer: {}\n- profile: {}\n{}'.format(head, line, ', '.join(names), rest)
+        result = '{}\n- writer: {}\n{}\n- profile: {}\n{}'.format(head, line, updated[0], ', '.join(names), updated[1])
+    else:
+        result = '{}\n- writer: {}\n- profile: {}\n{}'.format(head, line, ', '.join(names), rest)
+    return result.replace('\n', '\r\n') if crlf else result
 
 
 def validate(text):
