@@ -232,3 +232,11 @@ WP8 release preparation (2026-11-08): version set to 0.2.0 in `plugin.json` and 
 notes, CHANGELOG and a package test tying them together. A live-trial kit and record template
 were added with results left empty; no trial in the kit has been run yet. A Windows CI failure
 in WP5 was fixed: profile composition now handles CRLF templates from Windows checkouts.
+
+## Live trials of v0.2.0 (2026-11-08)
+
+Headless Claude Code 2.1.318, Codex CLI 0.167 and Antigravity CLI 1.4.12 sessions ran the kit's
+game chain, an abrupt-stop recovery, and the video and motion profiles in disposable projects.
+All passed with observed limits: Antigravity used file tools only, the two Claude aliases were one
+account, and Codex hooks were never trusted. Three findings were fixed afterwards. Details,
+prompts and exclusions: [live-trial-2026-11-08.md](evidence/live-trial-2026-11-08.md).

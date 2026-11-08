@@ -263,6 +263,11 @@ class ProtocolTests(unittest.TestCase):
         self.target.write_text(self.with_metadata('- updated_at: 2026-11-08T00:00:00Z'))
         self.cli('check')
 
+    def test_prose_file_observation_gets_actionable_warning(self):
+        self.target.write_text(checkpoint() + '\n- observed_file: game.js (A and B implementation)\n')
+        warnings = json.loads(self.cli('check', expected=1).stdout)['warnings']
+        self.assertIn('write it as one JSON object from inspect', warnings[0])
+
     def test_windows_line_endings(self):
         self.target.write_text(checkpoint())
         self.save(checkpoint().replace('\n', '\r\n'))

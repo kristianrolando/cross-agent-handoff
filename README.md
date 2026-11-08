@@ -103,9 +103,9 @@ The checkpoint links to existing requirements, architecture and backlog instead 
 
 | Host / component | Available route | Evidence and limits |
 | --- | --- | --- |
-| **Claude Code** | Direct skill or included Claude plugin | Maintainer reports successful use; manifests validated and installer copy checked. CLI 2.1.287 listed the project skill; the 2026-11-02 live trial could not run because its sign-in had expired. |
-| **Codex** | Direct skill; optional UI metadata | Codex CLI 0.166 initialized, handed off and later finished a task in a [live trial](docs/evidence/live-trial-2026-11-02.md). |
-| **Antigravity** | Native skill in `.agents/skills/` | Antigravity CLI 1.2.3 expanded `/cross-agent-handoff` and resumed from a Codex checkpoint in the [live trial](docs/evidence/live-trial-2026-11-02.md); headless mode denied shell commands, so it used file tools only. App and IDE not exercised. |
+| **Claude Code** | Direct skill or included Claude plugin | CLI 2.1.318 (print mode) initialized, resumed, recovered and finished tasks with hooks in the [2026-11-08 trial](docs/evidence/live-trial-2026-11-08.md). Interactive sessions and a second account not exercised. |
+| **Codex** | Direct skill; optional UI metadata | Codex CLI resumed, took over a lock after confirmation, recovered from an abrupt stop and avoided a re-render in live trials ([2026-11-02](docs/evidence/live-trial-2026-11-02.md), [2026-11-08](docs/evidence/live-trial-2026-11-08.md)). |
+| **Antigravity** | Native skill in `.agents/skills/` | Antigravity CLI (1.2.3, 1.4.12) expanded `/cross-agent-handoff` and resumed in live trials ([2026-11-02](docs/evidence/live-trial-2026-11-02.md), [2026-11-08](docs/evidence/live-trial-2026-11-08.md)); headless mode denied shell commands, so it used file tools only. App and IDE not exercised. |
 | **Cursor** | Native skill in `.agents/skills/`, `.cursor/skills/` or `.claude/skills/` | Official discovery/invocation documented; live-app handoff not exercised here. |
 | **Gemini CLI** | Native skill in `.agents/skills/` or `.gemini/skills/` | Official discovery documented; activation consent/settings may apply; no live-app trial here. |
 | **GitHub Copilot** | Native skill in `.github/skills/`, `.agents/skills/` or `.claude/skills/` | Official agent support documented; loaded when relevant, with no documented slash command; surfaces and locations vary; no live-app trial here. |
@@ -114,10 +114,10 @@ The checkpoint links to existing requirements, architecture and backlog instead 
 | **Windsurf / other filesystem agents** | Explicitly read installed `SKILL.md` and checkpoint | Portable fallback; native discovery not verified for this package. |
 | Plain chat / uploads | Read supplied checkpoint and files | Snapshot only unless live filesystem tools are available. |
 | Optional Python scripts | Python 3.9+, standard library: helper, installer, snapshot, inject, hooks, lock | Hosted checks on Linux, macOS and Windows with Python 3.9 and 3.14. |
-| Opt-in hooks | Claude Code, Codex, Antigravity | Event names and formats from official docs. Claude Code SessionStart and Stop ran once live; StopFailure, Codex and Antigravity hooks not yet exercised live. See the [hook guide](skills/cross-agent-handoff/references/hooks.md). |
+| Opt-in hooks | Claude Code, Codex, Antigravity | Claude Code SessionStart and Stop, and Antigravity CLI Stop, ran in live trials. StopFailure, PreCompact, trusted Codex hooks and Antigravity context injection not yet observed. See the [hook guide](skills/cross-agent-handoff/references/hooks.md). |
 | Concurrent overlapping writers | Requires separate coordination | An optional advisory lock makes a second writer visible; nothing locks source files. |
 
-New host routes were checked against [official documentation and installation paths](skills/cross-agent-handoff/references/agents.md), reviewed on 2026-11-02. Documented compatibility, installer checks and actual model trials are distinct; only Codex and Antigravity CLI have a recorded live handoff. See [validation and coverage](docs/validation.md).
+New host routes were checked against [official documentation and installation paths](skills/cross-agent-handoff/references/agents.md), reviewed on 2026-11-02. Documented compatibility, installer checks and actual model trials are distinct; Claude Code, Codex and Antigravity CLI have recorded live handoffs. See [validation and coverage](docs/validation.md).
 
 ## What to expect
 
