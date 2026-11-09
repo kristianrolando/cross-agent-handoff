@@ -60,6 +60,10 @@ def build(root, checkpoint, config):
     errors = handoff.validate(text)
     if errors:
         warnings.append('Checkpoint fails structural checks: ' + '; '.join(errors[:3]))
+    words = len(text.split())
+    if words > handoff.WORD_TARGET:
+        warnings.append('{} ({} words) At the next save, collapse completed work to one line with a link '
+                        'to its durable record.'.format(handoff.WORD_WARNING, words))
     if meta['handoff'] in ('working', 'recovery'):
         warnings.append('Checkpoint says handoff: {} (writer: {}). Confirm that session has stopped '
                         'before editing overlapping files.'.format(meta['handoff'], meta['writer']))

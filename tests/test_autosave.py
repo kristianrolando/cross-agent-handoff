@@ -172,6 +172,13 @@ class AutosaveTests(unittest.TestCase):
         self.assertNotIn('WARNING', output)
         self.assertIn('task_status: partial', output)
 
+    def test_inject_warns_when_checkpoint_exceeds_word_target(self):
+        long_state = 'Verified: ' + ' '.join(['detail'] * 1300) + '\n'
+        self.write_checkpoint(age_seconds=10, text=checkpoint().replace('Verified:', long_state + 'Verified:', 1))
+        output = self.run_script('inject', '--project', str(self.root)).stdout
+        self.assertIn('WARNING: Checkpoint exceeds the 1,200-word reading target', output)
+        self.assertIn('collapse completed work', output)
+
     def test_fresh_clone_is_not_reported_as_unsaved_work(self):
         self.init_git()
         self.write_checkpoint()
