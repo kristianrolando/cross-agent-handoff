@@ -3,6 +3,16 @@
 Versions follow the Claude plugin manifest and the skill's `VERSION` file. Release notes with
 install commands live in [docs/releases/](docs/releases/).
 
+## 0.2.1 (2026-11-10)
+
+Changed (token budget; checkpoint format unchanged):
+- Inject resume context warns when the checkpoint exceeds the 1,200-word reading target,
+  so the next agent compacts it instead of only `handoff.py check` reporting it.
+- SKILL.md: between-step saves update only changed sections; the full compaction and reread
+  stay at handoff. The save step states the word target and how to compact resolved work.
+- `references/setup.md`: shorter routing block that skips small or read-only tasks. Projects
+  keep their existing block; replace it only after reviewing local edits.
+
 ## 0.2.0 (2026-11-08)
 
 Built for rotating agents and accounts on one project, including media work. Everything new

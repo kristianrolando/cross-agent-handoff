@@ -27,6 +27,8 @@ OPTIONAL = {
                 'lowercase profile names separated by commas, such as video or game, motion'),
 }
 CLOCK_SKEW = timedelta(minutes=5)
+WORD_TARGET = 1200  # Advisory reading budget; never a reason to drop unresolved facts.
+WORD_WARNING = 'Checkpoint exceeds the 1,200-word reading target; compact only resolved detail.'
 PROFILES = Path(__file__).resolve().parent.parent / 'assets' / 'profiles'
 
 
@@ -149,8 +151,8 @@ def observations(root, text):
     saved = updated_at(text)
     if saved and saved > datetime.now(timezone.utc) + CLOCK_SKEW:
         warnings.append('updated_at is in the future; check the clock or the recorded time.')
-    if len(text.split()) > 1200:
-        warnings.append('Checkpoint exceeds the 1,200-word reading target; compact only resolved detail.')
+    if len(text.split()) > WORD_TARGET:
+        warnings.append(WORD_WARNING)
     return warnings
 
 
