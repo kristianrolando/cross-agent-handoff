@@ -15,7 +15,7 @@
 
 [![Package checks](https://github.com/kristianrolando/cross-agent-handoff/actions/workflows/ci.yml/badge.svg)](https://github.com/kristianrolando/cross-agent-handoff/actions/workflows/ci.yml)
 [![MIT License](https://img.shields.io/badge/License-MIT-315b43?style=flat-square)](LICENSE)
-[![v0.2.0](https://img.shields.io/badge/Release-v0.2.0-a15d3e?style=flat-square)](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.2.0)
+[![v0.2.1](https://img.shields.io/badge/Release-v0.2.1-a15d3e?style=flat-square)](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.2.1)
 
 **Hit a usage limit? Switching agents? Returning in a new session?** Save the useful context in your project, then let the next agent inspect the files and continue.
 

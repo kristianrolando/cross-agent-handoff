@@ -248,3 +248,12 @@ prompts and exclusions: [live-trial-2026-11-08.md](evidence/live-trial-2026-11-0
 - [Publish release run 42439322328](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/42439322328): checks and publish jobs succeeded.
 - [Release v0.2.0](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.2.0) is Latest, not a draft or prerelease, published 2026-11-08T02:37:36Z. Its body matches docs/releases/v0.2.0.md apart from the final newline.
 - Tags v0.1.0 (`666e04c`) and v0.1.1 (`f496f6e` → `5eb5279`) are unchanged.
+
+## Release v0.2.1 evidence (2026-11-10)
+
+- PR #10 passed all 12 hosted checks (two Package checks runs) and was merged as `cca0182`; main's own [Package checks run 42660749015](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/42660749015) succeeded. The tree equals the tested PR head `09a206e`.
+- Annotated tag `v0.2.1` (object `485679e`) targets `cca0182`. The maintainer asked for commit, PR, merge and release; the agent pushed the tag.
+- [Publish release run 42661782630](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/42661782630): checks and publish jobs succeeded.
+- [Release v0.2.1](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.2.1) is Latest, not a draft or prerelease, published 2026-11-09T17:09:31Z. Its body matches docs/releases/v0.2.1.md apart from the final newline.
+- Limits: guidance plus one warning; no live host trial was repeated and token savings were not measured, only the word target and routing-block size.
+- Tags v0.1.0, v0.1.1 and v0.2.0 are unchanged.
