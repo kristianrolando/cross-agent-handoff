@@ -4,6 +4,7 @@ These tests check file merging and command execution only; no host application r
 generated configuration here.
 """
 import json
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -58,7 +59,18 @@ class HookTests(unittest.TestCase):
         self.assertEqual(data['hooks']['Stop'][0], EXISTING['hooks']['Stop'][0])
         self.assertEqual(set(data['hooks']), {'Stop', 'PostToolUse', 'SessionStart', 'StopFailure', 'PreCompact'})
         command = data['hooks']['SessionStart'][0]['hooks'][0]['command']
-        self.assertIn('"$CLAUDE_PROJECT_DIR/.claude/skills/cross-agent-handoff/scripts/inject.py"', command)
+        # Braced: Claude Code rewrites only this form for PowerShell; a bare $NAME there is $null.
+        self.assertIn('"${CLAUDE_PROJECT_DIR}/.claude/skills/cross-agent-handoff/scripts/inject.py"', command)
+        if os.name != 'nt':  # Hosts run shell-form commands with sh -c on macOS and Linux.
+            result = subprocess.run(['/bin/sh', '-c', command], input=json.dumps({'cwd': str(self.root)}), text=True,
+                                    capture_output=True, env=dict(os.environ, CLAUDE_PROJECT_DIR=str(self.root)),
+                                    timeout=60)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn('resume context', result.stdout)
+        old = json.loads(json.dumps(data).replace('${CLAUDE_PROJECT_DIR}', '$CLAUDE_PROJECT_DIR'))
+        settings.write_text(json.dumps(old))  # As written by v0.2.1: recognised and upgraded.
+        self.assertIn('Updating claude hooks', self.hooks('install', '--host', 'claude', '--yes').stdout)
+        self.assertEqual(self.read('.claude/settings.local.json'), data)
         self.assertNotIn('--guard', json.dumps(data))
         self.assertIn('already up to date', self.hooks('install', '--host', 'claude', '--yes').stdout)
         self.hooks('remove', '--host', 'claude', '--yes')
@@ -110,6 +122,30 @@ class HookTests(unittest.TestCase):
         result = subprocess.run(start, shell=True, input=json.dumps({'cwd': str(self.root)}), text=True,
                                 capture_output=True, cwd=str(self.root), timeout=60)
         self.assertIn('resume context', result.stdout)
+
+    def test_shell_expanding_paths_are_refused_and_reported(self):
+        root = Path(self.temp.name) / 'price $5 `x`'
+        root.mkdir()
+        shutil.copytree(SKILL, root / '.agents/skills/cross-agent-handoff', ignore=shutil.ignore_patterns('__pycache__'))
+        shutil.copytree(SKILL, root / '.claude/skills/cross-agent-handoff', ignore=shutil.ignore_patterns('__pycache__'))
+        run = lambda *args: subprocess.run([sys.executable, str(HOOKS), *args, '--project', str(root)], text=True,
+                                           capture_output=True, stdin=subprocess.DEVNULL, timeout=60)
+        for host in ('codex', 'antigravity'):
+            result = run('install', '--host', host, '--yes')
+            self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+            self.assertIn('would expand', result.stderr)
+        self.assertFalse((root / '.codex').exists())
+        self.assertFalse((root / '.agents' / 'hooks.json').exists())
+        # Claude reads the project path from $CLAUDE_PROJECT_DIR, so the same project stays supported.
+        self.assertEqual(run('install', '--host', 'claude', '--yes').returncode, 0)
+        # An entry written by an older version for this path is reported, not trusted.
+        script = root / '.agents/skills/cross-agent-handoff/scripts/snapshot.py'
+        (root / '.codex').mkdir()
+        (root / '.codex' / 'hooks.json').write_text(json.dumps({'hooks': {'Stop': [{'hooks': [
+            {'type': 'command', 'command': 'python3 "{}" --hook --host codex'.format(script)}]}]}}))
+        report = json.loads(run('status', '--host', 'codex').stdout)
+        self.assertEqual(len(report['missing_scripts']), 1)
+        self.assertIn('expands', report['missing_scripts'][0])
 
     def test_antigravity_uses_its_own_named_entry(self):
         self.install_skill('.agents/skills')

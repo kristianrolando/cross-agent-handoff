@@ -3,6 +3,32 @@
 Versions follow the Claude plugin manifest and the skill's `VERSION` file. Release notes with
 install commands live in [docs/releases/](docs/releases/).
 
+## 0.2.3 (unreleased)
+
+Small fixes deferred from v0.2.2 (audit findings F08, F13 rest, F23). The checkpoint format and
+the routing block are unchanged.
+
+Fixed:
+- Hook commands for Claude Code now use `${CLAUDE_PROJECT_DIR}`, the form Claude Code rewrites
+  when hooks run in PowerShell; the bare `$CLAUDE_PROJECT_DIR` written before resolved to nothing
+  there (not tested on Windows). `hooks.py install` refuses a project or skill path containing
+  `$` or a backtick, because a shell would expand it inside the quoted command, and
+  `hooks.py status` reports an entry written for such a path by an earlier version. Entries
+  with the bare form are recognised and upgraded by the next `hooks.py install`.
+- `install.py --doctor`, `--update` and plain installs report an unreadable `MANIFEST.sha256`
+  (bad line, binary content) instead of ending in a traceback; `--update` rewrites it.
+- `handoff.py save` prints the same advisory warnings as `check` (reading budget, future
+  `updated_at`, observed files) in its JSON result and on stderr. The save and exit code 0 are
+  unchanged.
+
+Changed (guidance):
+- `SKILL.md` asks for an edit tool that fails when the old text is missing and a reread after a
+  full-file rewrite, because a silent no-op leaves a stale line and a rewrite can overwrite
+  another writer's edit.
+
+Compatibility: format `cross-agent-handoff/1` unchanged. Hook entries installed by v0.2.2 keep
+working; reinstalling hooks upgrades them.
+
 ## 0.2.2 (2026-11-26)
 
 Fixes from an audit of the skill against its use in four real projects

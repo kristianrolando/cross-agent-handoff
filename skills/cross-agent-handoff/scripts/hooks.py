@@ -65,13 +65,26 @@ def default_python():
     return 'python' if os.name == 'nt' else 'python3'
 
 
+# Braced form: sh and Git Bash expand it, and Claude Code rewrites it to ${env:...} when hooks run
+# in PowerShell (Windows without Git Bash), where a bare $CLAUDE_PROJECT_DIR resolves to $null.
+CLAUDE_DIR = re.compile(r'^\$(?:\{CLAUDE_PROJECT_DIR\}|CLAUDE_PROJECT_DIR)(?=/)')
+
+
+def expands(path):
+    """True when a POSIX shell would expand part of this double-quoted path ($ or backtick)."""
+    return bool(re.search(r'[$`]', CLAUDE_DIR.sub('', path, count=1)))
+
+
 def command(root, host, skill_dir, script, arguments, python):
     if host == 'claude':
-        path = '$CLAUDE_PROJECT_DIR/' + Path(skill_dir).as_posix() + '/scripts/' + script
+        path = '${CLAUDE_PROJECT_DIR}/' + Path(skill_dir).as_posix() + '/scripts/' + script
     else:
         path = str(root / skill_dir / 'scripts' / script)
     if '"' in path:
         raise HookError('Project paths containing double quotes are not supported.')
+    if expands(path):
+        raise HookError('A shell would expand "$" or "`" in {}; the hook would run another path or command. '
+                        'Use a project and skill path without these characters. Nothing changed.'.format(path))
     return '{} "{}" {}'.format(python, path, arguments)
 
 
@@ -167,7 +180,7 @@ def referenced_scripts(data, host):
 def script_path(root, text):
     match = re.search(r'"([^"]+)"', text)
     path = match[1] if match else ''
-    return Path(path.replace('$CLAUDE_PROJECT_DIR', str(root))) if path else None
+    return Path(CLAUDE_DIR.sub(lambda match: str(root), path, count=1)) if path else None
 
 
 def ignored_by_git(root, path):
@@ -202,8 +215,14 @@ def status(root, host, shared):
     data = load(path)
     commands = referenced_scripts(data, host)
     report['installed'] = bool(commands)
-    report['missing_scripts'] = sorted({str(script_path(root, text)) for text in commands
-                                        if not (script_path(root, text) or Path()).is_file()})
+    missing = set()
+    for text in commands:
+        match = re.search(r'"([^"]+)"', text)
+        if match and expands(match[1]):  # Written by v0.2.1 or earlier for such a path.
+            missing.add(match[1] + ' (a shell expands $ or ` here; reinstall from a plain path)')
+        elif not (script_path(root, text) or Path()).is_file():
+            missing.add(str(script_path(root, text)))
+    report['missing_scripts'] = sorted(missing)
     if path.exists():
         report['ignored_by_git'] = ignored_by_git(root, path)
     return report

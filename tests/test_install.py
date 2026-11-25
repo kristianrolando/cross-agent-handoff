@@ -74,6 +74,23 @@ class InstallTests(unittest.TestCase):
         report = json.loads(self.run_install('--doctor', '--json', '--hosts', 'claude,codex', expected=2).stdout)
         self.assertTrue(any('Missing copy for codex' in p for p in report['problems']))
 
+    def test_unreadable_manifest_is_reported_and_repaired_not_a_traceback(self):
+        self.run_install('--hosts', 'claude')
+        manifest = self.copy('.claude/skills') / 'MANIFEST.sha256'
+        for broken in (b'not a manifest line\n', b'\xff\xfe\x00 binary', b'abc  \n'):
+            manifest.write_bytes(broken)
+            result = self.run_install('--doctor', '--json', expected=1)
+            self.assertNotIn('Traceback', result.stderr)
+            report = json.loads(result.stdout)
+            self.assertTrue(any('Unreadable manifest' in w and '--update' in w for w in report['warnings']), report)
+            shown = self.run_install('--hosts', 'claude')
+            self.assertIn('manifest unreadable', shown.stdout)
+            self.assertEqual(manifest.read_bytes(), broken)  # Without --update nothing is replaced.
+        updated = self.run_install('--hosts', 'claude', '--update', '--yes')
+        self.assertIn('manifest cannot be read', updated.stdout)
+        self.assert_complete(self.copy('.claude/skills'))
+        self.assertEqual(self.run_install('--doctor', '--hosts', 'claude').stdout.strip().splitlines()[-1], 'Healthy.')
+
     def test_update_reports_local_edits_and_needs_confirmation(self):
         self.run_install('--hosts', 'claude')
         target = self.copy('.claude/skills') / 'references' / 'setup.md'

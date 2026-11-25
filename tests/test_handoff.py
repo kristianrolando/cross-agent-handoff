@@ -189,6 +189,14 @@ class ProtocolTests(unittest.TestCase):
         self.assertEqual(previous.read_text(), 'retained history')
         self.assertEqual(self.target.read_text(), checkpoint())
 
+    def test_save_reports_the_reading_budget_warning(self):
+        self.target.write_text(checkpoint())
+        long_text = checkpoint().replace('Verified:', 'Verified: ' + ' '.join(['detail'] * 1300) + '\nVerified:', 1)
+        result = self.save(long_text)  # Saved: the budget is advisory, never a reason to drop facts.
+        self.assertIn(handoff.WORD_WARNING, json.loads(result.stdout)['warnings'])
+        self.assertIn('saved with warning', result.stderr)
+        self.assertEqual(json.loads(self.save(checkpoint()).stdout)['warnings'], [])
+
     def test_atomic_replace_failure_preserves_live(self):
         self.target.write_text(checkpoint())
         before = self.target.read_bytes()
