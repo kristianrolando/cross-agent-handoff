@@ -4,7 +4,7 @@
 - task_status: partial
 - handoff: ready
 - writer: none
-- updated_at: 2026-11-26T04:14:07+07:00
+- updated_at: 2026-11-26T04:25:40+07:00
 
 ## Project
 Cross-Agent Handoff: portable sequential project continuity and a Claude Code plugin wrapper.
@@ -15,13 +15,13 @@ Host loading/routing: skills/cross-agent-handoff/references/agents.md.
 Release history: docs/releasing.md. Roadmap: docs/roadmap/.
 
 ## Task
-Maintain the skill. v0.2.1 is released. v0.2.2 (audit fixes) is open as PR #12
-(branch `fix/v0.2.2-audit`), not merged or tagged; the maintainer reviews first. Checkpoint format is
+Maintain the skill. v0.2.1 is released. v0.2.2 (audit fixes) is merged (PR #12, a395f52); the release
+is being prepared (maintainer approved it on 2026-11-26). Checkpoint format is
 unchanged. Talk to the maintainer in Indonesian; write code and docs in English.
 
 ## State
-Verified: v0.2.2 branch `fix/v0.2.2-audit` (from main 27bac5a): 90 tests OK on Python 3.9.6 and
-3.15.2; the seven new checks fail on v0.2.1 scripts. Closes audit findings F01-F05, F07, F12,
+Verified: PR #12 merged as a395f52: 90 tests OK on Python 3.9.6 and 3.15.2 and all 12 hosted
+checks; the seven new checks fail on v0.2.1 scripts. Closes audit findings F01-F05, F07, F12,
 F13, F15-F17, F24 (docs/evidence/audit-2026-11-26.md). Deferred to the next release: F08, F23,
 the `${CLAUDE_PROJECT_DIR}` and shell-expansion hook-command patch, manifest hardening in install.py,
 alt-A compaction. Routing text is not shown to change agent behavior (no live trial).
@@ -63,13 +63,14 @@ Writers / operations: none running.
 - Hook facts: official pages fetched 2026-11-08, links in docs/roadmap/v0.2.0-audit.md.
 
 ## Next
-Maintainer reviews PR #12 (hosted CI pending when written) and decides on merge and release; never tag without
+After the prep PR merges, tag v0.2.2 on its merge commit, verify the publish run, then record the
+release in docs/validation.md, docs/releasing.md and the README badge in a last PR; never tag without
 that request. Optional after that: the maintainer runs the remaining live-trial kit steps and
 records them with docs/evidence/live-trial-template.md. Never move the v0.1.0, v0.1.1, v0.2.0 or
 v0.2.1 tags.
 
 ## Recent outcomes
-- 2026-11-26, Claude Code: prepared v0.2.2 from the 2026-11-26 audit and opened PR #12.
+- 2026-11-26, Claude Code: prepared v0.2.2 from the 2026-11-26 audit and opened and merged PR #12 (a395f52).
 - 2026-11-08, Claude Code: ran headless live trials of v0.2.0; all passed; three findings fixed.
 - 2026-11-08, Claude Code: published v0.2.0 and verified the release.
 - 2026-11-10, Claude Code: merged PR #10 (token budget), tagged and published v0.2.1, verified.

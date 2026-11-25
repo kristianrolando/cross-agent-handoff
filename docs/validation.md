@@ -272,5 +272,9 @@ the routing block being identical in both places and small.
 Audit: a read-only audit of v0.2.1 against four real projects is recorded in
 [evidence/audit-2026-11-26.md](evidence/audit-2026-11-26.md), including its own breaches of the
 read-only rule. Its measurements came from copies and mock projects; its token figures are
-estimates. Not covered: Windows, live host sessions with the new routing text, and any change in
-agent behavior.
+estimates.
+
+Hosted: PR #12 passed all 12 Package checks jobs on head `423fec4` and was merged as `a395f52`. Its
+first run failed on the four Windows jobs because the new code-page test wrote its fixture with
+cp1252; the test now writes UTF-8 and the product code was unchanged. Not covered: a Windows host
+session, live host sessions with the new routing text, and any change in agent behavior.
