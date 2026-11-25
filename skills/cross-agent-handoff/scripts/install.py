@@ -234,6 +234,37 @@ def install(base, hosts, args, user):
     return 0
 
 
+def plugin_routes(base, user):
+    """Claude Code plugin installs of this skill that are enabled for this project or the user.
+
+    Read-only: looks at enabledPlugins in settings files and the version in installed_plugins.json.
+    Anything unreadable is skipped; the plugin route is information, never a failure."""
+    home = Path.home() / '.claude'
+    files = [(home / 'settings.json', 'user settings')]
+    if not user:
+        files += [(base / '.claude' / 'settings.json', 'project settings'),
+                  (base / '.claude' / 'settings.local.json', 'local settings')]
+    enabled = {}
+    for path, label in files:
+        try:
+            data = json.loads(path.read_text(encoding='utf-8'))
+            plugins = data.get('enabledPlugins') if isinstance(data, dict) else None
+        except (OSError, ValueError):
+            continue
+        for key, value in (plugins.items() if isinstance(plugins, dict) else ()):
+            if key.split('@', 1)[0] == NAME:
+                enabled[key] = label if value is True else enabled.get(key)
+    versions = {}
+    try:
+        records = json.loads((home / 'plugins' / 'installed_plugins.json').read_text(encoding='utf-8'))
+        for key, items in (records.get('plugins') or {}).items():
+            versions[key] = next((item.get('version') for item in items if isinstance(item, dict)), None)
+    except (OSError, ValueError, AttributeError, TypeError):
+        pass
+    return [{'plugin': key, 'enabled_in': label, 'version': versions.get(key) or 'unknown'}
+            for key, label in sorted(enabled.items()) if label]
+
+
 def found_copies(base, user):
     parents = sorted(set(USER.values())) if user else KNOWN_PROJECT
     return [base / parent / NAME for parent in parents if is_our_skill(base / parent / NAME)]
@@ -289,12 +320,16 @@ def ignored(base, rel):
 def doctor(base, hosts, args, user):
     problems, warnings = [], []
     copies = [dict(inspect(path), path=shown(path, base)) for path in found_copies(base, user)]
+    plugins = plugin_routes(base, user)
     if hosts:
         for dest, owners in destinations(base, hosts, USER if user else PROJECT).items():
-            if not is_our_skill(dest):
+            if not is_our_skill(dest) and not (plugins and owners == ['claude']):  # The plugin serves Claude Code.
                 problems.append('Missing copy for {}: {}'.format(', '.join(owners), shown(dest, base)))
-    if not copies and not hosts:
+    if not copies and not hosts and not plugins:
         warnings.append('No installed copy found in the known {} folders.'.format('user' if user else 'project'))
+    if plugins and any(record['path'].startswith('.claude/skills/') for record in copies):
+        warnings.append('Claude Code loads the plugin ({}) and a copy in .claude/skills, so the skill is listed '
+                        'twice; keep one of them.'.format(', '.join(item['plugin'] for item in plugins)))
     for record in copies:
         if record['manifest'] == 'differs':
             warnings.append('Edited copy {}: changed {}, missing {}, extra {}'.format(
@@ -323,14 +358,17 @@ def doctor(base, hosts, args, user):
                     warnings.append('{} holds personal hook settings and is not ignored by Git.'.format(report['config']))
         if (base / '.handoff' / 'auto').is_dir() and ignored(base, '.handoff/auto/latest.json') is False:
             warnings.append('.handoff/auto/ is not ignored by Git; restore its .gitignore file.')
-    result = {'copies': copies, 'hooks': hook_reports, 'problems': problems, 'warnings': warnings,
-              'source_version': version(SOURCE)}
+    result = {'copies': copies, 'plugins': plugins, 'hooks': hook_reports, 'problems': problems,
+              'warnings': warnings, 'source_version': version(SOURCE)}
     if args.json:
         print(json.dumps(result, indent=2))
     else:
         for record in copies:
             print('{}  version {}  manifest {}  digest {}'.format(record['path'], record['version'],
                                                                  record['manifest'], record['digest'][:12]))
+        for item in plugins:
+            print('plugin: {}  version {}  enabled in {} (serves Claude Code; no project copy needed)'.format(
+                item['plugin'], item['version'], item['enabled_in']))
         for report in hook_reports:
             print('hooks: {} in {}'.format(report['host'], report['config']))
         for item in problems:

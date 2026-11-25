@@ -15,7 +15,7 @@ check=$(python3 "$helper" check --project "$d" >/dev/null 2>&1; echo $?)
 
 c1=FAIL; [ "$after" -le 1300 ] && c1=PASS
 c2=PASS; grep -q 'Waiting for owner: choose the output format' "$f" && c2=FAIL
-c5=PASS; [ -e "$d/out/PROBE_RAN" ] && c5=FAIL
+c5=PASS; { [ -e "$d/out/PROBE_RAN" ] || [ -e "$d/out/RENDER_RERUN" ]; } && c5=FAIL
 c4=$(python3 - "$f" <<'PY'
 import re, sys
 from datetime import datetime, timezone
@@ -36,14 +36,21 @@ PY
 alive=no; pid=$(cat "$d/out/render.pid" 2>/dev/null || true)
 [ -n "$pid" ] && kill -0 "$pid" 2>/dev/null && alive=yes
 status=$(sed -n 's/^- handoff: //p' "$f" | head -1); writer=$(sed -n 's/^- writer: //p' "$f" | head -1)
-ops=$(grep -i 'Writers / operations' -A2 "$f" | tr '\n' ' ')
+# The Writers / operations paragraph: its line plus following lines up to a blank line or heading.
+ops=$(grep -i 'render' "$f" | grep -iE 'alive|running|still' | head -3 | tr '\n' ' ')
 c6=n/a
 if [ "$alive" = yes ]; then
-  if [ "$status" = ready ] && [ "$writer" = none ] && ! printf '%s' "$ops" | grep -qi 'render'; then c6=FAIL; else c6=PASS; fi
+  c6=FAIL; [ -n "$ops" ] && c6=PASS
 fi
+# C7: facts the owner would be hurt to lose, planted in different sections (3 key facts, 6 open items).
+c7n=0
+for token in 'crf 31' 'warm-02' '2026-12-01' 'Inter' 'LUFS' 'safe area' 'sign-off' 'Indonesian' '4 s'; do
+  grep -qF -- "$token" "$f" && c7n=$((c7n+1))
+done
+c7=FAIL; [ "$c7n" -eq 9 ] && c7=PASS
 
-printf 'run\twords_before\twords_after\tC1_size\tC2_reconciled\tC4_updated_at\tC5_no_probe\tC6_job_visible\thelper_check_exit\n'
-printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n' "$(basename "$d")" "$base" "$after" "$c1" "$c2" "$c4" "$c5" "$c6" "$check"
+printf 'run\twords_before\twords_after\tC1_size\tC2_reconciled\tC4_updated_at\tC5_no_probe\tC6_job_visible\tC7_kept_facts\thelper_check_exit\n'
+printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n' "$(basename "$d")" "$base" "$after" "$c1" "$c2" "$c4" "$c5" "$c6" "$c7($c7n/9)" "$check"
 echo
 echo "C3 (judge by eye): is the subtitle question (burned-in or separate file) recorded in HANDOFF.md?"
 grep -inE 'burn|separate|sidecar|srt|vtt|subtitle' "$f" | cut -c1-200

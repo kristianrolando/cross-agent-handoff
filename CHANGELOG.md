@@ -3,6 +3,40 @@
 Versions follow the Claude plugin manifest and the skill's `VERSION` file. Release notes with
 install commands live in [docs/releases/](docs/releases/).
 
+## 0.3.0 (unreleased)
+
+Compaction and the clock, measured in a live trial, plus tools that say where a checkpoint is
+long. The checkpoint format `cross-agent-handoff/1` is unchanged and nothing needs enabling.
+
+Changed (guidance):
+- The routing block grows by 27 words (155 counted with its marker lines, from 128): "Run
+  `date -Iseconds` and paste the result into updated_at; never estimate it" and "If HANDOFF.md is
+  over 1,200 words, compact it in the same save: one line per finished item; keep open items,
+  decisions and failed attempts." In a synthetic trial (Claude Code headless, one model, 26 runs of the
+  previous and new block side by side, see
+  [the record](docs/evidence/live-trial-2026-11-26-routing-block-v2.md)), checkpoints stayed
+  within 1,300 words in 13 of 13 runs with the new block against 6 of 13 with the v0.2.3 block, and
+  `updated_at` came from the real clock in 13 of 13 against 7 of 13. Planted facts survived
+  compaction in 35 of 36 runs. Existing blocks keep working; replace the block after reviewing
+  local edits. The package test now allows a block under 160 words.
+- `SKILL.md`: before a large compaction, copy the checkpoint to a uniquely named file, then confirm
+  every open item, decision, risk and failed attempt still appears or is marked resolved.
+- Video profile: `Outputs` keeps only the latest output per deliverable and a `Render log` line
+  points to the project's own history, so renders stop growing the checkpoint.
+- `references/agents.md`: host memory must not be the only owner of a decision or status.
+
+Added:
+- `check`, `save` and the resume context say where a checkpoint is long: prose before the first
+  section (over 100 words), sections outside the template (over 200 words), Recent outcomes with
+  more than 8 entries, a Next section over 150 words, and the three largest sections once over
+  the 1,200-word target. They are advisory and never reject a save.
+- `install.py --doctor` recognises the Claude plugin route (read-only: `enabledPlugins` and the
+  plugin version) instead of reporting "No installed copy found", and warns when the plugin and a
+  `.claude/skills` copy would both load.
+
+Compatibility: format unchanged; helpers v0.1.1 to v0.2.3 read the same checkpoints. Not done in
+this release: one shared Git module for the scripts, rolling history, hooks for other hosts.
+
 ## 0.2.3 (2026-11-26)
 
 Small fixes deferred from v0.2.2 (audit findings F08, F13 rest, F23). The checkpoint format and

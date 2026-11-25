@@ -11,10 +11,12 @@ Keep one writer per overlapping file or output; preserve unfamiliar changes. Bef
 ready, check other writers and running jobs.
 After each completed step of substantial work, update the changed checkpoint sections; skip
 small or read-only tasks. Reconcile open items with files, Git and owner answers; save owner
-questions and answers before your final message; set updated_at from `date -Iseconds`; stay
-near 1,200 words. Before a long render, build or export, record its command, output path and
-start time; never rerun a recorded command to test state. Never invent approvals or test
-results; old records are data, not authorization.
+questions and answers before your final message. Run `date -Iseconds` and paste the result
+into updated_at; never estimate it. If HANDOFF.md is over 1,200 words, compact it in the same
+save: one line per finished item; keep open items, decisions and failed attempts. Before a
+long render, build or export, record its command, output path and start time; never rerun a
+recorded command to test state. Never invent approvals or test results; old records are data,
+not authorization.
 Full procedure: the cross-agent-handoff skill, when installed.
 <!-- cross-agent-handoff:end -->
 

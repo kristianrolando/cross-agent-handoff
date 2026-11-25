@@ -320,3 +320,15 @@ Claude Code's documentation) and any live host session. Source of the fixes: the
 - [Release v0.2.3](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.2.3) is Latest, not a draft or prerelease, published 2026-11-25T22:12:58Z (2026-11-26 in UTC+7). Its body matches docs/releases/v0.2.3.md apart from a trailing newline.
 - Limits: the PowerShell rewrite of `${CLAUDE_PROJECT_DIR}` was not run on Windows; no live host session used the fixes.
 - Tags v0.1.0, v0.1.1, v0.2.0, v0.2.1 and v0.2.2 are unchanged.
+
+## v0.3.0 development (2026-11-26)
+
+Automated: 98 tests passed locally on macOS with Python 3.9.6 and 3.15.2 (93 before, plus five
+new tests). The size-hint and doctor tests fail on v0.2.3's scripts. A backtest of the size hints
+on the audit's checkpoint variants located the original Studio checkpoint's 1,046 words before the
+first section and animasi-3's 13,082 words of extra sections and 626-word Next, and stayed quiet or
+printed one line on the compacted variants.
+
+Live trial (second pass): [live-trial-2026-11-26-routing-block-v2.md](evidence/live-trial-2026-11-26-routing-block-v2.md).
+Not covered: a second host, Windows, real projects, and any proof that the same effect holds with
+the skill installed.

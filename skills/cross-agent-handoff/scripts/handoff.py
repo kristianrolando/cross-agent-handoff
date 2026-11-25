@@ -135,6 +135,44 @@ def validate(text):
     return errors
 
 
+PREAMBLE_WORDS = 100        # Prose between the metadata and the first section.
+NEXT_WORDS = 150            # Next should be one concrete action.
+OUTCOME_ENTRIES = 8         # Recent outcomes keeps a few entries, not a log.
+EXTRA_WORDS = 200           # Sections outside the template (Profile sections are expected).
+
+
+def size_hints(text):
+    """Advisory hints that say where a long checkpoint is long; none of them rejects a save."""
+    text = text.replace('\r\n', '\n')
+    parts = re.split(r'^## (.+?)[ \t]*$', text, flags=re.M)
+    head, sections = parts[0], list(zip(parts[1::2], parts[2::2]))
+    prose = [line for line in head.splitlines()
+             if line.strip() and not line.startswith('# ') and not re.match(r'^- [a-z_]+: ', line)]
+    hints = []
+    preamble = sum(len(line.split()) for line in prose)
+    if preamble > PREAMBLE_WORDS:
+        hints.append('{} words sit before the first section; move them into a section or link a durable '
+                     'record.'.format(preamble))
+    counts = {name: len(body.split()) for name, body in sections}
+    if len(text.split()) > WORD_TARGET and counts:
+        largest = sorted(counts.items(), key=lambda item: -item[1])[:3]
+        hints.append('Largest parts: ' + ', '.join('{} ({} words)'.format(name, words) for name, words in largest) + '.')
+    extra = {name: words for name, words in counts.items()
+             if name not in SECTIONS and not name.startswith('Profile:')}
+    if sum(extra.values()) > EXTRA_WORDS:
+        hints.append('Sections outside the template hold {} words ({}); fold what is open into State and '
+                     'link the rest.'.format(sum(extra.values()), ', '.join(sorted(extra, key=extra.get, reverse=True)[:3])))
+    body = dict(sections)
+    entries = len(re.findall(r'^\s*(?:[-*]|\d+[.)])\s', body.get('Recent outcomes', ''), flags=re.M))
+    if entries > OUTCOME_ENTRIES:
+        hints.append('Recent outcomes has {} entries; keep the latest few and link older work to its '
+                     'record.'.format(entries))
+    following = len(body.get('Next', '').split())
+    if following > NEXT_WORDS:
+        hints.append('Next has {} words; leave one concrete action and move the rest to State.'.format(following))
+    return hints
+
+
 def observations(root, text):
     warnings = []
     for raw in fields(text, 'observed_file'):
@@ -154,6 +192,7 @@ def observations(root, text):
         warnings.append('updated_at is in the future; check the clock or the recorded time.')
     if len(text.split()) > WORD_TARGET:
         warnings.append(WORD_WARNING)
+    warnings.extend(size_hints(text))
     return warnings
 
 

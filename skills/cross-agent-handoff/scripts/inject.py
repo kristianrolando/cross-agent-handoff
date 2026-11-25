@@ -88,6 +88,7 @@ def build(root, checkpoint, config):
     if words > handoff.WORD_TARGET:
         warnings.append('{} ({} words) At the next save, collapse completed work to one line with a link '
                         'to its durable record.'.format(handoff.WORD_WARNING, words))
+    warnings.extend(handoff.size_hints(text))
     if meta['handoff'] in ('working', 'recovery'):
         warnings.append('Checkpoint says handoff: {} (writer: {}). Confirm that session has stopped '
                         'before editing overlapping files.'.format(meta['handoff'], meta['writer']))
