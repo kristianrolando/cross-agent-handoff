@@ -275,7 +275,10 @@ class AutosaveTests(unittest.TestCase):
 
     def test_inject_output_survives_a_legacy_code_page(self):
         # Windows pipes default to the ANSI code page before Python 3.15; simulate it anywhere.
-        self.write_checkpoint(text=checkpoint(next_step='Render scene 2 → output/v2.mp4, then mark ✓.'))
+        path = self.write_checkpoint()
+        # Explicit UTF-8: the default encoding of write_text on Windows cannot store these characters.
+        path.write_text(checkpoint(next_step='Render scene 2 → output/v2.mp4, then mark ✓.'), encoding='utf-8')
+        os.utime(path, (time.time() - 600, time.time() - 600))
         result = subprocess.run([sys.executable, str(SCRIPTS / 'inject.py'), '--project', str(self.root)],
                                 capture_output=True, timeout=60, env=dict(os.environ, PYTHONIOENCODING='cp1252'))
         self.assertEqual(result.returncode, 0)
