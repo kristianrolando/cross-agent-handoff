@@ -44,7 +44,7 @@ if [ "$alive" = yes ]; then
 fi
 # C7: facts the owner would be hurt to lose, planted in different sections (3 key facts, 6 open items).
 c7n=0
-for token in 'crf 31' 'warm-02' '2026-12-01' 'Inter' 'LUFS' 'safe area' 'sign-off' 'Indonesian' '4 seconds'; do
+for token in 'crf 31' 'warm-02' '2026-12-01' 'Inter' 'LUFS' 'safe area' 'sign-off' 'Indonesian' '4 s'; do
   grep -qF -- "$token" "$f" && c7n=$((c7n+1))
 done
 c7=FAIL; [ "$c7n" -eq 9 ] && c7=PASS

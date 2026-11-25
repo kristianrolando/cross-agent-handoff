@@ -1,10 +1,10 @@
 # Project handoff
 
 - format: cross-agent-handoff/1
-- task_status: done
+- task_status: in_progress
 - handoff: ready
 - writer: none
-- updated_at: 2026-11-26T05:14:11+07:00
+- updated_at: 2026-11-26T05:28:55+07:00
 
 ## Project
 Cross-Agent Handoff: portable sequential project continuity and a Claude Code plugin wrapper.
@@ -15,11 +15,16 @@ Host loading/routing: skills/cross-agent-handoff/references/agents.md.
 Release history: docs/releasing.md. Roadmap: docs/roadmap/.
 
 ## Task
-Maintain the skill. v0.2.3 (small fixes) is released (2026-11-26; PR #16 7fe0ffe, prep PR #17 ea9f59c, tag object 350e54d, publish run 45711238994, Latest). v0.2.1 is released. v0.2.2 (audit fixes) is released (2026-11-26; PR #12 a395f52, prep PR #13 9333c35, tag
+Maintain the skill. v0.3.0 (compaction, size hints, doctor) is prepared on branch feat/v0.3.0, not merged or tagged. v0.2.3 (small fixes) is released (2026-11-26; PR #16 7fe0ffe, prep PR #17 ea9f59c, tag object 350e54d, publish run 45711238994, Latest). v0.2.1 is released. v0.2.2 (audit fixes) is released (2026-11-26; PR #12 a395f52, prep PR #13 9333c35, tag
 object b4b9244, publish run 45705163155, Latest). Checkpoint format is
 unchanged. Talk to the maintainer in Indonesian; write code and docs in English.
 
 ## State
+Verified (local, branch feat/v0.3.0): 98 tests OK on Python 3.9.6 and 3.15.2. Routing block now 155 words with markers (was 128):
+adds "paste date -Iseconds" and "compact in the same save"; 26 side-by-side runs: size within 1,300 words 13/13 vs 6/13, real clock
+13/13 vs 7/13, planted facts kept 35/36 (docs/evidence/live-trial-2026-11-26-routing-block-v2.md; one model, synthetic project).
+Also: localized size hints in check/save/inject (F10, F20), doctor plugin route (F25), video profile and host-memory guidance
+(F09, F06), copy-before-compaction in SKILL.md. Not done: shared Git module (F35, F16), rolling history, other-host hooks.
 Verified: PR #16 merged as 7fe0ffe: 93 tests OK on Python 3.9.6 and 3.15.2 and all 12 hosted checks; the three new tests and the
 extended hooks case fail on v0.2.2 scripts. Adds the `${CLAUDE_PROJECT_DIR}` and shell-expansion hook-command patch (F13), unreadable
 manifest reporting in install.py, save warnings (F23) and the edit-tool guidance in SKILL.md (F08). Version files, CHANGELOG
@@ -66,12 +71,11 @@ Writers / operations: none running.
 - Hook facts: official pages fetched 2026-11-08, links in docs/roadmap/v0.2.0-audit.md.
 
 ## Next
-No work remains for v0.2.3. Optional: the maintainer runs the remaining live-trial kit steps and
-records them with docs/evidence/live-trial-template.md. Planned later: v0.3.0 (compaction and
-supporting tools) after a repeat of the routing-block trial with a fixed C6. Never move the v0.1.0,
-v0.1.1, v0.2.0, v0.2.1, v0.2.2 or v0.2.3 tags.
+Open the v0.3.0 PR, check CI, merge, prepare the release (date the CHANGELOG), then tag only on the maintainer's explicit request. Never move
+the v0.1.0 to v0.2.3 tags. Later: repeat the trial on a second host and with the skill installed.
 
 ## Recent outcomes
+- 2026-11-26, Claude Code: ran three more trial batches, adopted the new routing block, built v0.3.0 on feat/v0.3.0.
 - 2026-11-26, Claude Code: tagged and published v0.2.3 and verified the release.
 - 2026-11-26, Claude Code: ran the v0.2.2 routing-block live trial (PR #15), prepared v0.2.3 and merged PR #16 (7fe0ffe).
 - 2026-11-26, Claude Code: prepared v0.2.2 from the 2026-11-26 audit and merged PR #12 and #13, tagged and published v0.2.2.

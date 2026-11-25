@@ -77,7 +77,7 @@ class PackageTests(unittest.TestCase):
         blocks = [pattern.findall(path.read_text()) for path in (ROOT / 'AGENTS.md', SKILL / 'references/setup.md')]
         self.assertEqual([len(found) for found in blocks], [1, 1])
         self.assertEqual(blocks[0], blocks[1])
-        self.assertLess(len(blocks[0][0].split()), 135)
+        self.assertLess(len(blocks[0][0].split()), 160)
 
     def test_core_reading_size(self):
         self.assertLess(len((SKILL / 'SKILL.md').read_text().split()), 1600)
