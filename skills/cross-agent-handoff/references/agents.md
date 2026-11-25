@@ -109,7 +109,7 @@ existing `CLAUDE.md` needs an `@AGENTS.md` import or plain pointer; Gemini CLI l
 `GEMINI.md` unless `context.fileName` includes `AGENTS.md`, so prefer a pointer in `GEMINI.md`
 over changing settings. Keep the portable routing block in one
 canonical place, normally `AGENTS.md`. If the host does not load it, add a small instruction
-to the existing supported entrypoint: `Read AGENTS.md and HANDOFF.md before substantial work.`
+to the existing supported entrypoint: `Read AGENTS.md and HANDOFF.md before substantial work; keep HANDOFF.md near 1,200 words.`
 Use actual paths and plain instructions; `@AGENTS.md` imports are not universal syntax.
 Do not generate a full collection of vendor configuration files, duplicate permanent rules,
 or place volatile progress inside host rules. Verify actual loading by checking the agent's

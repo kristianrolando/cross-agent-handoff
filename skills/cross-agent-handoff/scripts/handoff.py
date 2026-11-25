@@ -20,7 +20,8 @@ TIMESTAMP = re.compile(r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d{3}|\.\d{6
 NAME = r'[a-z0-9]+(?:-[a-z0-9]+)*'
 OPTIONAL = {
     'updated_at': (None, 'an ISO 8601 time with a UTC offset, such as '
-                         '2026-11-08T14:05:00+07:00 or 2026-11-08T07:05:00Z'),
+                         '2026-11-08T14:05:00+07:00 or 2026-11-08T07:05:00Z (offsets need the colon; '
+                         'date -Iseconds prints a valid value)'),
     'language': (re.compile(r'[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*'),
                  'a language code such as en, id or pt-BR'),
     'profile': (re.compile(NAME + r'(?:, *' + NAME + r')*'),
@@ -172,7 +173,8 @@ def atomic(path, data):
 
 def git_info(root):
     def run(*args):
-        result = subprocess.run(['git', '-C', str(root), *args], capture_output=True, text=True, timeout=10)
+        result = subprocess.run(['git', '-C', str(root), *args], capture_output=True, text=True, timeout=10,
+                                env=dict(os.environ, GIT_OPTIONAL_LOCKS='0'))  # Read-only: no index refresh.
         return result.stdout.rstrip('\n') if result.returncode == 0 else None
     try:
         top = run('rev-parse', '--show-toplevel')

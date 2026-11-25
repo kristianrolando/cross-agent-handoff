@@ -99,6 +99,21 @@ class ProfileTests(unittest.TestCase):
         self.assertIn('Running operations (check before rerunning anything):', output)
         self.assertIn('out/promo_v3.mp4, started 08:40. Do NOT re-render.', output)
 
+    def test_inject_surfaces_operations_written_as_list_items(self):
+        self.helper('init', '--profile', 'video')
+        text = fill(self.target.read_text())
+        text = text.replace('Writers / operations: Recorded fixture value.',
+                            '- Writers / operations: codex render running since 09:10.')
+        text = text.replace('Running renders: Recorded fixture value.',
+                            'Running renders:\n- ffmpeg -i cut.mov out/promo_v4.mp4, started 09:12\n'
+                            '\nOutputs list follows.')
+        self.target.write_text(text)
+        output = subprocess.run([sys.executable, str(SKILL / 'scripts' / 'inject.py'), '--project', str(self.root)],
+                                text=True, capture_output=True, check=True, timeout=60).stdout
+        self.assertIn('- Writers / operations: codex render running since 09:10.', output)
+        self.assertIn('- ffmpeg -i cut.mov out/promo_v4.mp4, started 09:12', output)
+        self.assertNotIn('Outputs list follows', output)
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
