@@ -3,7 +3,7 @@
 Versions follow the Claude plugin manifest and the skill's `VERSION` file. Release notes with
 install commands live in [docs/releases/](docs/releases/).
 
-## 0.3.0 (unreleased)
+## 0.3.0 (2026-11-26)
 
 Compaction and the clock, measured in a live trial, plus tools that say where a checkpoint is
 long. The checkpoint format `cross-agent-handoff/1` is unchanged and nothing needs enabling.

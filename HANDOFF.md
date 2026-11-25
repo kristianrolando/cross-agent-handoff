@@ -4,7 +4,7 @@
 - task_status: in_progress
 - handoff: ready
 - writer: none
-- updated_at: 2026-11-26T05:28:55+07:00
+- updated_at: 2026-11-26T05:33:19+07:00
 
 ## Project
 Cross-Agent Handoff: portable sequential project continuity and a Claude Code plugin wrapper.
@@ -15,12 +15,12 @@ Host loading/routing: skills/cross-agent-handoff/references/agents.md.
 Release history: docs/releasing.md. Roadmap: docs/roadmap/.
 
 ## Task
-Maintain the skill. v0.3.0 (compaction, size hints, doctor) is prepared on branch feat/v0.3.0, not merged or tagged. v0.2.3 (small fixes) is released (2026-11-26; PR #16 7fe0ffe, prep PR #17 ea9f59c, tag object 350e54d, publish run 45711238994, Latest). v0.2.1 is released. v0.2.2 (audit fixes) is released (2026-11-26; PR #12 a395f52, prep PR #13 9333c35, tag
+Maintain the skill. v0.3.0 (compaction, size hints, doctor) is merged (PR #19, 8b716a5) and the release is being prepared, not tagged. v0.2.3 (small fixes) is released (2026-11-26; PR #16 7fe0ffe, prep PR #17 ea9f59c, tag object 350e54d, publish run 45711238994, Latest). v0.2.1 is released. v0.2.2 (audit fixes) is released (2026-11-26; PR #12 a395f52, prep PR #13 9333c35, tag
 object b4b9244, publish run 45705163155, Latest). Checkpoint format is
 unchanged. Talk to the maintainer in Indonesian; write code and docs in English.
 
 ## State
-Verified (local, branch feat/v0.3.0): 98 tests OK on Python 3.9.6 and 3.15.2. Routing block now 155 words with markers (was 128):
+Verified: PR #19 merged as 8b716a5 with all 12 hosted checks; 98 tests OK on Python 3.9.6 and 3.15.2. Routing block now 155 words with markers (was 128):
 adds "paste date -Iseconds" and "compact in the same save"; 26 side-by-side runs: size within 1,300 words 13/13 vs 6/13, real clock
 13/13 vs 7/13, planted facts kept 35/36 (docs/evidence/live-trial-2026-11-26-routing-block-v2.md; one model, synthetic project).
 Also: localized size hints in check/save/inject (F10, F20), doctor plugin route (F25), video profile and host-memory guidance
@@ -71,8 +71,9 @@ Writers / operations: none running.
 - Hook facts: official pages fetched 2026-11-08, links in docs/roadmap/v0.2.0-audit.md.
 
 ## Next
-Open the v0.3.0 PR, check CI, merge, prepare the release (date the CHANGELOG), then tag only on the maintainer's explicit request. Never move
-the v0.1.0 to v0.2.3 tags. Later: repeat the trial on a second host and with the skill installed.
+After this prep PR merges, tag v0.3.0 on its merge commit only on the maintainer's explicit request, verify the publish run, then record the
+release in docs/validation.md, docs/releasing.md and the README badge in a last PR. Never move the v0.1.0 to v0.2.3 tags. Later: repeat the trial
+on a second host and with the skill installed.
 
 ## Recent outcomes
 - 2026-11-26, Claude Code: ran three more trial batches, adopted the new routing block, built v0.3.0 on feat/v0.3.0.

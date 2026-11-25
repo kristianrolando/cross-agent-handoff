@@ -330,5 +330,9 @@ first section and animasi-3's 13,082 words of extra sections and 626-word Next, 
 printed one line on the compacted variants.
 
 Live trial (second pass): [live-trial-2026-11-26-routing-block-v2.md](evidence/live-trial-2026-11-26-routing-block-v2.md).
-Not covered: a second host, Windows, real projects, and any proof that the same effect holds with
+Hosted: PR #19 passed all 12 Package checks jobs (pull-request and push runs, Ubuntu, macOS and Windows,
+Python 3.9 and 3.14) on head `d889363` and was merged as `8b716a5`.
+
+Not covered: a second host (the Antigravity CLI auto-denied shell commands in headless mode and its allow-rule
+syntax was not found), Windows host sessions, real projects, and any proof that the same effect holds with
 the skill installed.
