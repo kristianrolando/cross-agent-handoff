@@ -91,6 +91,56 @@ class InstallTests(unittest.TestCase):
         self.assert_complete(self.copy('.claude/skills'))
         self.assertEqual(self.run_install('--doctor', '--hosts', 'claude').stdout.strip().splitlines()[-1], 'Healthy.')
 
+    def enable_plugin(self, where, enabled=True):
+        """Record the Claude Code plugin route the way Claude Code writes it, in the disposable HOME."""
+        key = 'cross-agent-handoff@cross-agent-tools'
+        settings = where / 'settings.json'
+        settings.parent.mkdir(parents=True, exist_ok=True)
+        settings.write_text(json.dumps({'enabledPlugins': {key: enabled, 'other@x': True}}))
+        records = self.home / '.claude' / 'plugins'
+        records.mkdir(parents=True, exist_ok=True)
+        (records / 'installed_plugins.json').write_text(json.dumps(
+            {'version': 2, 'plugins': {key: [{'scope': 'user', 'version': '0.2.3'}]}}))
+
+    def test_doctor_recognises_the_plugin_route(self):
+        # Without a copy or a plugin the doctor still warns, as before.
+        self.run_install('--doctor', expected=1)
+        self.enable_plugin(self.home / '.claude')
+        result = self.run_install('--doctor', '--json')
+        report = json.loads(result.stdout)
+        self.assertEqual(report['plugins'], [{'plugin': 'cross-agent-handoff@cross-agent-tools',
+                                              'enabled_in': 'user settings', 'version': '0.2.3'}])
+        self.assertEqual(report['warnings'], [])
+        text = self.run_install('--doctor').stdout
+        self.assertIn('plugin: cross-agent-handoff@cross-agent-tools  version 0.2.3', text)
+        # Claude Code is served by the plugin, so asking for a claude copy is not a problem; codex still is.
+        self.run_install('--doctor', '--hosts', 'claude')
+        self.assertIn('Missing copy for codex', json.loads(self.run_install('--doctor', '--json', '--hosts', 'claude,codex',
+                                                                           expected=2).stdout)['problems'][0])
+        # A project-level enable counts too, and a disabled entry does not.
+        shutil.rmtree(self.home / '.claude')
+        self.enable_plugin(self.root / '.claude', enabled=False)
+        self.run_install('--doctor', expected=1)
+        self.enable_plugin(self.root / '.claude')
+        self.assertEqual(json.loads(self.run_install('--doctor', '--json').stdout)['plugins'][0]['enabled_in'],
+                         'project settings')
+
+    def test_doctor_warns_when_plugin_and_claude_copy_both_load(self):
+        self.enable_plugin(self.home / '.claude')
+        self.run_install('--hosts', 'codex')
+        self.run_install('--doctor')  # A copy Claude Code does not read is no duplicate.
+        self.run_install('--hosts', 'claude')
+        report = json.loads(self.run_install('--doctor', '--json', expected=1).stdout)
+        self.assertTrue(any('listed twice' in w for w in report['warnings']), report)
+
+    def test_a_damaged_plugin_record_is_ignored_not_a_traceback(self):
+        records = self.home / '.claude' / 'plugins'
+        records.mkdir(parents=True)
+        (self.home / '.claude' / 'settings.json').write_text('{not json')
+        (records / 'installed_plugins.json').write_text('[1, 2')
+        result = self.run_install('--doctor', expected=1)
+        self.assertNotIn('Traceback', result.stderr)
+
     def test_update_reports_local_edits_and_needs_confirmation(self):
         self.run_install('--hosts', 'claude')
         target = self.copy('.claude/skills') / 'references' / 'setup.md'
