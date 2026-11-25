@@ -1,10 +1,10 @@
 # Project handoff
 
 - format: cross-agent-handoff/1
-- task_status: in_progress
+- task_status: done
 - handoff: ready
 - writer: none
-- updated_at: 2026-11-26T05:33:19+07:00
+- updated_at: 2026-11-26T05:37:27+07:00
 
 ## Project
 Cross-Agent Handoff: portable sequential project continuity and a Claude Code plugin wrapper.
@@ -15,7 +15,7 @@ Host loading/routing: skills/cross-agent-handoff/references/agents.md.
 Release history: docs/releasing.md. Roadmap: docs/roadmap/.
 
 ## Task
-Maintain the skill. v0.3.0 (compaction, size hints, doctor) is merged (PR #19, 8b716a5) and the release is being prepared, not tagged. v0.2.3 (small fixes) is released (2026-11-26; PR #16 7fe0ffe, prep PR #17 ea9f59c, tag object 350e54d, publish run 45711238994, Latest). v0.2.1 is released. v0.2.2 (audit fixes) is released (2026-11-26; PR #12 a395f52, prep PR #13 9333c35, tag
+Maintain the skill. v0.3.0 (compaction, size hints, doctor) is released (2026-11-26; PR #19 8b716a5, prep PR #20 edcefa5, tag object e21477e, publish run 45714596537, Latest). v0.2.3 (small fixes) is released (2026-11-26; PR #16 7fe0ffe, prep PR #17 ea9f59c, tag object 350e54d, publish run 45711238994, Latest). v0.2.1 is released. v0.2.2 (audit fixes) is released (2026-11-26; PR #12 a395f52, prep PR #13 9333c35, tag
 object b4b9244, publish run 45705163155, Latest). Checkpoint format is
 unchanged. Talk to the maintainer in Indonesian; write code and docs in English.
 
@@ -71,11 +71,11 @@ Writers / operations: none running.
 - Hook facts: official pages fetched 2026-11-08, links in docs/roadmap/v0.2.0-audit.md.
 
 ## Next
-After this prep PR merges, tag v0.3.0 on its merge commit only on the maintainer's explicit request, verify the publish run, then record the
-release in docs/validation.md, docs/releasing.md and the README badge in a last PR. Never move the v0.1.0 to v0.2.3 tags. Later: repeat the trial
-on a second host and with the skill installed.
+No work remains for v0.3.0. Later: repeat the routing-block trial on a second host and with the skill installed; shared Git module (F35, F16);
+rolling history only if evidence appears. Never move the v0.1.0 to v0.3.0 tags.
 
 ## Recent outcomes
+- 2026-11-26, Claude Code: tagged and published v0.3.0 and verified the release.
 - 2026-11-26, Claude Code: ran three more trial batches, adopted the new routing block, built v0.3.0 on feat/v0.3.0.
 - 2026-11-26, Claude Code: tagged and published v0.2.3 and verified the release.
 - 2026-11-26, Claude Code: ran the v0.2.2 routing-block live trial (PR #15), prepared v0.2.3 and merged PR #16 (7fe0ffe).

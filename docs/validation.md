@@ -336,3 +336,15 @@ Python 3.9 and 3.14) on head `d889363` and was merged as `8b716a5`.
 Not covered: a second host (the Antigravity CLI auto-denied shell commands in headless mode and its allow-rule
 syntax was not found), Windows host sessions, real projects, and any proof that the same effect holds with
 the skill installed.
+
+## Release v0.3.0 evidence (2026-11-26)
+
+- PR #19 (changes) was merged as `8b716a5` and PR #20 (release preparation, docs only) as `edcefa5`;
+  both passed all 12 Package checks jobs. The Package checks run on `main` for the merge commit,
+  [45714543377](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/45714543377), also succeeded.
+- Annotated tag `v0.3.0` (object `e21477e`) targets `edcefa5`. The maintainer asked for the release;
+  the agent pushed the tag. Package checks on the tag, [run 45714596600](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/45714596600), succeeded.
+- [Publish release run 45714596537](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/45714596537): checks and publish succeeded.
+- [Release v0.3.0](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.3.0) is Latest, not a draft or prerelease, published 2026-11-25T22:36:20Z (2026-11-26 in UTC+7). Its body matches docs/releases/v0.3.0.md apart from a trailing newline.
+- Limits: the trial behind the routing block ran one model on one host with a synthetic project; no second host, no Windows host session, no skill-installed run.
+- Tags v0.1.0 to v0.2.3 are unchanged.
