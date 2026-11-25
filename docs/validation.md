@@ -308,3 +308,15 @@ macOS and Windows with Python 3.9 and 3.14) on head `15923d2` and was merged as 
 Not covered: a Windows host session (the PowerShell rewrite of `${CLAUDE_PROJECT_DIR}` follows
 Claude Code's documentation) and any live host session. Source of the fixes: the read-only audit in
 [evidence/audit-2026-11-26.md](evidence/audit-2026-11-26.md).
+
+## Release v0.2.3 evidence (2026-11-26)
+
+- PR #16 (fixes) was merged as `7fe0ffe` and PR #17 (release preparation, docs only) as `ea9f59c`.
+  Both passed all 12 Package checks jobs (pull-request and push runs); the Package checks run on
+  `main` for the merge commit, [45711039866](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/45711039866), also succeeded.
+- Annotated tag `v0.2.3` (object `350e54d`) targets `ea9f59c`. The maintainer asked for the release;
+  the agent pushed the tag. Package checks on the tag, [run 45711238899](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/45711238899), succeeded.
+- [Publish release run 45711238994](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/45711238994): checks and publish succeeded.
+- [Release v0.2.3](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.2.3) is Latest, not a draft or prerelease, published 2026-11-25T22:12:58Z (2026-11-26 in UTC+7). Its body matches docs/releases/v0.2.3.md apart from a trailing newline.
+- Limits: the PowerShell rewrite of `${CLAUDE_PROJECT_DIR}` was not run on Windows; no live host session used the fixes.
+- Tags v0.1.0, v0.1.1, v0.2.0, v0.2.1 and v0.2.2 are unchanged.

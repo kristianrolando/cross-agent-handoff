@@ -1,10 +1,10 @@
 # Project handoff
 
 - format: cross-agent-handoff/1
-- task_status: in_progress
+- task_status: done
 - handoff: ready
 - writer: none
-- updated_at: 2026-11-26T05:04:45+07:00
+- updated_at: 2026-11-26T05:14:11+07:00
 
 ## Project
 Cross-Agent Handoff: portable sequential project continuity and a Claude Code plugin wrapper.
@@ -15,7 +15,7 @@ Host loading/routing: skills/cross-agent-handoff/references/agents.md.
 Release history: docs/releasing.md. Roadmap: docs/roadmap/.
 
 ## Task
-Maintain the skill. v0.2.3 (small fixes) is merged (PR #16, 7fe0ffe); the release is being prepared (maintainer approved on 2026-11-26), not tagged. v0.2.1 is released. v0.2.2 (audit fixes) is released (2026-11-26; PR #12 a395f52, prep PR #13 9333c35, tag
+Maintain the skill. v0.2.3 (small fixes) is released (2026-11-26; PR #16 7fe0ffe, prep PR #17 ea9f59c, tag object 350e54d, publish run 45711238994, Latest). v0.2.1 is released. v0.2.2 (audit fixes) is released (2026-11-26; PR #12 a395f52, prep PR #13 9333c35, tag
 object b4b9244, publish run 45705163155, Latest). Checkpoint format is
 unchanged. Talk to the maintainer in Indonesian; write code and docs in English.
 
@@ -66,13 +66,13 @@ Writers / operations: none running.
 - Hook facts: official pages fetched 2026-11-08, links in docs/roadmap/v0.2.0-audit.md.
 
 ## Next
-After this prep PR merges, tag v0.2.3 on its merge commit, verify the publish run, then record the
-release in docs/validation.md, docs/releasing.md and the README badge in a last PR; never tag without
-the maintainer's request. Optional: the maintainer runs the remaining live-trial kit steps and
-records them with docs/evidence/live-trial-template.md. Never move the v0.1.0, v0.1.1, v0.2.0, v0.2.1
-or v0.2.2 tags.
+No work remains for v0.2.3. Optional: the maintainer runs the remaining live-trial kit steps and
+records them with docs/evidence/live-trial-template.md. Planned later: v0.3.0 (compaction and
+supporting tools) after a repeat of the routing-block trial with a fixed C6. Never move the v0.1.0,
+v0.1.1, v0.2.0, v0.2.1, v0.2.2 or v0.2.3 tags.
 
 ## Recent outcomes
+- 2026-11-26, Claude Code: tagged and published v0.2.3 and verified the release.
 - 2026-11-26, Claude Code: ran the v0.2.2 routing-block live trial (PR #15), prepared v0.2.3 and merged PR #16 (7fe0ffe).
 - 2026-11-26, Claude Code: prepared v0.2.2 from the 2026-11-26 audit and merged PR #12 and #13, tagged and published v0.2.2.
 - 2026-11-08, Claude Code: ran headless live trials of v0.2.0; all passed; three findings fixed.
