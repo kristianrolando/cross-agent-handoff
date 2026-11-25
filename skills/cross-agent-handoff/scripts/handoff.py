@@ -244,8 +244,13 @@ def execute(args):
         backup = local(root, args.checkpoint + '.previous')
         atomic(backup, current)
         atomic(target, candidate)
+        # The same advisory warnings as check (reading budget, future updated_at, observed files);
+        # the save itself succeeded, so the exit code stays 0.
+        warnings = observations(root, candidate.decode('utf-8'))
         print(json.dumps({'saved': args.checkpoint, 'sha256': digest(candidate),
-                          'previous': args.checkpoint + '.previous'}))
+                          'previous': args.checkpoint + '.previous', 'warnings': warnings}))
+        for warning in warnings:
+            print('handoff: saved with warning: ' + warning, file=sys.stderr)
     finally:
         lock.unlink()
     return 0

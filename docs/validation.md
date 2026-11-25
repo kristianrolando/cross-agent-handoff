@@ -291,3 +291,18 @@ session, live host sessions with the new routing text, and any change in agent b
 - [Release v0.2.2](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.2.2) is Latest, not a draft or prerelease, published 2026-11-25T21:32:06Z (2026-11-26 in UTC+7). Its body matches docs/releases/v0.2.2.md apart from a trailing newline.
 - Limits: the routing text was not tried in a live host session and is not shown to change agent behavior; no Windows host session was run.
 - Tags v0.1.0, v0.1.1, v0.2.0 and v0.2.1 are unchanged.
+
+## v0.2.3 development (2026-11-26)
+
+Automated: 93 tests passed locally on macOS with Python 3.9.6 and 3.15.2 (90 before, plus three new tests).
+Run against v0.2.2's scripts, the same test files failed on all three new tests and on the
+extended Claude hooks case (three failures, one error); all pass on the fixed scripts. They cover
+the Claude hook command run through `/bin/sh -c`, paths containing `$` or a
+backtick, reporting of entries written for such paths by an older version, upgrade of the bare
+`$CLAUDE_PROJECT_DIR` form, an unreadable manifest in doctor, plain install and `--update`, and
+the warnings in the `save` result.
+
+Not covered: a Windows host session (the PowerShell rewrite of `${CLAUDE_PROJECT_DIR}` follows
+Claude Code's documentation), hosted CI results until the pull request runs, and any live host
+session. Source of the fixes: the read-only audit in
+[evidence/audit-2026-11-26.md](evidence/audit-2026-11-26.md).

@@ -38,6 +38,7 @@
 | CHANGELOG.md | Version history with links to release notes |
 | docs/releases/v0.2.0.md | v0.2.0 notes and upgrade steps from v0.1.1 |
 | docs/releases/v0.2.1.md | v0.2.1 notes (token budget) and upgrade steps from v0.2.0 |
+| docs/releases/v0.2.3.md | v0.2.3 notes (small fixes) and upgrade steps from v0.2.2 |
 | docs/evidence/live-trial-kit-v0.2.0.md | Step-by-step live trials for the maintainer, results left empty |
 | docs/evidence/live-trial-2026-11-08.md | Headless Claude Code, Codex and Antigravity CLI trials of v0.2.0 |
 | docs/evidence/live-trial-template.md | Record form for live trials |

@@ -12,6 +12,7 @@ import hashlib
 import importlib.util
 import json
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
@@ -75,13 +76,16 @@ def manifest_text(table):
 
 
 def read_manifest(root):
+    """Return {path: sha256}, None when absent, or raise ValueError when it cannot be read."""
     path = root / MANIFEST
     if not path.is_file():
         return None
     table = {}
-    for line in path.read_text(encoding='utf-8').splitlines():
+    for line in path.read_text(encoding='utf-8').splitlines():  # UnicodeDecodeError is a ValueError.
         if line.strip():
-            value, rel = line.split('  ', 1)
+            value, _, rel = line.partition('  ')
+            if not re.fullmatch(r'[0-9a-f]{64}', value) or not rel.strip():
+                raise ValueError('malformed line in ' + MANIFEST)
             table[rel] = value
     return table
 
@@ -105,7 +109,11 @@ def inspect(path):
     table = hashes(path)
     record = {'path': str(path), 'version': version(path) or 'unknown (v0.1.x or another installer)',
               'digest': digest(table), 'files': len(table)}
-    manifest = read_manifest(path)
+    try:
+        manifest = read_manifest(path)
+    except (ValueError, OSError):
+        record['manifest'] = 'unreadable'
+        return record
     if manifest is None:
         record['manifest'] = 'absent'
     else:
@@ -208,6 +216,8 @@ def install(base, hosts, args, user):
                 print('  Local changes that will be lost: ' + ', '.join(edits))
             if current['manifest'] == 'absent':
                 print('  No manifest: local edits cannot be detected; review before replacing.')
+            elif current['manifest'] == 'unreadable':
+                print('  The manifest cannot be read, so local edits cannot be detected; review before replacing.')
         if not args.dry_run and confirm('Replace these copies?', args.yes):
             for dest, label, _ in replace:
                 copy_into(dest, source_table)
@@ -291,6 +301,9 @@ def doctor(base, hosts, args, user):
                 record['path'], record.get('changed', []), record.get('missing', []), record.get('extra', [])))
         elif record['manifest'] == 'absent':
             warnings.append('No manifest in {} ({}); run --update to make it checkable.'.format(
+                record['path'], record['version']))
+        elif record['manifest'] == 'unreadable':
+            warnings.append('Unreadable manifest in {} ({}); run --update to rewrite it.'.format(
                 record['path'], record['version']))
     if len({record['digest'] for record in copies}) > 1:
         warnings.append('Copies differ from each other (drift); run --update to align them.')
