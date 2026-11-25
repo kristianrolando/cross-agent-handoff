@@ -302,7 +302,9 @@ backtick, reporting of entries written for such paths by an older version, upgra
 `$CLAUDE_PROJECT_DIR` form, an unreadable manifest in doctor, plain install and `--update`, and
 the warnings in the `save` result.
 
+Hosted: PR #16 passed all 12 Package checks jobs (the pull-request and push runs, on Ubuntu,
+macOS and Windows with Python 3.9 and 3.14) on head `15923d2` and was merged as `7fe0ffe`.
+
 Not covered: a Windows host session (the PowerShell rewrite of `${CLAUDE_PROJECT_DIR}` follows
-Claude Code's documentation), hosted CI results until the pull request runs, and any live host
-session. Source of the fixes: the read-only audit in
+Claude Code's documentation) and any live host session. Source of the fixes: the read-only audit in
 [evidence/audit-2026-11-26.md](evidence/audit-2026-11-26.md).
