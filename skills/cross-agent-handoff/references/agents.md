@@ -48,7 +48,11 @@ It uses the fewest folders: `.agents/skills/` for Codex, Antigravity, Cursor, Ge
 Copilot and OpenCode, and `.claude/skills/` for Claude Code and Cline. Each copy gets
 `VERSION` and `MANIFEST.sha256`. `--doctor` reports edited copies, copies that differ from each
 other, copies missing for `--hosts`, hooks pointing at missing scripts, and personal hook files
-not ignored by Git. Exit codes: 0 healthy, 1 warnings, 2 problems.
+not ignored by Git. It also reads, without changing anything, whether the Claude plugin is enabled
+(`enabledPlugins` in the user, project and local settings, plus the version in Claude Code's
+plugin records); when it is, no project copy is needed for Claude Code, and a copy in
+`.claude/skills/` as well draws a warning because the skill would be listed twice. Exit codes:
+0 healthy, 1 warnings, 2 problems.
 
 An existing copy that differs is never replaced silently: `--update` lists local edits and
 asks for confirmation (`--yes` skips it). Copies from v0.1.x or another installer have no
@@ -80,7 +84,8 @@ that destination. Do not assume `--global` works identically across products or 
 Do not install into every host or change global settings merely to enable handoff.
 The Skills CLI and the bundled installer write the same folders, and `install.py --doctor`
 also checks copies made by the Skills CLI. The Claude plugin is separate: Claude Code keeps it
-in its own plugin cache, which the bundled installer neither reads nor changes. Use one route
+in its own plugin cache, which the bundled installer neither installs into nor changes (the doctor
+only reports that the plugin is enabled and its version). Use one route
 per host so Claude Code does not see the plugin and a direct copy at the same time.
 
 ## Activate and route project context
