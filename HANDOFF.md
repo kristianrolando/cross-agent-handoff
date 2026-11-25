@@ -4,7 +4,7 @@
 - task_status: in_progress
 - handoff: ready
 - writer: none
-- updated_at: 2026-11-26T04:59:32+07:00
+- updated_at: 2026-11-26T05:04:45+07:00
 
 ## Project
 Cross-Agent Handoff: portable sequential project continuity and a Claude Code plugin wrapper.
@@ -15,15 +15,15 @@ Host loading/routing: skills/cross-agent-handoff/references/agents.md.
 Release history: docs/releasing.md. Roadmap: docs/roadmap/.
 
 ## Task
-Maintain the skill. v0.2.3 (small fixes) is prepared on branch fix/v0.2.3, not pushed or released. v0.2.1 is released. v0.2.2 (audit fixes) is released (2026-11-26; PR #12 a395f52, prep PR #13 9333c35, tag
+Maintain the skill. v0.2.3 (small fixes) is merged (PR #16, 7fe0ffe); the release is being prepared (maintainer approved on 2026-11-26), not tagged. v0.2.1 is released. v0.2.2 (audit fixes) is released (2026-11-26; PR #12 a395f52, prep PR #13 9333c35, tag
 object b4b9244, publish run 45705163155, Latest). Checkpoint format is
 unchanged. Talk to the maintainer in Indonesian; write code and docs in English.
 
 ## State
-Verified (local, branch fix/v0.2.3, unpushed): 93 tests OK on Python 3.9.6 and 3.15.2; the three new tests and the extended
-hooks case fail on v0.2.2 scripts. Adds the `${CLAUDE_PROJECT_DIR}` and shell-expansion hook-command patch (F13), unreadable
+Verified: PR #16 merged as 7fe0ffe: 93 tests OK on Python 3.9.6 and 3.15.2 and all 12 hosted checks; the three new tests and the
+extended hooks case fail on v0.2.2 scripts. Adds the `${CLAUDE_PROJECT_DIR}` and shell-expansion hook-command patch (F13), unreadable
 manifest reporting in install.py, save warnings (F23) and the edit-tool guidance in SKILL.md (F08). Version files, CHANGELOG
-(0.2.3 unreleased), docs/releases/v0.2.3.md and docs/validation.md updated; README badge and docs/releasing.md wait for the
+(0.2.3, 2026-11-26), docs/releases/v0.2.3.md and docs/validation.md updated; README badge and docs/releasing.md wait for the
 release. Live trial of the v0.2.2 routing block: docs/evidence/live-trial-2026-11-26-routing-block.md (PR #15).
 Verified: v0.2.2 released from 9333c35; PR #12 merged as a395f52: 90 tests OK on Python 3.9.6 and 3.15.2 and all 12 hosted
 checks; the seven new checks fail on v0.2.1 scripts. Closes audit findings F01-F05, F07, F12,
@@ -66,11 +66,14 @@ Writers / operations: none running.
 - Hook facts: official pages fetched 2026-11-08, links in docs/roadmap/v0.2.0-audit.md.
 
 ## Next
-No work remains for v0.2.2. Optional: the maintainer runs the remaining live-trial kit steps and
-records them with docs/evidence/live-trial-template.md. Never move the v0.1.0, v0.1.1, v0.2.0, v0.2.1 or
-v0.2.2 tags.
+After this prep PR merges, tag v0.2.3 on its merge commit, verify the publish run, then record the
+release in docs/validation.md, docs/releasing.md and the README badge in a last PR; never tag without
+the maintainer's request. Optional: the maintainer runs the remaining live-trial kit steps and
+records them with docs/evidence/live-trial-template.md. Never move the v0.1.0, v0.1.1, v0.2.0, v0.2.1
+or v0.2.2 tags.
 
 ## Recent outcomes
+- 2026-11-26, Claude Code: ran the v0.2.2 routing-block live trial (PR #15), prepared v0.2.3 and merged PR #16 (7fe0ffe).
 - 2026-11-26, Claude Code: prepared v0.2.2 from the 2026-11-26 audit and merged PR #12 and #13, tagged and published v0.2.2.
 - 2026-11-08, Claude Code: ran headless live trials of v0.2.0; all passed; three findings fixed.
 - 2026-11-08, Claude Code: published v0.2.0 and verified the release.
