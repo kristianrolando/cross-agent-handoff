@@ -3,7 +3,7 @@
 Versions follow the Claude plugin manifest and the skill's `VERSION` file. Release notes with
 install commands live in [docs/releases/](docs/releases/).
 
-## 0.2.2 (unreleased)
+## 0.2.2 (2026-11-26)
 
 Fixes from an audit of the skill against its use in four real projects
 ([evidence](docs/evidence/audit-2026-11-26.md)). The checkpoint format is unchanged.
@@ -32,9 +32,9 @@ Fixed:
   repositories), and records `status_error` instead of an empty status.
 - Hook Git calls set `GIT_OPTIONAL_LOCKS=0` and `diff.autoRefreshIndex=false`, so a background
   snapshot no longer takes `.git/index.lock` and fails a concurrent `git add` or `commit`.
-- Unverified on Windows: `inject.py` writes its output as UTF-8 bytes, because Python before 3.15
-  can fail to encode checkpoint text for an ANSI-code-page pipe. Reproduced only by simulating
-  the code page.
+- `inject.py` writes its output as UTF-8 bytes, because Python before 3.15 can fail to encode
+  checkpoint text for an ANSI-code-page pipe. Tested by simulating the code page, which passed on
+  the hosted Windows jobs; not observed in a real Windows host session.
 
 Compatibility: format `cross-agent-handoff/1` unchanged. The new routing text is not shown to
 change agent behavior: the audit read one reader per variant and no live trial has run.
