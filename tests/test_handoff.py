@@ -197,6 +197,38 @@ class ProtocolTests(unittest.TestCase):
         self.assertIn('saved with warning', result.stderr)
         self.assertEqual(json.loads(self.save(checkpoint()).stdout)['warnings'], [])
 
+    def test_size_hints_name_where_a_checkpoint_is_long(self):
+        self.assertEqual(handoff.size_hints(checkpoint()), [])
+        filler = ' '.join(['detail'] * 160)
+        bloated = checkpoint().replace('## Project', filler + '\n\n## Project', 1)
+        self.assertTrue(any('160 words sit before the first section' in h for h in handoff.size_hints(bloated)))
+        extra = checkpoint() + '\n## Parallel round 3 (merged)\n' + filler + '\n\n## Old sprint (done)\n' + filler + '\n'
+        hints = handoff.size_hints(extra)
+        self.assertTrue(any('outside the template hold 320 words (Parallel round 3 (merged), Old sprint (done))' in h
+                            for h in hints), hints)
+        outcomes = checkpoint() + ''.join('- 2026-11-%02d: finished item %d.\n' % (n, n) for n in range(1, 12))
+        self.assertTrue(any('Recent outcomes has 11 entries' in h for h in handoff.size_hints(outcomes)))
+        long_next = checkpoint(next_step=filler)
+        self.assertTrue(any('Next has 160 words' in h for h in handoff.size_hints(long_next)))
+        # Profile sections are expected and never counted as extra.
+        profile = checkpoint() + '\n## Profile: video\n' + filler + ' ' + filler + '\n'
+        self.assertFalse(any('outside the template' in h for h in handoff.size_hints(profile)))
+        # Over the reading target, the largest parts are listed by size.
+        huge = checkpoint().replace('Verified:', 'Verified: ' + ' '.join(['detail'] * 1300) + '\nVerified:', 1)
+        largest = [h for h in handoff.size_hints(huge) if h.startswith('Largest parts: State (13')]
+        self.assertEqual(len(largest), 1, handoff.size_hints(huge))
+
+    def test_check_and_save_report_the_hints_without_blocking(self):
+        filler = ' '.join(['detail'] * 160)
+        text = checkpoint().replace('## Project', filler + '\n\n## Project', 1)
+        self.target.write_text(checkpoint())
+        result = self.save(text)  # Advisory: the save is kept.
+        self.assertTrue(any('before the first section' in w for w in json.loads(result.stdout)['warnings']))
+        check = subprocess.run([sys.executable, str(SCRIPT), 'check', '--project', str(self.root)],
+                               capture_output=True, text=True, timeout=60)
+        self.assertEqual(check.returncode, 1, check.stdout + check.stderr)
+        self.assertIn('before the first section', check.stdout)
+
     def test_atomic_replace_failure_preserves_live(self):
         self.target.write_text(checkpoint())
         before = self.target.read_bytes()
