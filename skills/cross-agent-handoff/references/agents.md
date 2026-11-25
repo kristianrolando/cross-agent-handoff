@@ -124,6 +124,14 @@ When switching, save, stop overlapping writers and open the same complete projec
 host. If a cloud agent has a separate checkout, explicitly transfer required dirty/untracked
 files and checkpoint, reconcile branches, then verify the snapshot. No automatic sync is provided.
 
+## Host memory and the checkpoint
+
+Some hosts keep their own memory (Claude Code auto-memory, project memory files). Another agent
+cannot read it, and it can state a status the checkpoint has since corrected. Keep decisions,
+open items and statuses in the checkpoint or the project's canonical file. Keep memory for
+personal preferences and facts that never change. When memory and the checkpoint disagree, the
+checkpoint and the files win; fix or delete the memory entry instead of repeating it.
+
 ## Official sources
 
 - [Claude Code skills](https://code.claude.com/docs/en/skills) and [AGENTS.md loading](https://code.claude.com/docs/en/memory)

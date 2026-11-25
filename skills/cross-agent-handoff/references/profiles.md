@@ -8,7 +8,7 @@ extends the base template and never replaces it; the six base sections stay requ
 | Profile | Use for | Section records |
 | --- | --- | --- |
 | `game` | Small games and prototypes | Engine and version, run/build commands, scene or level checklist, input mapping, last playtest, known bugs |
-| `video` | Edits and renders, for example with ffmpeg scripts | Output spec, read-only sources, edit order or EDL, exact final render command, output versions with the latest marked, running renders |
+| `video` | Edits and renders, for example with ffmpeg scripts | Output spec, read-only sources, edit order or EDL, exact final render command, latest output per deliverable, render log path, running renders |
 | `motion` | Motion graphics, for example Remotion, Manim, Lottie or CSS | Tool and preview command, style-tokens file path, compositions with frame ranges, preview and final render status |
 
 Profiles combine: `profile: video, motion` adds both sections. With the helper:
@@ -28,6 +28,8 @@ Rules that matter after a switch:
   A successor must check that output, and whether the process still runs, before rendering
   again. `inject.py` prints these lines under "Running operations".
 - Treat source footage as read-only. Write renders to a separate output folder.
+- Render history belongs to the project's render log, not the checkpoint. If a render script appends to HANDOFF.md,
+  point it at a log file instead; until then, trim finished entries at each save and keep the running one.
 - For motion work, read the style-tokens file before producing visual output, so every
   agent keeps the same colors, fonts, easing and durations.
 
