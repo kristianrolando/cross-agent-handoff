@@ -258,7 +258,7 @@ prompts and exclusions: [live-trial-2026-11-08.md](evidence/live-trial-2026-11-0
 - Limits: guidance plus one warning; no live host trial was repeated and token savings were not measured, only the word target and routing-block size.
 - Tags v0.1.0, v0.1.1 and v0.2.0 are unchanged.
 
-## v0.2.2 development (unreleased, 2026-11-26)
+## v0.2.2 development (2026-11-26)
 
 Automated: 90 tests passed locally on macOS with Python 3.9.6 and 3.15.2 (82 before, plus eight
 new tests and one extended case). Run against v0.2.1's scripts, the same test files showed seven
@@ -278,3 +278,16 @@ Hosted: PR #12 passed all 12 Package checks jobs on head `423fec4` and was merge
 first run failed on the four Windows jobs because the new code-page test wrote its fixture with
 cp1252; the test now writes UTF-8 and the product code was unchanged. Not covered: a Windows host
 session, live host sessions with the new routing text, and any change in agent behavior.
+
+## Release v0.2.2 evidence (2026-11-26)
+
+- PR #12 (fixes) was merged as `a395f52`; PR #13 (release preparation, docs only) as `9333c35`.
+  PR #13's pull-request run [45704300518](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/45704300518)
+  passed all six jobs. Its twin push run was still queued on macOS when the PR was merged, so the
+  merge relied on the pull-request run for the identical commit `11d938d`.
+- Annotated tag `v0.2.2` (object `b4b9244`) targets `9333c35`. The maintainer asked for the release;
+  the agent pushed the tag. Package checks on the tag, [run 45705163151](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/45705163151), and on main, [run 45705151065](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/45705151065), succeeded.
+- [Publish release run 45705163155](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/45705163155): checks and publish succeeded.
+- [Release v0.2.2](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.2.2) is Latest, not a draft or prerelease, published 2026-11-25T21:32:06Z (2026-11-26 in UTC+7). Its body matches docs/releases/v0.2.2.md apart from a trailing newline.
+- Limits: the routing text was not tried in a live host session and is not shown to change agent behavior; no Windows host session was run.
+- Tags v0.1.0, v0.1.1, v0.2.0 and v0.2.1 are unchanged.

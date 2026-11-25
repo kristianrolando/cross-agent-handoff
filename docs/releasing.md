@@ -3,8 +3,9 @@
 ## Publication status
 
 Public repository: [kristianrolando/cross-agent-handoff](https://github.com/kristianrolando/cross-agent-handoff).
-Latest release: [v0.2.1](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.2.1) ([notes](releases/v0.2.1.md)), annotated tag pushed by the agent at the maintainer's request on verified source commit `cca01823992a350319490923ff806b243dad3e10`; [publish run](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/42661782630) succeeded.
-Previous release: [v0.2.0](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.2.0) ([notes](releases/v0.2.0.md)), source commit `3e5f3805441edb4ee17b170f8afe48e04cd92da7`; [publish run](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/42439322328) succeeded.
+Latest release: [v0.2.2](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.2.2) ([notes](releases/v0.2.2.md)), annotated tag pushed by the agent at the maintainer's request on verified source commit `9333c35660fc1c80233f7d71dc3a40d214d94a1a`; [publish run](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/45705163155) succeeded.
+Previous release: [v0.2.1](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.2.1) ([notes](releases/v0.2.1.md)), source commit `cca01823992a350319490923ff806b243dad3e10`; [publish run](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/42661782630) succeeded.
+Earlier release: [v0.2.0](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.2.0) ([notes](releases/v0.2.0.md)), source commit `3e5f3805441edb4ee17b170f8afe48e04cd92da7`; [publish run](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/42439322328) succeeded.
 Earlier release: [v0.1.1](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.1.1) ([notes](releases/v0.1.1.md)), tag pushed by the maintainer on verified source commit `5eb5279d461807582158474aead506692d5c8348`.
 Published initial release: [v0.1.0](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.1.0). The tag targets verified source commit `666e04c279d312a375a9ba06b5f9e6dfd3d92204`.
 
