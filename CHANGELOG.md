@@ -3,6 +3,42 @@
 Versions follow the Claude plugin manifest and the skill's `VERSION` file. Release notes with
 install commands live in [docs/releases/](docs/releases/).
 
+## 0.2.2 (unreleased)
+
+Fixes from an audit of the skill against its use in four real projects
+([evidence](docs/evidence/audit-2026-11-26.md)). The checkpoint format is unchanged.
+
+Changed (guidance):
+- The routing block grows by about 34 words: keep the checkpoint near 1,200 words, reconcile open
+  items with files, Git and owner answers, save owner questions and answers before the final
+  message, take `updated_at` from `date -Iseconds`, check for other writers before marking
+  ready, and never rerun a recorded command just to test state. It was the only text those
+  projects' agents loaded each session, and none ran the helper. Existing blocks keep working.
+  The sentence listing the checkpoint sections was dropped from the block to pay for the
+  additions; `SKILL.md` still lists them.
+- `updated_at` errors now name `date -Iseconds` and say offsets need the colon (`+0700` was
+  written in a real project and rejected).
+- README no longer says two agents "never write at once": the lock is advisory.
+
+Fixed:
+- `inject.py` printed no running operation when the label was a list item, bold, or had its
+  details on following lines; it now prints those lines and cuts each printed line at 300
+  characters, so one unwrapped paragraph cannot flood a session start.
+- Hook scripts (`snapshot.py`, `inject.py`) exit 0 on invalid arguments. A hook command from
+  another skill version made argparse exit 2, which blocks `Stop` and `PreCompact` in Claude Code.
+- `install.py --uninstall` removes hooks written with `hooks.py install --shared`, and `--doctor`
+  reports shared hooks that point at missing scripts.
+- `snapshot.py` no longer hides modified files when a Git call times out (large media
+  repositories), and records `status_error` instead of an empty status.
+- Hook Git calls set `GIT_OPTIONAL_LOCKS=0` and `diff.autoRefreshIndex=false`, so a background
+  snapshot no longer takes `.git/index.lock` and fails a concurrent `git add` or `commit`.
+- Unverified on Windows: `inject.py` writes its output as UTF-8 bytes, because Python before 3.15
+  can fail to encode checkpoint text for an ANSI-code-page pipe. Reproduced only by simulating
+  the code page.
+
+Compatibility: format `cross-agent-handoff/1` unchanged. The new routing text is not shown to
+change agent behavior: the audit read one reader per variant and no live trial has run.
+
 ## 0.2.1 (2026-11-10)
 
 Changed (token budget; checkpoint format unchanged):

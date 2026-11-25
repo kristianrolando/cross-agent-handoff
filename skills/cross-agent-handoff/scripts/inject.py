@@ -23,8 +23,32 @@ spec = importlib.util.spec_from_file_location('cross_agent_handoff_lock', HERE /
 lock = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(lock)
 LISTED_FILES = 15
-# Lines a successor must see before rerunning long jobs (base template and profiles).
-OPERATIONS = re.compile(r'^(?:Writers / operations|Running renders|Renders):', re.I)
+WIDTH = 300  # Characters per printed line; the checkpoint keeps the full text.
+# Lines a successor must see before rerunning long jobs (base template and profiles), also when
+# written as a list item or in bold, as agents often do.
+OPERATIONS = re.compile(r'^(?:[-*+]\s+)?(?:\*\*)?(?:Writers ?/ ?operations|Running renders|Renders)(?:\*\*)?\s*:', re.I)
+ITEM = re.compile(r'^(\s*)[-*+]\s+\S')
+
+
+def operation_lines(text):
+    """Operation labels, plus the list items under a label that has no text of its own."""
+    lines = text.splitlines()
+    found = []
+    for index, line in enumerate(lines):
+        label = line.strip()
+        if not OPERATIONS.match(label):
+            continue
+        found.append(label)
+        if OPERATIONS.sub('', label).strip():
+            continue
+        indent = len(line) - len(line.lstrip())
+        nested = ITEM.match(line) is not None  # A list-item label owns only deeper items.
+        for follow in lines[index + 1:index + 6]:
+            item = ITEM.match(follow)
+            if not item or (nested and len(item.group(1)) <= indent):
+                break
+            found.append('  ' + follow.strip())
+    return found
 
 
 def section(text, name, limit):
@@ -92,10 +116,10 @@ def build(root, checkpoint, config):
     lines.extend('  ' + line for line in section(text, 'Task', 8))
     lines.append('Next:')
     lines.extend('  ' + line for line in section(text, 'Next', 6))
-    operations = [line.strip() for line in text.splitlines() if OPERATIONS.match(line.strip())]
+    operations = operation_lines(text)
     if operations:
         lines.append('Running operations (check before rerunning anything):')
-        lines.extend('  ' + line for line in operations[:6])
+        lines.extend('  ' + line for line in operations[:8])
     if changes['files']:
         lines.append('Changed after the checkpoint (newest first):')
         for rel, size, mtime in changes['files'][:LISTED_FILES]:
@@ -115,6 +139,8 @@ def build(root, checkpoint, config):
 
 
 def render(lines, limit, output_format):
+    # The line cap alone does not bound size: one unwrapped checkpoint paragraph is one line.
+    lines = [line if len(line) <= WIDTH else line[:WIDTH - 3] + '...' for line in lines]
     if len(lines) > limit:
         lines = lines[:limit - 1] + ['(output capped at {} lines)'.format(limit)]
     text = '\n'.join(lines)
@@ -146,7 +172,17 @@ def main():
     try:
         output = run()
         if output:
-            print(output)
+            # Hook stdout is a pipe; on Windows before Python 3.15 it defaults to the ANSI code
+            # page, which cannot encode checkpoint text such as arrows and would drop the output.
+            stream = getattr(sys.stdout, 'buffer', None)
+            if stream is None:
+                print(output)
+            else:
+                stream.write((output + '\n').encode('utf-8'))
+                stream.flush()
+    except SystemExit as exc:  # argparse exits 2 on a hook command from another skill version.
+        if exc.code not in (0, None):
+            print('inject: invalid arguments; no resume context printed.', file=sys.stderr)
     except Exception as exc:  # A session-start hook must never break the host.
         print('inject: failed: {}: {}'.format(type(exc).__name__, exc), file=sys.stderr)
     return 0

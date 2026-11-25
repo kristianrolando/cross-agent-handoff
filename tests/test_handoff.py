@@ -245,6 +245,8 @@ class ProtocolTests(unittest.TestCase):
             '- updated_at: 2026-11-08T14:05:00': 'updated_at must be',  # No offset.
             '- updated_at: 2026-13-08T14:05:00Z': 'updated_at must be',  # Impossible month.
             '- updated_at: yesterday': "got 'yesterday'",
+            # macOS `date +%Y-%m-%dT%H:%M:%S%z` output, seen in a real project checkpoint.
+            '- updated_at: 2026-11-25T23:50:49+0700': 'date -Iseconds prints a valid value',
             '- language: Indonesian': 'language must be a language code',
             '- profile: Video': 'profile must be lowercase profile names',
             '- profile: video;motion': 'profile must be',

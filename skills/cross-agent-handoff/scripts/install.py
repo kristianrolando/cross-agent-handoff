@@ -241,17 +241,27 @@ def uninstall(base, hosts, args, user):
     if not remove and not hook_hosts:
         print('Nothing to remove.')
         return 0
+    hooks = load_hooks()
+    # Shared Claude hooks (hooks.py install --shared) would otherwise keep running a removed script.
+    shared = False
+    if 'claude' in hook_hosts:
+        try:
+            shared = hooks.present(hooks.load(hooks.config_path(base, 'claude', True)), 'claude')
+        except hooks.HookError as exc:
+            print('Note: shared Claude settings left unchanged: ' + str(exc))
     if hook_hosts:
-        print('{} this skill\'s hook entries for: {}'.format('Would remove' if args.dry_run else 'Remove',
-                                                            ', '.join(hook_hosts)))
+        print('{} this skill\'s hook entries for: {}{}'.format('Would remove' if args.dry_run else 'Remove',
+                                                              ', '.join(hook_hosts),
+                                                              ' (including shared .claude/settings.json)' if shared else ''))
     if args.dry_run:
         return 0
     if not confirm('Remove these? HANDOFF.md, .handoff/ and other project files are kept.', args.yes):
         print('Skipped.')
         return 0
-    hooks = load_hooks()
     for host in hook_hosts:  # Hook entries first, so no hook points at a removed script.
         hooks.run(['remove', '--project', str(base), '--host', host, '--yes'])
+    if shared:
+        hooks.run(['remove', '--project', str(base), '--host', 'claude', '--shared', '--yes'])
     for path in remove:
         shutil.rmtree(path)
         print('Removed ' + shown(path, base))
@@ -288,12 +298,15 @@ def doctor(base, hosts, args, user):
     if not user:
         hooks = load_hooks()
         for host in HOOK_HOSTS:
-            report = hooks.status(base, host, False)
-            if report['installed']:
+            for shared in ((False, True) if host == 'claude' else (False,)):  # settings.local.json and --shared
+                report = hooks.status(base, host, shared)
+                if not report['installed']:
+                    continue
                 hook_reports.append(report)
                 if report['missing_scripts']:
-                    problems.append('{} hooks reference missing scripts: {}'.format(host, report['missing_scripts']))
-                if report.get('ignored_by_git') is False:
+                    problems.append('{} hooks reference missing scripts: {} (in {})'.format(
+                        host, report['missing_scripts'], report['config']))
+                if not shared and report.get('ignored_by_git') is False:
                     warnings.append('{} holds personal hook settings and is not ignored by Git.'.format(report['config']))
         if (base / '.handoff' / 'auto').is_dir() and ignored(base, '.handoff/auto/latest.json') is False:
             warnings.append('.handoff/auto/ is not ignored by Git; restore its .gitignore file.')

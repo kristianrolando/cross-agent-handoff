@@ -41,6 +41,7 @@
 | docs/evidence/live-trial-kit-v0.2.0.md | Step-by-step live trials for the maintainer, results left empty |
 | docs/evidence/live-trial-2026-11-08.md | Headless Claude Code, Codex and Antigravity CLI trials of v0.2.0 |
 | docs/evidence/live-trial-template.md | Record form for live trials |
+| docs/evidence/audit-2026-11-26.md | Audit of v0.2.1 against four real projects, with its incident record |
 | docs/releases/v0.1.1.md | Expanded host guide, helper and workflow fixes release notes |
 | .github/workflows/ci.yml | GitHub Actions matrix for automatic package/protocol checks |
 | docs/ci.md | CI scope, configured environments and local equivalent |

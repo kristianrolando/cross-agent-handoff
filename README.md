@@ -72,7 +72,7 @@ No coding knowledge is needed to understand the idea. Think of a shift change at
 
 <img src="docs/assets/explain-safety-net.svg" alt="Three optional helpers, all off by default: a camera that records changed files when an agent stops, a welcome message that shows the notebook and warns about stale notes, and a one-time reminder to update stale notes.">
 
-**Two agents never write at once.** A lock file lets one agent work. A second agent must ask you before taking over, and every takeover is logged (see [lock](skills/cross-agent-handoff/references/lock.md)):
+**A second writer becomes visible.** An optional lock file marks which agent is working. A second agent must ask you before taking over, and every takeover is logged. The lock is advisory: it cannot stop an agent, editor or process from writing (see [lock](skills/cross-agent-handoff/references/lock.md)):
 
 <img src="docs/assets/explain-one-writer.svg" alt="Four steps: the working agent takes a lock; another agent sees it and asks you first; you confirm the first agent is really finished; the takeover is logged with who, why and when.">
 

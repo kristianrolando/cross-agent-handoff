@@ -147,6 +147,27 @@ class InstallTests(unittest.TestCase):
         report = json.loads(self.run_install('--doctor', '--json', expected=2).stdout)
         self.assertTrue(any('codex hooks reference missing scripts' in p for p in report['problems']))
 
+    def run_hooks(self, *args):
+        result = subprocess.run([sys.executable, str(SKILL / 'scripts' / 'hooks.py'), *args, '--project', str(self.root)],
+                                text=True, capture_output=True, stdin=subprocess.DEVNULL, timeout=60)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_shared_claude_hooks_are_checked_and_removed(self):
+        self.run_install('--hosts', 'claude')
+        self.run_hooks('install', '--host', 'claude', '--shared', '--yes')
+        shared = self.root / '.claude' / 'settings.json'
+        data = json.loads(shared.read_text())
+        data['permissions'] = {'allow': ['Bash(npm test)']}
+        shared.write_text(json.dumps(data))
+        shutil.rmtree(self.copy('.claude/skills'))
+        report = json.loads(self.run_install('--doctor', '--json', expected=2).stdout)
+        self.assertTrue(any('claude hooks reference missing scripts' in p and '.claude/settings.json' in p
+                            for p in report['problems']), report)
+        self.run_install('--hosts', 'claude')
+        result = self.run_install('--uninstall', '--yes')
+        self.assertIn('including shared .claude/settings.json', result.stdout)
+        self.assertEqual(json.loads(shared.read_text()), {'permissions': {'allow': ['Bash(npm test)']}})
+
     def test_user_install_uses_documented_user_folders(self):
         self.run_install('--user', '--hosts', 'antigravity,cline,claude')
         self.assert_complete(self.home / '.gemini' / 'config' / 'skills' / 'cross-agent-handoff')

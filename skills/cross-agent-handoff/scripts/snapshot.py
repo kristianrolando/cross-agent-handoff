@@ -84,10 +84,18 @@ def load_config(root):
 
 
 def git(root, *args, timeout=5):
+    # Hooks run in the background: never take .git/index.lock for an optional index refresh
+    # (status) or a stat-only refresh (diff), which would make a concurrent `git add` or
+    # `git commit` by the user or agent fail.
     try:
-        result = subprocess.run(['git', '-c', 'core.quotepath=off', '-C', str(root), *args],
-                                capture_output=True, text=True, timeout=timeout)
-    except (OSError, subprocess.TimeoutExpired):
+        result = subprocess.run(['git', '-c', 'core.quotepath=off', '-c', 'diff.autoRefreshIndex=false',
+                                 '-C', str(root), *args],
+                                capture_output=True, text=True, timeout=timeout,
+                                env=dict(os.environ, GIT_OPTIONAL_LOCKS='0'))
+    except OSError:
+        return None
+    except subprocess.TimeoutExpired:  # Large stat-dirty media can take Git longer than this.
+        warn('git {} timed out after {} s'.format(args[0], timeout))
         return None
     return result.stdout if result.returncode == 0 else None
 
@@ -95,24 +103,34 @@ def git(root, *args, timeout=5):
 def git_state(root):
     if git(root, 'rev-parse', '--is-inside-work-tree') is None:
         return {'available': False}
-    status = (git(root, 'status', '--porcelain', '--untracked-files=normal') or '').splitlines()
-    stat = git(root, 'diff', '--stat', 'HEAD')
-    if stat is None:  # No commit yet.
-        stat = git(root, 'diff', '--stat') or ''
+    raw = git(root, 'status', '--porcelain', '--untracked-files=normal')
+    status = (raw or '').splitlines()
+    head = (git(root, 'rev-parse', '--short', 'HEAD') or '').strip() or None
+    # Without HEAD (no commit yet) diff the index; a failed HEAD diff is not retried.
+    stat = (git(root, 'diff', '--stat', 'HEAD') if head else git(root, 'diff', '--stat')) or ''
     stat = stat.splitlines()
-    return {'available': True, 'branch': (git(root, 'branch', '--show-current') or '').strip() or None,
-            'head': (git(root, 'rev-parse', '--short', 'HEAD') or '').strip() or None,
-            'status': status[:200], 'status_truncated': len(status) > 200,
-            'diff_stat': stat[-50:], 'note': 'Status paths are relative to the Git root.'}
+    record = {'available': True, 'branch': (git(root, 'branch', '--show-current') or '').strip() or None,
+              'head': head, 'status': status[:200], 'status_truncated': len(status) > 200,
+              'diff_stat': stat[-50:], 'note': 'Status paths are relative to the Git root.'}
+    if raw is None:
+        record['status_error'] = 'git status failed or timed out; status unknown, not clean'
+    return record
 
 
 def tracked_clean(root):
-    """Tracked files under root whose content matches the index and HEAD, or None without Git."""
+    """Tracked files under root whose content matches the index and HEAD, or None without Git.
+
+    When Git cannot say which tracked files are modified, nothing counts as clean, so an
+    unsaved edit is reported rather than hidden.
+    """
     listed = git(root, 'ls-files', '-z')
     if listed is None:
         return None
     tracked = set(filter(None, listed.split('\0')))
-    modified = set(filter(None, (git(root, 'ls-files', '-z', '--modified') or '').split('\0')))
+    modified = git(root, 'ls-files', '-z', '--modified')
+    if modified is None:
+        return set()
+    modified = set(filter(None, modified.split('\0')))
     staged = git(root, 'diff', '--cached', '--name-only', '-z', '--relative')
     staged = tracked if staged is None else set(filter(None, staged.split('\0')))
     return tracked - modified - staged
@@ -344,6 +362,9 @@ def run(argv=None, stdin=None):
 def main():
     try:
         run()
+    except SystemExit as exc:  # argparse exits 2 on a hook command from another skill version.
+        if exc.code not in (0, None):
+            warn('invalid arguments; nothing recorded.')
     except Exception as exc:  # A hook must never break the host session.
         warn('failed: {}: {}'.format(type(exc).__name__, exc))
     return 0

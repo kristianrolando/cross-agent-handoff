@@ -109,6 +109,27 @@ class AutosaveTests(unittest.TestCase):
         self.assertNotIn('.claude/skills/cross-agent-handoff/SKILL.md', paths)
         self.assertFalse(any(path.startswith('.handoff') for path in paths))
 
+    def test_hook_git_calls_leave_the_index_alone(self):
+        # A background hook must not take .git/index.lock: a concurrent `git add` would fail.
+        self.init_git()
+        self.write_checkpoint()
+        for index in range(50):
+            (self.root / ('f%02d.txt' % index)).write_text('same')
+        self.git('add', '.')
+        self.git('commit', '-m', 'Fixture baseline')
+        later = time.time() + 5
+        for index in range(50):
+            os.utime(self.root / ('f%02d.txt' % index), (later, later))  # Stat-dirty, same content.
+        index_file = self.root / '.git' / 'index'
+        before = index_file.read_bytes()
+        env = {key: value for key, value in os.environ.items() if key != 'GIT_OPTIONAL_LOCKS'}
+        for args in (('snapshot.py', '--project', str(self.root)),
+                     ('handoff.py', 'inspect', '--project', str(self.root))):
+            result = subprocess.run([sys.executable, str(SCRIPTS / args[0]), *args[1:]], env=env, text=True,
+                                    capture_output=True, timeout=60)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(index_file.read_bytes(), before, args[0])
+
     def test_snapshot_outside_continuity_project_records_nothing(self):
         (self.root / 'file.txt').write_text('x')
         result = self.run_script('snapshot', '--project', str(self.root))
@@ -125,6 +146,16 @@ class AutosaveTests(unittest.TestCase):
             self.assertEqual(snapshot.main(), 0)
         with mock.patch.object(inject, 'run', side_effect=RuntimeError('boom')):
             self.assertEqual(inject.main(), 0)
+
+    def test_hook_scripts_exit_zero_on_invalid_arguments(self):
+        # A hook command written by another skill version must not exit 2 (a blocking code on Stop).
+        for name, args in (('snapshot', ('--hook', '--host', 'bogus')), ('inject', ('--hook', '--format', 'bogus')),
+                           ('snapshot', ('--hook', '--flag-from-a-newer-version'))):
+            result = subprocess.run([sys.executable, str(SCRIPTS / (name + '.py')), *args], input='{}',
+                                    text=True, capture_output=True, timeout=60)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn('usage:', result.stderr)
+            self.assertEqual(result.stdout, '')
 
     def test_media_metadata_and_optional_partial_hash(self):
         self.write_checkpoint()
@@ -201,6 +232,26 @@ class AutosaveTests(unittest.TestCase):
         self.assertIn('0 files and 1 commits changed', output)
         self.assertIn('Unrecorded follow-up', output)
 
+    def test_git_timeout_does_not_hide_modified_files(self):
+        # Re-hashing large stat-dirty media can exceed the 5 s Git timeout; unknown is not clean.
+        self.init_git()
+        self.write_checkpoint()
+        (self.root / 'edit.js').write_text('base')
+        self.git('add', '.')
+        self.git('commit', '-m', 'Baseline')
+        (self.root / 'edit.js').write_text('half-finished')
+        real = snapshot.git
+
+        def slow(root, *args, **options):
+            if args[0] == 'status' or (args[0] == 'ls-files' and '--modified' in args):
+                return None  # What a timed-out call returns.
+            return real(root, *args, **options)
+        with mock.patch.object(snapshot, 'git', side_effect=slow):
+            changes = snapshot.changes_since_checkpoint(self.root, 'HANDOFF.md', snapshot.load_config(self.root))
+            state = snapshot.git_state(self.root)
+        self.assertIn('edit.js', [item[0] for item in changes['files']])
+        self.assertIn('status_error', state)
+
     def test_inject_from_subdirectory_crlf_and_cap(self):
         self.write_checkpoint(text=checkpoint(phase='working', actor='claude-A').replace('\n', '\r\n'))
         (self.root / 'src').mkdir()
@@ -213,8 +264,25 @@ class AutosaveTests(unittest.TestCase):
         steps = json.loads(self.run_script('inject', '--project', str(self.root), '--format', 'antigravity').stdout)
         self.assertIn('resume context', steps['injectSteps'][0]['ephemeralMessage'])
 
+    def test_inject_cuts_long_checkpoint_lines(self):
+        self.write_checkpoint(age_seconds=10, text=checkpoint(next_step='Render the cut. ' + 'detail ' * 400))
+        output = self.run_script('inject', '--project', str(self.root)).stdout
+        self.assertTrue(all(len(line) <= inject.WIDTH for line in output.splitlines()))
+        self.assertIn('  Render the cut. detail', output)
+
     def test_inject_silent_outside_continuity_project(self):
         self.assertEqual(self.run_script('inject', '--project', str(self.root)).stdout, '')
+
+    def test_inject_output_survives_a_legacy_code_page(self):
+        # Windows pipes default to the ANSI code page before Python 3.15; simulate it anywhere.
+        path = self.write_checkpoint()
+        # Explicit UTF-8: the default encoding of write_text on Windows cannot store these characters.
+        path.write_text(checkpoint(next_step='Render scene 2 → output/v2.mp4, then mark ✓.'), encoding='utf-8')
+        os.utime(path, (time.time() - 600, time.time() - 600))
+        result = subprocess.run([sys.executable, str(SCRIPTS / 'inject.py'), '--project', str(self.root)],
+                                capture_output=True, timeout=60, env=dict(os.environ, PYTHONIOENCODING='cp1252'))
+        self.assertEqual(result.returncode, 0)
+        self.assertIn('Render scene 2 → output/v2.mp4', result.stdout.decode('utf-8'))
 
     def test_staleness_guard_asks_once_per_checkpoint_version(self):
         self.write_checkpoint(age_seconds=3600)

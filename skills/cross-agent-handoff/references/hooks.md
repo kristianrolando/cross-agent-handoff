@@ -84,3 +84,9 @@ reports `stop_hook_active`, and it asks at most once per checkpoint version, rec
 `inject.py` (on Antigravity, the `cross-agent-handoff` entry). It never deletes
 `HANDOFF.md`, `.handoff/` records or other hooks. Delete `.handoff/auto/` by hand if the
 snapshots are no longer wanted.
+
+Remove hooks before deleting a skill copy by hand. A hook whose script is missing makes
+Python exit 2, which Claude Code treats as blocking for `Stop` and `PreCompact`. The hook
+scripts now exit 0 even on invalid arguments, but a missing script still cannot be caught.
+`install.py --uninstall` also removes `--shared` entries, and `--doctor` reports hooks,
+including shared ones, that point at missing scripts.

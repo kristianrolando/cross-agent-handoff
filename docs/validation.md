@@ -51,7 +51,7 @@ claude plugin validate .
 claude plugin validate .claude-plugin/plugin.json
 ```
 
-The automated suite now comprises 27 tests, including bundled-license and public-example checks. Actual output is saved in [test output](evidence/unittest.txt). It does not call either vendor model. The helper requires only the Python standard library.
+The automated suite comprised 27 tests on 2026-11-02, including bundled-license and public-example checks; later counts are in the release sections below (90 at v0.2.2). Actual output is saved in [test output](evidence/unittest.txt). It does not call either vendor model. The helper requires only the Python standard library.
 
 ## Self-review and fixes
 
@@ -257,3 +257,20 @@ prompts and exclusions: [live-trial-2026-11-08.md](evidence/live-trial-2026-11-0
 - [Release v0.2.1](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.2.1) is Latest, not a draft or prerelease, published 2026-11-09T17:09:31Z. Its body matches docs/releases/v0.2.1.md apart from the final newline.
 - Limits: guidance plus one warning; no live host trial was repeated and token savings were not measured, only the word target and routing-block size.
 - Tags v0.1.0, v0.1.1 and v0.2.0 are unchanged.
+
+## v0.2.2 development (unreleased, 2026-11-26)
+
+Automated: 90 tests passed locally on macOS with Python 3.9.6 and 3.15.2 (82 before, plus eight
+new tests and one extended case). Run against v0.2.1's scripts, the same test files showed seven
+of the new tests and the extended case failing (seven failures, one error) and all passing on the
+fixed scripts. The eighth new test only guards the routing block and passes on both. They cover running
+operations written as list items, line width, exit codes of hook scripts on bad arguments,
+shared Claude hooks in uninstall and doctor, a timed-out Git call, the Git index staying
+byte-identical after hook runs, UTF-8 output under a legacy code page, the `updated_at` hint and
+the routing block being identical in both places and small.
+
+Audit: a read-only audit of v0.2.1 against four real projects is recorded in
+[evidence/audit-2026-11-26.md](evidence/audit-2026-11-26.md), including its own breaches of the
+read-only rule. Its measurements came from copies and mock projects; its token figures are
+estimates. Not covered: Windows, live host sessions with the new routing text, and any change in
+agent behavior.

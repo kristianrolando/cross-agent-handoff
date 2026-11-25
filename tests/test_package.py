@@ -71,6 +71,14 @@ class PackageTests(unittest.TestCase):
         self.assertTrue((ROOT / 'docs' / 'releases' / ('v' + plugin['version'] + '.md')).is_file())
         self.assertIn('## ' + plugin['version'], (ROOT / 'CHANGELOG.md').read_text())
 
+    def test_routing_block_is_identical_and_small(self):
+        # The block is loaded in every session, so each word is paid for repeatedly.
+        pattern = re.compile(r'<!-- cross-agent-handoff:start -->.*?<!-- cross-agent-handoff:end -->', re.S)
+        blocks = [pattern.findall(path.read_text()) for path in (ROOT / 'AGENTS.md', SKILL / 'references/setup.md')]
+        self.assertEqual([len(found) for found in blocks], [1, 1])
+        self.assertEqual(blocks[0], blocks[1])
+        self.assertLess(len(blocks[0][0].split()), 135)
+
     def test_core_reading_size(self):
         self.assertLess(len((SKILL / 'SKILL.md').read_text().split()), 1600)
         self.assertLess(len((SKILL / 'assets/checkpoint.md').read_text().split()), 400)
