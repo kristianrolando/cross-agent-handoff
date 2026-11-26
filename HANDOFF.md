@@ -4,7 +4,7 @@
 - task_status: in_progress
 - handoff: ready
 - writer: none
-- updated_at: 2026-11-26T09:44:09+07:00
+- updated_at: 2026-11-26T09:44:42+07:00
 
 ## Project
 Cross-Agent Handoff: portable sequential project continuity and a Claude Code plugin wrapper.
@@ -79,11 +79,7 @@ real project (Studio) with the maintainer's go-ahead, and run the skill-installe
 
 ## Recent outcomes
 - 2026-11-26, Claude Code: rewrote the four small audit fixes as v0.3.1 on fix/v0.3.1 (scratch folder with the old patches was gone).
-- 2026-11-26, Claude Code: tagged and published v0.3.0 and verified the release.
-- 2026-11-26, Claude Code: ran three more trial batches, adopted the new routing block, built v0.3.0 on feat/v0.3.0.
-- 2026-11-26, Claude Code: tagged and published v0.2.3 and verified the release.
-- 2026-11-26, Claude Code: ran the v0.2.2 routing-block live trial (PR #15), prepared v0.2.3 and merged PR #16 (7fe0ffe).
-- 2026-11-26, Claude Code: prepared v0.2.2 from the 2026-11-26 audit and merged PR #12 and #13, tagged and published v0.2.2.
-- 2026-11-08, Claude Code: ran headless live trials of v0.2.0; all passed; three findings fixed.
-- 2026-11-08, Claude Code: published v0.2.0 and verified the release.
-- 2026-11-10, Claude Code: merged PR #10 (token budget), tagged and published v0.2.1, verified.
+- 2026-11-26, Claude Code: tagged and published v0.3.0 (new routing block, size hints, doctor plugin route) and verified it.
+- 2026-11-26, Claude Code: ran the routing-block live trials (PR #15 and three more batches) and adopted the new block.
+- 2026-11-26, Claude Code: released v0.2.2 and v0.2.3 (audit fixes, hook paths, manifest, save warnings); details in CHANGELOG.md.
+- Earlier history (v0.2.0 trials, v0.2.1 token budget): CHANGELOG.md and docs/releasing.md.
