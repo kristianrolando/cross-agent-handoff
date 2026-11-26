@@ -229,6 +229,34 @@ class ProtocolTests(unittest.TestCase):
         self.assertEqual(check.returncode, 1, check.stdout + check.stderr)
         self.assertIn('before the first section', check.stdout)
 
+    @unittest.skipIf(os.name == 'nt', 'POSIX permission bits')
+    def test_save_keeps_the_file_mode(self):
+        self.target.write_text(checkpoint())
+        os.chmod(self.target, 0o644)
+        self.save(checkpoint(next_step='Another step.'))
+        self.assertEqual(self.target.stat().st_mode & 0o777, 0o644)
+        os.chmod(self.target, 0o664)
+        self.save(checkpoint(next_step='A third step.'))
+        self.assertEqual(self.target.stat().st_mode & 0o777, 0o664)
+        fresh = self.root / 'fresh.md'
+        old_umask = os.umask(0o022)
+        try:
+            handoff.atomic(fresh, b'x')
+        finally:
+            os.umask(old_umask)
+        self.assertEqual(fresh.stat().st_mode & 0o777, 0o644)  # A new file follows the umask, not 0600.
+
+    def test_file_digest_reads_in_chunks_and_matches(self):
+        data = os.urandom(300_000) + b'tail'
+        path = self.root / 'big.bin'
+        path.write_bytes(data)
+        with mock.patch.object(handoff, 'CHUNK', 4096), mock.patch.object(Path, 'read_bytes') as whole:
+            self.assertEqual(handoff.file_digest(path), hashlib.sha256(data).hexdigest())
+            whole.assert_not_called()  # The file is never read into memory at once.
+        empty = self.root / 'empty.bin'
+        empty.write_bytes(b'')
+        self.assertEqual(handoff.file_digest(empty), hashlib.sha256(b'').hexdigest())
+
     def test_atomic_replace_failure_preserves_live(self):
         self.target.write_text(checkpoint())
         before = self.target.read_bytes()

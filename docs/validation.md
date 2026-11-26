@@ -348,3 +348,14 @@ the skill installed.
 - [Release v0.3.0](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.3.0) is Latest, not a draft or prerelease, published 2026-11-25T22:36:20Z (2026-11-26 in UTC+7). Its body matches docs/releases/v0.3.0.md apart from a trailing newline.
 - Limits: the trial behind the routing block ran one model on one host with a synthetic project; no second host, no Windows host session, no skill-installed run.
 - Tags v0.1.0 to v0.2.3 are unchanged.
+
+## v0.3.1 development (2026-11-26)
+
+Automated: 103 tests passed locally on macOS with Python 3.9.6 and 3.15.2 (98 before, plus five
+new tests). Each new test fails on v0.3.0's scripts. They cover a wrongly typed config value,
+the file mode kept by `save` (POSIX only), the `--host` label check, the lock folder's
+`.gitignore` with a missing final newline, and the chunked file digest. The original audit patches
+were lost with the session's scratch folder, so the fixes were rewritten from the findings; the
+audit's measurement of 1.10 GB resident memory for a 1 GB file was not repeated.
+
+Not covered: Windows host sessions, hosted CI until the pull request runs.

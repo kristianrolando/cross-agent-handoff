@@ -3,6 +3,26 @@
 Versions follow the Claude plugin manifest and the skill's `VERSION` file. Release notes with
 install commands live in [docs/releases/](docs/releases/).
 
+## 0.3.1 (unreleased)
+
+Four small fixes found by the audit of v0.2.1 (F28 to F30, F33). Checkpoint format, routing block
+and guidance are unchanged.
+
+Fixed:
+- A wrongly typed value in `.handoff/config.json` (for example a string for `window_minutes`)
+  no longer cost `inject` its whole output: the value is ignored with a warning naming the key and
+  the default stays.
+- `handoff.py save` keeps the checkpoint's file mode. The temporary file made it 0600, so another
+  user or a container with a different UID could no longer read `HANDOFF.md`. A new file follows
+  the umask.
+- `lock.py` rejects an email or other free text in `--host`, as it already did for `--agent` and
+  `--alias`, and its `.handoff/.gitignore` now also covers a crashed save's temporary file
+  (`.lock.json-*`) and no longer joins its entry to a last line that lacks a newline.
+- `handoff.py inspect` and the `observed_file` check hash a file in 1 MB chunks. Reading a 1 GB
+  render took 1.1 GB of memory before.
+
+Compatibility: format `cross-agent-handoff/1` unchanged; no migration.
+
 ## 0.3.0 (2026-11-26)
 
 Compaction and the clock, measured in a live trial, plus tools that say where a checkpoint is

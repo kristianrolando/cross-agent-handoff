@@ -284,6 +284,22 @@ class AutosaveTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0)
         self.assertIn('Render scene 2 → output/v2.mp4', result.stdout.decode('utf-8'))
 
+    def test_a_wrongly_typed_config_value_falls_back_with_a_warning(self):
+        path = self.write_checkpoint()
+        os.utime(path, (time.time() - 600, time.time() - 600))
+        config = self.root / '.handoff' / 'config.json'
+        config.parent.mkdir(exist_ok=True)
+        config.write_text(json.dumps({'snapshot': {'window_minutes': 'soon', 'exclude': 'cache', 'scan_seconds': 2},
+                                      'inject': {'max_lines': [1]}, 'lock': {'stale_minutes': True}}))
+        result = self.run_script('inject', '--project', str(self.root))
+        self.assertEqual(result.returncode, 0)
+        self.assertIn('resume context', result.stdout)  # Context is not lost to one bad value.
+        for key in ('window_minutes', 'exclude', 'max_lines', 'lock_stale_minutes'):
+            self.assertIn(key, result.stderr)
+        self.assertNotIn('scan_seconds', result.stderr)  # A valid number is accepted.
+        loaded = snapshot.load_config(self.root)
+        self.assertEqual((loaded['window_minutes'], loaded['exclude'], loaded['scan_seconds']), (120, [], 2))
+
     def test_staleness_guard_asks_once_per_checkpoint_version(self):
         self.write_checkpoint(age_seconds=3600)
         (self.root / 'cut.py').write_text('edit list')
