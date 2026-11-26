@@ -358,4 +358,7 @@ the file mode kept by `save` (POSIX only), the `--host` label check, the lock fo
 were lost with the session's scratch folder, so the fixes were rewritten from the findings; the
 audit's measurement of 1.10 GB resident memory for a 1 GB file was not repeated.
 
-Not covered: Windows host sessions, hosted CI until the pull request runs.
+Hosted: PR #22 passed all 12 Package checks jobs (pull-request and push runs, Ubuntu, macOS and Windows,
+Python 3.9 and 3.14) on head `f371479` and was merged as `97246d8`.
+
+Not covered: Windows host sessions.

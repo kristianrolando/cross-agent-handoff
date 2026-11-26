@@ -4,7 +4,7 @@
 - task_status: in_progress
 - handoff: ready
 - writer: none
-- updated_at: 2026-11-26T09:44:42+07:00
+- updated_at: 2026-11-26T10:25:38+07:00
 
 ## Project
 Cross-Agent Handoff: portable sequential project continuity and a Claude Code plugin wrapper.
@@ -15,14 +15,14 @@ Host loading/routing: skills/cross-agent-handoff/references/agents.md.
 Release history: docs/releasing.md. Roadmap: docs/roadmap/.
 
 ## Task
-Maintain the skill. v0.3.1 (four small fixes) is prepared on branch fix/v0.3.1, not merged or tagged. v0.3.0 (compaction, size hints, doctor) is released (2026-11-26; PR #19 8b716a5, prep PR #20 edcefa5, tag object e21477e, publish run 45714596537, Latest). v0.2.3 (small fixes) is released (2026-11-26; PR #16 7fe0ffe, prep PR #17 ea9f59c, tag object 350e54d, publish run 45711238994, Latest). v0.2.1 is released. v0.2.2 (audit fixes) is released (2026-11-26; PR #12 a395f52, prep PR #13 9333c35, tag
+Maintain the skill. v0.3.1 (four small fixes) is merged (PR #22, 97246d8) and the release is being prepared (maintainer approved on 2026-11-26), not tagged. v0.3.0 (compaction, size hints, doctor) is released (2026-11-26; PR #19 8b716a5, prep PR #20 edcefa5, tag object e21477e, publish run 45714596537, Latest). v0.2.3 (small fixes) is released (2026-11-26; PR #16 7fe0ffe, prep PR #17 ea9f59c, tag object 350e54d, publish run 45711238994, Latest). v0.2.1 is released. v0.2.2 (audit fixes) is released (2026-11-26; PR #12 a395f52, prep PR #13 9333c35, tag
 object b4b9244, publish run 45705163155, Latest). Checkpoint format is
 unchanged. Talk to the maintainer in Indonesian; write code and docs in English.
 
 ## State
-Verified (local, branch fix/v0.3.1): 103 tests OK on Python 3.9.6 and 3.15.2; the five new tests fail on v0.3.0 scripts. Fixes F28 (config
+Verified: PR #22 merged as 97246d8 with all 12 hosted checks; 103 tests OK on Python 3.9.6 and 3.15.2; the five new tests fail on v0.3.0 scripts. Fixes F28 (config
 types), F29 (file mode kept), F30 (lock host label, .gitignore), F33 (chunked digest), rewritten from the audit findings because the scratch
-folder with the original patches was wiped. Unfinished: PR and CI, release only on the maintainer's request, Studio trial, skill-installed trial.
+folder with the original patches was wiped. Skill-installed trial done (PR #23, no measurable difference). Unfinished: release tag, Studio routing block (waits for the maintainer; a session is active there).
 Verified: PR #19 merged as 8b716a5 with all 12 hosted checks; 98 tests OK on Python 3.9.6 and 3.15.2. Routing block now 155 words with markers (was 128):
 adds "paste date -Iseconds" and "compact in the same save"; 26 side-by-side runs: size within 1,300 words 13/13 vs 6/13, real clock
 13/13 vs 7/13, planted facts kept 35/36 (docs/evidence/live-trial-2026-11-26-routing-block-v2.md; one model, synthetic project).
@@ -74,10 +74,12 @@ Writers / operations: none running.
 - Hook facts: official pages fetched 2026-11-08, links in docs/roadmap/v0.2.0-audit.md.
 
 ## Next
-Open the v0.3.1 PR, check CI, merge on the maintainer's approval, date the CHANGELOG, tag only on request. Then: apply the v0.3.0 routing block to one
-real project (Studio) with the maintainer's go-ahead, and run the skill-installed trial pass. Never move the v0.1.0 to v0.3.0 tags.
+After this prep PR merges, tag v0.3.1 on its merge commit only on the maintainer's explicit request, verify the publish run, then record the release in
+docs/validation.md, docs/releasing.md and the README badge in a last PR. Studio: replace its routing block only with the maintainer's go-ahead.
+Never move the v0.1.0 to v0.3.0 tags.
 
 ## Recent outcomes
+- 2026-11-26, Claude Code: merged v0.3.1 (PR #22) and the skill-installed trial record (PR #23).
 - 2026-11-26, Claude Code: rewrote the four small audit fixes as v0.3.1 on fix/v0.3.1 (scratch folder with the old patches was gone).
 - 2026-11-26, Claude Code: tagged and published v0.3.0 (new routing block, size hints, doctor plugin route) and verified it.
 - 2026-11-26, Claude Code: ran the routing-block live trials (PR #15 and three more batches) and adopted the new block.

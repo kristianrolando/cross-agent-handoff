@@ -3,7 +3,7 @@
 Versions follow the Claude plugin manifest and the skill's `VERSION` file. Release notes with
 install commands live in [docs/releases/](docs/releases/).
 
-## 0.3.1 (unreleased)
+## 0.3.1 (2026-11-26)
 
 Four small fixes found by the audit of v0.2.1 (F28 to F30, F33). Checkpoint format, routing block
 and guidance are unchanged.
