@@ -88,6 +88,26 @@ class LockTests(unittest.TestCase):
         result = self.lock('acquire', '--agent', 'codex', '--alias', 'me@example.com', expected=2)
         self.assertIn('no emails', result.stderr)
 
+    def test_host_label_is_checked_like_the_alias(self):
+        result = self.lock('acquire', '--agent', 'claude', '--host', 'me@example.com', expected=2)
+        self.assertIn('no emails', result.stderr)
+        self.assertFalse(self.lock_file.exists())
+        self.lock('acquire', '--agent', 'claude', '--host', 'claude')
+        self.assertEqual(json.loads(self.lock_file.read_text())['host'], 'claude')
+
+    def test_ignore_file_keeps_lock_and_temp_files_out_of_git_and_survives_a_missing_newline(self):
+        ignore = self.root / '.handoff' / '.gitignore'
+        ignore.parent.mkdir()
+        ignore.write_bytes(b'notes.txt')  # No trailing newline: appending must not glue two names together.
+        self.lock('acquire', '--agent', 'claude')
+        lines = ignore.read_text().splitlines()
+        self.assertIn('notes.txt', lines)
+        self.assertIn('lock.json', lines)
+        self.assertIn('.lock.json-*', lines)
+        self.lock('release', '--agent', 'claude')
+        self.lock('acquire', '--agent', 'claude')
+        self.assertEqual(ignore.read_text().splitlines().count('lock.json'), 1)
+
     def test_force_release_requires_yes_and_is_logged(self):
         self.lock('acquire', '--agent', 'codex')
         self.lock('force-release', expected=2)

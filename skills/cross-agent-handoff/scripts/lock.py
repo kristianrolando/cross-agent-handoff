@@ -40,9 +40,9 @@ def paths(root):
     return folder / 'lock.json', folder / 'log.jsonl'
 
 
-def identity(agent, alias):
+def identity(agent, alias, host=None):
     alias = alias or os.environ.get('HANDOFF_AGENT_ALIAS') or None
-    for label, value in (('agent', agent), ('alias', alias)):
+    for label, value in (('agent', agent), ('alias', alias), ('host', host)):
         if value is not None and not ALIAS.fullmatch(value):
             raise LockError('{} must be a short label of letters, digits, ".", "_" or "-" (no emails or '
                             'personal data); got {!r}'.format(label, value))
@@ -87,12 +87,16 @@ def state(root, stale_minutes):
 def ensure_ignored(root):
     """Keep the machine-local lock out of Git without editing the project's .gitignore."""
     ignore = root / '.handoff' / '.gitignore'
-    lines = ignore.read_text(encoding='utf-8').splitlines() if ignore.is_file() else []
-    if 'lock.json' not in lines:
+    text = ignore.read_text(encoding='utf-8') if ignore.is_file() else ''
+    lines = text.splitlines()
+    missing = [name for name in ('lock.json', '.lock.json-*') if name not in lines]  # The second is a crashed save's temp file.
+    if missing:
         with open(ignore, 'a', encoding='utf-8') as stream:
             if not lines:
                 stream.write('# Machine-local continuity files; log.jsonl stays committed.\n')
-            stream.write('lock.json\n')
+            elif not text.endswith('\n'):
+                stream.write('\n')  # Otherwise the new name would join the last existing line.
+            stream.write(''.join(name + '\n' for name in missing))
 
 
 def append_log(root, entry):
@@ -212,7 +216,7 @@ def run(argv=None):
         return release(root, identity(args.agent or 'unknown', args.alias), force=True)
     if not args.agent:
         raise LockError('--agent is required for ' + args.action)
-    who = identity(args.agent, args.alias)
+    who = identity(args.agent, args.alias, args.host if args.action == 'acquire' else None)
     if args.action == 'acquire':
         return acquire(root, who, args.host or args.agent, args.reason, args.confirm_takeover, stale, args.checkpoint)
     return release(root, who, force=False)

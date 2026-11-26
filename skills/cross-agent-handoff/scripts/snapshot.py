@@ -69,6 +69,17 @@ def find_root(start, checkpoint='HANDOFF.md'):
     return None
 
 
+def right_type(default, value):
+    """A config value must have the kind of its default: a number for a number, a list, a flag."""
+    if isinstance(default, bool):
+        return isinstance(value, bool)
+    if isinstance(default, (int, float)):
+        return isinstance(value, (int, float)) and not isinstance(value, bool)
+    if isinstance(default, list):
+        return isinstance(value, list)
+    return True
+
+
 def load_config(root):
     config = dict(DEFAULTS)
     path = root / '.handoff' / 'config.json'
@@ -77,7 +88,12 @@ def load_config(root):
             data = json.loads(path.read_text(encoding='utf-8'))
             for section in ('snapshot', 'guard', 'inject', 'lock'):
                 for key, value in (data.get(section) or {}).items():
-                    config[section + '_' + key if section in ('guard', 'lock') else key] = value
+                    name = section + '_' + key if section in ('guard', 'lock') else key
+                    if name in DEFAULTS and not right_type(DEFAULTS[name], value):
+                        warn('ignoring .handoff/config.json {}: expected {}, got {!r}'.format(
+                            name, type(DEFAULTS[name]).__name__, value))
+                        continue
+                    config[name] = value
         except (OSError, ValueError, AttributeError) as exc:
             warn('ignoring unreadable .handoff/config.json: ' + str(exc))
     return config

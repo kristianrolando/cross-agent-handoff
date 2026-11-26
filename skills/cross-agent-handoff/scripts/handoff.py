@@ -7,6 +7,7 @@ import json
 import os
 from pathlib import Path
 import re
+import stat
 import subprocess
 import sys
 import tempfile
@@ -33,8 +34,20 @@ WORD_WARNING = 'Checkpoint exceeds the 1,200-word reading target; compact only r
 PROFILES = Path(__file__).resolve().parent.parent / 'assets' / 'profiles'
 
 
+CHUNK = 1024 * 1024
+
+
 def digest(data):
     return hashlib.sha256(data).hexdigest()
+
+
+def file_digest(path):
+    """SHA-256 of a file read in chunks, so a large media file is never held in memory."""
+    state = hashlib.sha256()
+    with open(path, 'rb') as stream:
+        for block in iter(lambda: stream.read(CHUNK), b''):
+            state.update(block)
+    return state.hexdigest()
 
 
 def local(root, name):
@@ -179,7 +192,7 @@ def observations(root, text):
         try:
             record = json.loads(raw)
             path = local(root, record['path'])
-            if not path.is_file() or digest(path.read_bytes()) != record['sha256']:
+            if not path.is_file() or file_digest(path) != record['sha256']:
                 warnings.append('Observed file changed or is missing: ' + record['path'])
         except (ValueError, KeyError, TypeError, OSError) as exc:
             warnings.append('Invalid file observation ({}): write it as one JSON object from inspect, for example '
@@ -196,14 +209,29 @@ def observations(root, text):
     return warnings
 
 
+def file_mode(path):
+    """The mode to keep or give a replaced file: the existing mode, else what a plain write would use."""
+    try:
+        return stat.S_IMODE(path.stat().st_mode)
+    except OSError:
+        umask = os.umask(0)
+        os.umask(umask)
+        return 0o666 & ~umask
+
+
 def atomic(path, data):
     """Replace one file; not a multi-file transaction or power-loss guarantee."""
+    mode = file_mode(path)
     fd, name = tempfile.mkstemp(prefix='.' + path.name + '-', dir=str(path.parent))
     try:
         with os.fdopen(fd, 'wb') as stream:
             stream.write(data)
             stream.flush()
             os.fsync(stream.fileno())
+        try:
+            os.chmod(name, mode)  # mkstemp creates 0600; keep the file readable as it was.
+        except OSError:
+            pass
         os.replace(name, path)
     finally:
         if os.path.exists(name):
@@ -248,11 +276,11 @@ def execute(args):
         return 0
     if args.command == 'inspect':
         output = {'project': str(root), 'checkpoint': args.checkpoint,
-                  'sha256': digest(target.read_bytes()) if target.is_file() else None,
+                  'sha256': file_digest(target) if target.is_file() else None,
                   'git': git_info(root), 'observations': []}
         for name in args.file:
             path = local(root, name)
-            output['observations'].append({'path': name, 'sha256': digest(path.read_bytes())})
+            output['observations'].append({'path': name, 'sha256': file_digest(path)})
         print(json.dumps(output, indent=2))
         return 0
     if args.command == 'check':
