@@ -47,6 +47,7 @@
 | docs/evidence/live-trial-kit-v0.2.2.md | Trial of the v0.2.2 routing block against the v0.2.1 block, with a fixture builder and scorer in docs/evidence/live-trial-v0.2.2/ |
 | docs/evidence/live-trial-2026-11-26-routing-block.md | Result of that trial: 3 runs per arm on Claude Code, with its limits |
 | docs/evidence/live-trial-2026-11-26-routing-block-v2.md | Second trial pass: old, current and candidate routing blocks, 26 runs |
+| docs/evidence/live-trial-2026-11-26-skill-installed.md | Third trial pass: skill installed or not, with the v0.3.0 block, 16 runs |
 | docs/evidence/audit-2026-11-26.md | Audit of v0.2.1 against four real projects, with its incident record |
 | docs/releases/v0.1.1.md | Expanded host guide, helper and workflow fixes release notes |
 | .github/workflows/ci.yml | GitHub Actions matrix for automatic package/protocol checks |
