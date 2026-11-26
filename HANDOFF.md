@@ -1,10 +1,10 @@
 # Project handoff
 
 - format: cross-agent-handoff/1
-- task_status: in_progress
+- task_status: done
 - handoff: ready
 - writer: none
-- updated_at: 2026-11-26T10:25:38+07:00
+- updated_at: 2026-11-26T10:32:03+07:00
 
 ## Project
 Cross-Agent Handoff: portable sequential project continuity and a Claude Code plugin wrapper.
@@ -15,7 +15,7 @@ Host loading/routing: skills/cross-agent-handoff/references/agents.md.
 Release history: docs/releasing.md. Roadmap: docs/roadmap/.
 
 ## Task
-Maintain the skill. v0.3.1 (four small fixes) is merged (PR #22, 97246d8) and the release is being prepared (maintainer approved on 2026-11-26), not tagged. v0.3.0 (compaction, size hints, doctor) is released (2026-11-26; PR #19 8b716a5, prep PR #20 edcefa5, tag object e21477e, publish run 45714596537, Latest). v0.2.3 (small fixes) is released (2026-11-26; PR #16 7fe0ffe, prep PR #17 ea9f59c, tag object 350e54d, publish run 45711238994, Latest). v0.2.1 is released. v0.2.2 (audit fixes) is released (2026-11-26; PR #12 a395f52, prep PR #13 9333c35, tag
+Maintain the skill. v0.3.1 (four small fixes) is released (2026-11-26; PR #22 97246d8, prep PR #24 df8037a, tag object 6664582, publish run 45749303535, Latest). v0.3.0 (compaction, size hints, doctor) is released (2026-11-26; PR #19 8b716a5, prep PR #20 edcefa5, tag object e21477e, publish run 45714596537, Latest). v0.2.3 (small fixes) is released (2026-11-26; PR #16 7fe0ffe, prep PR #17 ea9f59c, tag object 350e54d, publish run 45711238994, Latest). v0.2.1 is released. v0.2.2 (audit fixes) is released (2026-11-26; PR #12 a395f52, prep PR #13 9333c35, tag
 object b4b9244, publish run 45705163155, Latest). Checkpoint format is
 unchanged. Talk to the maintainer in Indonesian; write code and docs in English.
 
@@ -74,14 +74,13 @@ Writers / operations: none running.
 - Hook facts: official pages fetched 2026-11-08, links in docs/roadmap/v0.2.0-audit.md.
 
 ## Next
-After this prep PR merges, tag v0.3.1 on its merge commit only on the maintainer's explicit request, verify the publish run, then record the release in
-docs/validation.md, docs/releasing.md and the README badge in a last PR. Studio: replace its routing block only with the maintainer's go-ahead.
-Never move the v0.1.0 to v0.3.0 tags.
+No work remains for v0.3.1. Open with the maintainer: replace Studio's routing block (a session was active there; waits for a go-ahead). Later: a second host
+for the routing-block trial, shared Git module (F35, F16). Never move the v0.1.0 to v0.3.1 tags.
 
 ## Recent outcomes
+- 2026-11-26, Claude Code: tagged and published v0.3.1 and verified the release.
 - 2026-11-26, Claude Code: merged v0.3.1 (PR #22) and the skill-installed trial record (PR #23).
 - 2026-11-26, Claude Code: rewrote the four small audit fixes as v0.3.1 on fix/v0.3.1 (scratch folder with the old patches was gone).
 - 2026-11-26, Claude Code: tagged and published v0.3.0 (new routing block, size hints, doctor plugin route) and verified it.
 - 2026-11-26, Claude Code: ran the routing-block live trials (PR #15 and three more batches) and adopted the new block.
 - 2026-11-26, Claude Code: released v0.2.2 and v0.2.3 (audit fixes, hook paths, manifest, save warnings); details in CHANGELOG.md.
-- Earlier history (v0.2.0 trials, v0.2.1 token budget): CHANGELOG.md and docs/releasing.md.

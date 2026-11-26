@@ -362,3 +362,15 @@ Hosted: PR #22 passed all 12 Package checks jobs (pull-request and push runs, Ub
 Python 3.9 and 3.14) on head `f371479` and was merged as `97246d8`.
 
 Not covered: Windows host sessions.
+
+## Release v0.3.1 evidence (2026-11-26)
+
+- PR #22 (fixes) was merged as `97246d8` and PR #24 (release preparation, docs only) as `df8037a`;
+  both passed all 12 Package checks jobs. The Package checks run on `main` for the merge commit,
+  [45749264545](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/45749264545), also succeeded.
+- Annotated tag `v0.3.1` (object `6664582`) targets `df8037a`. The maintainer asked for the release;
+  the agent pushed the tag. Package checks on the tag, [run 45749303541](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/45749303541), succeeded.
+- [Publish release run 45749303535](https://github.com/kristianrolando/cross-agent-handoff/actions/runs/45749303535): checks and publish succeeded.
+- [Release v0.3.1](https://github.com/kristianrolando/cross-agent-handoff/releases/tag/v0.3.1) is Latest, not a draft or prerelease, published 2026-11-26T03:30:27Z (10:30 in UTC+7). Its body matches docs/releases/v0.3.1.md apart from a trailing newline.
+- Limits: the fixes were rewritten after the original patches were lost; memory use on a 1 GB file was not re-measured; no Windows host session.
+- Tags v0.1.0 to v0.3.0 are unchanged.
